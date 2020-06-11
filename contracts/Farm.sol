@@ -24,18 +24,6 @@ library String {
 
 contract Farm is Registry {
   using String for string;
-  // Farm data type
-  struct FarmData {
-    uint256 farmSize;
-    string farmOwner;
-    string farmImage;
-    string lon;
-    string lat;
-  }
-
-  // Farms registry
-  mapping(address => FarmData) public farms;
-  address[] private farmOwners;
 
   /**
    * registerFarm
@@ -49,15 +37,13 @@ contract Farm is Registry {
     string memory _latitude
   )
     public
-    override
-    returns (bool result) {
+    override {
       require(_farmSize != 0, "farm size cannot be 0");
       require(_farmOwner.isEmpty() == false, "farm owner cannot be unknown");
       require(_farmImage.isEmpty() == false, "farm image cannot be unknown");
       require(_longitude.isEmpty() == false, "farm longitude coords cannot be unknown");
       require(_latitude.isEmpty() == false, "farm latitude coords cannot be unknown");
-      farms[msg.sender] = FarmData(_farmSize, _farmOwner, _farmImage, _longitude, _latitude);
-      farmOwners.push(msg.sender);
-      return true;
+      farmRegistry[msg.sender] = FarmData(_farmSize, _farmOwner, _farmImage, _longitude, _latitude);
+      emit Register(msg.sender, _farmSize, _farmOwner, _longitude, _latitude);
   }
 }

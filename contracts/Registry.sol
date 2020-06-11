@@ -8,15 +8,33 @@ pragma solidity >=0.4.22 <0.7.0;
  */
 
 abstract contract Registry {
+
+  // Farm data type
+  struct FarmData {
+    uint256 farmSize;
+    string farmOwner;
+    string farmImage;
+    string lon;
+    string lat;
+  }
+
+  event Register(
+    address _from,
+    uint256 _farmSize,
+    string _farmOwner,
+    string _longitude,
+    string _latitude
+  );
+
+  // Farm registry
+  mapping(address => FarmData) public farmRegistry;
+
   // Register farm
   function registerFarm(
     uint256 _farmSize,
     string memory _farmOwner,
     string memory _farmImage,
-    string memory _Longitude,
+    string memory _longitude,
     string memory _latitude
-  )
-    public
-    virtual
-    returns (bool);
+  ) public virtual;
 }
