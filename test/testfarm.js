@@ -1,20 +1,22 @@
+/* eslint-disable */
+
 const Farm = artifacts.require("Farm");
 
 let instance;
 
 contract("Farm test", async accounts => {
 
-  beforeEach(async() => {
+  before(async() => {
     instance = await Farm.deployed();
   });
 
   it("should register a farm", async() => {
-    await instance.registerFarm(100, "John Doe", "farm_image_hash", "36.89384", "-1.29473");
-    const owner = await instance.farms(accounts[0]);
-    assert.equal(Number(owner.farmSize), 100, "farm size should be 100");
-    assert.equal(String(owner.farmOwner), "John Doe", "farm owner should be John Doe");
-    assert.equal(parseFloat(owner.lon), 36.89384, "farm longitude should 36.89384");
-    assert.equal(parseFloat(owner.lat), -1.29473, "farm latitude should be -1.29473");
+    const result = await instance.registerFarm(100, "John Doe", "farm_image_hash", "36.89384", "-1.29473");
+    assert.equal(Number(result.logs[0].args._farmSize), 100, "farm size should be 100");
+    assert.equal(String(result.logs[0].args._farmOwner), "John Doe", "farm owner should be John Doe");
+    assert.equal(parseFloat(result.logs[0].args._longitude), 36.89384, "farm longitude should 36.89384");
+    assert.equal(parseFloat(result.logs[0].args._latitude), -1.29473, "farm latitude should be -1.29473");
+    assert.equal(result.logs[0].args._from, accounts[0], "account should be the same");
   });
   it("should not create farm with no farm size", async() => {
     try {
