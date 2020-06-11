@@ -4,12 +4,26 @@ pragma solidity >=0.4.22 <0.7.0;
 
 import "./Registry.sol";
 
+library String {
+
+  // check if string is null
+  function isEmpty(string memory _value) internal pure returns (bool) {
+    bytes memory tempEmptyString = bytes(_value);
+    if (tempEmptyString.length == 0) {
+        return true;
+    } else {
+        return false;
+    }
+  }
+}
+
 /**
  * Farm
  * This implements functionality in a farm
  */
 
 contract Farm is Registry {
+  using String for string;
   // Farm data type
   struct FarmData {
     uint256 farmSize;
@@ -22,16 +36,6 @@ contract Farm is Registry {
   // Farms registry
   mapping(address => FarmData) public farms;
   address[] private farmOwners;
-
-  // check if string is null
-  function stringIsEmpty(string memory _value) internal pure returns (bool) {
-    bytes memory tempEmptyString = bytes(_value);
-    if (tempEmptyString.length == 0) {
-        return true;
-    } else {
-        return false;
-    }
-  }
 
   /**
    * registerFarm
@@ -48,10 +52,10 @@ contract Farm is Registry {
     override
     returns (bool result) {
       require(_farmSize != 0, "farm size cannot be 0");
-      require(stringIsEmpty(_farmOwner) == false, "farm owner cannot be unknown");
-      require(stringIsEmpty(_farmImage) == false, "farm image cannot be unknown");
-      require(stringIsEmpty(_longitude) == false, "farm longitude coords cannot be unknown");
-      require(stringIsEmpty(_latitude) == false, "farm latitude coords cannot be unknown");
+      require(_farmOwner.isEmpty() == false, "farm owner cannot be unknown");
+      require(_farmImage.isEmpty() == false, "farm image cannot be unknown");
+      require(_longitude.isEmpty() == false, "farm longitude coords cannot be unknown");
+      require(_latitude.isEmpty() == false, "farm latitude coords cannot be unknown");
       farms[msg.sender] = FarmData(_farmSize, _farmOwner, _farmImage, _longitude, _latitude);
       farmOwners.push(msg.sender);
       return true;
