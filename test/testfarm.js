@@ -18,11 +18,11 @@ contract("Farm test", async accounts => {
     assert.equal(parseFloat(result.logs[1].args._latitude), -1.29473, "farm latitude should be -1.29473");
     assert.equal(result.logs[1].args._from, accounts[0], "account should be the same");
   });
-  it("should tokenize farm with NFT(non-fungile token)", async() => {
+  it("should mint NFT(non-fungile token) and tokenize farm", async() => {
     const result = await instance.ownerOf(884565);
     assert.equal(result, accounts[0], "address should be equal");
   });
-  it("should not duplicate token generation", async() => {
+  it("should not duplicate token during minting", async() => {
     try {
       await instance.registerFarm(100, "John Doe", "farm_image_hash", "36.89384", "-1.29473", 884565);
     } catch(err) {
