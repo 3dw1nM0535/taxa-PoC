@@ -26,8 +26,8 @@ abstract contract Registry {
     string _latitude
   );
 
-  // Farm registry
-  mapping(address => FarmData) public farmRegistry;
+  // Map tokenId to farm data
+  mapping(uint256 => FarmData) public farmRegistry;
 
   // Register farm
   function registerFarm(
@@ -35,6 +35,7 @@ abstract contract Registry {
     string memory _farmOwner,
     string memory _farmImage,
     string memory _longitude,
-    string memory _latitude
+    string memory _latitude,
+    uint256 tokenId
   ) public virtual;
 }

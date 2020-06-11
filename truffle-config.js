@@ -29,8 +29,9 @@ module.exports = {
     solc: {
       version: "0.6.8",
       parser: "solcjs",
-      settings: {
-        evmVersion: "byzantium"
+      optimizer: {
+        enabled: true,
+        runs: 200
       }
     }
   }
