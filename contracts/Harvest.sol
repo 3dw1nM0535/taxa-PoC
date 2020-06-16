@@ -18,11 +18,18 @@ abstract contract Harvest {
         string cropType;
     }
 
+    // Booking data type
+    struct Booking {
+        address _booker;
+        string _product;
+        uint256 _volume;
+    }
+
     // Mapping for harvest
     mapping(uint256 => HarvestData) public _farmHarvest;
 
     // Mapping for bookers
-    mapping(address => uint256) public _harvestBookers;
+    mapping(address => Booking) public _harvestBookers;
 
     // Mapping for deposits
     mapping(address => uint256) public _deposits;

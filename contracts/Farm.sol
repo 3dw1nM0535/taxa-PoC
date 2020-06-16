@@ -144,8 +144,8 @@ contract Farm is Registry, ERC721, Harvest {
             require(_crypto != 0, "fee cannot be 0");
             require(_crypto == _farmHarvest[_tokenId].price.mul(_amnt), "insufficient funds");
             _farmHarvest[_tokenId].totalSupply = _farmHarvest[_tokenId].totalSupply.sub(_amnt);
-            _deposits[msg.sender] = uint256(1).div(uint256(2)).mul(_crypto);
-            _harvestBookers[msg.sender] = _amnt;
+            _deposits[msg.sender] = _crypto;
+            _harvestBookers[msg.sender] = Booking(msg.sender, _farmHarvest[_tokenId].cropType, _amnt);
             emit BookingHarvest(msg.sender, _amnt);
         }
 
