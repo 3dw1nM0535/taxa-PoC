@@ -83,6 +83,14 @@ contract("Farm test", async accounts => {
         assert.equal(Number(log._pricePerSupply), bigNumber, "price should be 2000000000000000000");
         assert.equal(String(log._cropName), "Tomatoes", "crop type should be Tomatoes");
     });
+    it("farmer should not create harvest sometime ago than the current harvest date", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
+        try {
+            await instance.createHarvest(1600126314, 3, bigNumber, "Tomatoes", tokenId);
+        } catch(err) {
+            assert.equal(err.reason, "invalid harvest input", "should fail with reason");
+        }
+    });
     it("farmer cannot  create over-surplus harvest", async() => {
         const bigNumber = web3.utils.toBN(web3.utils.toWei("1", "ether"));
         try {
@@ -166,29 +174,32 @@ contract("Farm test", async accounts => {
         }
     });
     it("farm owner should not create harvest contract with invalid harvest date", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
         try {
-            await instance.createHarvest(0, 100, 2000, "Tomatoes", tokenId);
+            await instance.createHarvest(0, 100, bigNumber, "Tomatoes", tokenId);
         } catch(err) {
             assert.equal(err.reason, "invalid harvest date", "should fail with reason");
         }
     });
     it("farm owner should not create harvest contract with 0 supply", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
         try {
-            await instance.createHarvest(1600126318, 0, 2000, "Tomatoes", tokenId);
+            await instance.createHarvest(1600126318, 0, bigNumber, "Tomatoes", tokenId);
         } catch(err) {
             assert.equal(err.reason, "supply cannot be 0", "should fail with reason");
         }
     });
     it("farm owner should not create harvest contract with no pricing", async() => {
         try {
-            await instance.createHarvest(1600126318, 100, 0, "Tomatoes", tokenId);
+            await instance.createHarvest(1600126318, 10, 0, "Tomatoes", tokenId);
         } catch(err) {
             assert.equal(err.reason, "price cannot be 0", "should fail with reason");
         }
     });
     it("farm owner should not create harvest contract with no crop type", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
         try {
-            await instance.createHarvest(1600126318, 100, 2000, "", tokenId);
+            await instance.createHarvest(1600126318, 10, bigNumber, "", tokenId);
         } catch(err) {
             assert.equal(err.reason, "crop type should be provided", "should fail with reason");
         }
