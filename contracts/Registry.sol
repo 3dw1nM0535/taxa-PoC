@@ -11,6 +11,7 @@ abstract contract Registry {
 
   // Farm data type
   struct FarmData {
+    address owner;
     uint256 farmSize;
     string farmImage;
     string lon;
@@ -18,7 +19,7 @@ abstract contract Registry {
   }
 
   event Register(
-    address _from,
+    address _owner,
     uint256 _farmSize,
     string _longitude,
     string _latitude
