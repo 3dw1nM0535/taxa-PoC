@@ -21,7 +21,8 @@ contract Delivery {
         address _rider,
         address _from,
         bool _accept,
-        bool _reject
+        bool _reject,
+        uint256 _refund
     );
     event Delivered(
         address _rider,
@@ -43,7 +44,7 @@ contract Delivery {
 
     // Offer data type
     struct Offer {
-        address _from;
+        address payable _from;
         string _product;
         uint256 _amount;
         uint256 _date;
@@ -56,7 +57,7 @@ contract Delivery {
 
     // Delivery person data type
     struct DeliveryPerson {
-        address _address;
+        address payable _address;
         string _dataHash;
     }
 
@@ -176,7 +177,11 @@ contract Delivery {
             _offers[_from]._accept = false;
             _rejectedOffers[msg.sender] = _rejectedOffers[msg.sender].add(1);
             _rejectionRate[msg.sender] = rejectionRate(msg.sender);
-            emit Reject(msg.sender, _from, _offers[_from]._accept, _offers[_from]._reject);
+            uint256 _refund = _offers[_from]._fee;
+            emit Reject(msg.sender, _from, _offers[_from]._accept, _offers[_from]._reject, _refund);
+            _offers[_from]._fee = 0;
+            _offers[_from]._from.transfer(_refund);
+            _refund = 0;
         }
 
 }
