@@ -134,12 +134,7 @@ contract Farm is Registry, ERC721, Harvest {
      * params: _booker, _amount, _deposit(1/2(buying_price)), buying_price(amount*pricePerSupply)
      */
 
-    function updateBookings
-        (
-            uint256 _amnt,
-            uint256 _tokenId,
-            uint256 _crypto
-        )
+    function updateBookings(uint256 _amnt, uint256 _tokenId, uint256 _crypto)
             internal
             condition(_tokenId != 0, "invalid token")
             condition(_exists(_tokenId) == true, "invalid token")
@@ -154,11 +149,7 @@ contract Farm is Registry, ERC721, Harvest {
             emit BookingHarvest(msg.sender, _amnt);
         }
 
-    function bookHarvest
-        (
-            uint256 _amount,
-            uint256 _tokenId
-        )
+    function bookHarvest(uint256 _amount, uint256 _tokenId)
             public
             payable
             condition(msg.sender != farmRegistry[_tokenId].owner, "cannot book from own farm")
