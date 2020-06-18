@@ -83,6 +83,14 @@ contract("Farm test", async accounts => {
         assert.equal(Number(log._pricePerSupply), bigNumber, "price should be 2000000000000000000");
         assert.equal(String(log._cropName), "Beans", "crop type should be beans");
     });
+    it("farmer should create over-surplus", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
+        try {
+            await instance.createHarvest(1600126359, 10, bigNumber, "Beans", tokenId);
+        } catch(err) {
+            assert.equal(err.reason, "previous harvest season still in supply");
+        }
+    });
     it("farmer should not book from own farm", async() => {
         const bigNumber = web3.utils.toBN(web3.utils.toWei("6", "ether"));
         try {
