@@ -7,19 +7,19 @@ import "@openzeppelin/contracts/math/SafeMath.sol";
 import "./StringUtils.sol";
 import "./Registry.sol";
 import "./Harvest.sol";
+import "./Book.sol";
 
 /**
  * Farm
  * This implements functionality in a farm
  */
 
-contract Farm is Registry, ERC721, Harvest {
+contract Farm is Registry, ERC721, Harvest, Book {
 
     using StringUtils for string;
     using SafeMath for uint256;
 
     // Events
-    event StateChange(uint256 _tokenId, string _stateChanged);
     event Planting(string _crop, string _seed);
 
     // Crop selection
@@ -65,14 +65,14 @@ contract Farm is Registry, ERC721, Harvest {
      */
     function openPlantingSeason(string memory _cropSelection, string memory _seedSelection, uint256 _tokenId)
             public
-            condition(_exists(_tokenId) == true, "ERC721: invalid token")
+            condition(_exists(_tokenId) == true, "ERC721:invalid token")
         {
             if (ownerOf(_tokenId) == address(msg.sender)) {
                 _plantingSeason[_tokenId] = PlantingSeason(_cropSelection, _seedSelection);
                 emit Planting(_cropSelection, _seedSelection);
                 return;
             } else {
-                revert("unknown farm owner");
+                revert("UNKNOWN:farm owner");
             }
          }
 
@@ -83,7 +83,7 @@ contract Farm is Registry, ERC721, Harvest {
      */
     function openHarvestSeason(uint256 _tokenId, string memory _cropName)
         public
-        condition(_plantingSeason[_tokenId].crop.equal(_cropName), "cannot reap what you never sow")
+        condition(_plantingSeason[_tokenId].crop.equal(_cropName), "ERROR:reap what you sow")
         override
         returns (bool)
     {
@@ -105,9 +105,9 @@ contract Farm is Registry, ERC721, Harvest {
             uint256 _tokenId
         )
             public
-            condition(_exists(_tokenId) == true, "invalid token")
-            condition(_plantingSeason[_tokenId].crop.equal(_cropType), "cannot reap what you never sow")
-            condition(msg.sender == farmRegistry[_tokenId].owner, "unknown farm owner")
+            condition(_exists(_tokenId) == true, "ERC721:invalid token")
+            condition(_plantingSeason[_tokenId].crop.equal(_cropType), "ERROR:reap what you sow")
+            condition(msg.sender == farmRegistry[_tokenId].owner, "UKNOWN:farm owner")
             override
             returns (bool)
         {
@@ -122,47 +122,48 @@ contract Farm is Registry, ERC721, Harvest {
                 return true;
             } else if (_harvestDate >= _farmHarvest[_tokenId].harvestDate) { // meaning its a future harvest
                 if (_farmHarvest[_tokenId].totalSupply != 0) {
-                   revert("previous harvest season still in supply");
-                } else {
-                     _farmHarvest[_tokenId] = HarvestData(_harvestDate, _totalSupply, _price, _cropType);
+                   revert("OVERSUPPLY:harvest");
+                } else if (_farmHarvest[_tokenId].totalSupply == 0) {
+                    _farmHarvest[_tokenId].harvestDate = _harvestDate;
+                    _farmHarvest[_tokenId].totalSupply = _farmHarvest[_tokenId].totalSupply.add(_totalSupply);
+                    _farmHarvest[_tokenId].price = _price;
+                    _farmHarvest[_tokenId].cropType = _cropType;
                     emit Harvesting(
                         _farmHarvest[_tokenId].harvestDate,
                         _farmHarvest[_tokenId].totalSupply,
                         _farmHarvest[_tokenId].price,
                         _farmHarvest[_tokenId].cropType
                     );
+                    return true;
+                } else {
+                    revert("SUPPLY:invalid");
                 }
             } else {
-                revert("invalid harvest");
+                revert("INVALID:harvest");
             }
         }
 
     /**
-     * bookHarvest
-     * params: _booker, _amount, _deposit(1/2(buying_price)), buying_price(amount*pricePerSupply)
+     * @dev Book harvest
+     * @param _amount to be booked, _crop, and tokenized farm _tokenId
      */
-
-    function updateBookings(uint256 _amnt, uint256 _tokenId, uint256 _crypto)
-            internal
-            condition(_exists(_tokenId) == true, "invalid token")
-            condition(_amnt <= _farmHarvest[_tokenId].totalSupply, "no enough supply to cover your booking")
-        {
-            require(_crypto == _farmHarvest[_tokenId].price.mul(_amnt), "insufficient funds");
-            _farmHarvest[_tokenId].totalSupply = _farmHarvest[_tokenId].totalSupply.sub(_amnt);
-            _deposits[msg.sender] = _crypto;
-            _harvestBookers[msg.sender] = Booking(msg.sender, _farmHarvest[_tokenId].cropType, _amnt);
-            emit BookingHarvest(msg.sender, _amnt);
+    function bookHarvest(uint256 _amount, string memory _crop, uint256 _tokenId)
+        public
+        payable
+        override
+        returns (bool)
+    {
+        if (msg.value == _farmHarvest[_tokenId].price.mul(_amount) && _amount <= _farmHarvest[_tokenId].totalSupply) {
+            _harvestBookers[msg.sender]._booker = msg.sender;
+            _harvestBookers[msg.sender]._product = _crop;
+            _harvestBookers[msg.sender]._volume = _harvestBookers[msg.sender]._volume.add(_amount);
+            _farmHarvest[_tokenId].totalSupply = _farmHarvest[_tokenId].totalSupply.sub(_amount);
+            Book.deposit(msg.sender);
+            emit BookingHarvest(_harvestBookers[msg.sender]._booker, _harvestBookers[msg.sender]._volume);
+        } else if (msg.sender == farmRegistry[_tokenId].owner) {
+            revert("ILLEGAL:booking your farm");
+        } else {
+            revert("INSUFFICIENT:funds or BOOK_AMOUNT:not possible");
         }
-
-    function bookHarvest(uint256 _amount, uint256 _tokenId)
-            public
-            payable
-            condition(msg.sender != farmRegistry[_tokenId].owner, "cannot book from own farm")
-            override
-            returns (bool)
-        {
-            require(msg.value != 0, "fee cannot be 0");
-            updateBookings(_amount, _tokenId, msg.value);
-            return true;
-        }
+    }
 }

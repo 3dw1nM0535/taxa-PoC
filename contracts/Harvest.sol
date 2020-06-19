@@ -6,7 +6,6 @@ abstract contract Harvest {
 
     // Events
     event Harvesting(uint256 _date, uint256 _supply, uint256 _pricePerSupply, string _cropName);
-    event BookingHarvest(address _booker, uint256 _amnt);
     event OpenHarvest(bool _status, string _cropName);
 
 
@@ -18,13 +17,6 @@ abstract contract Harvest {
         string cropType;
     }
 
-    // Booking data type
-    struct Booking {
-        address _booker;
-        string _product;
-        uint256 _volume;
-    }
-
     // Harvest
     struct HarvestCrop {
         bool status;
@@ -33,9 +25,6 @@ abstract contract Harvest {
 
     // Mapping for harvest
     mapping(uint256 => HarvestData) public _farmHarvest;
-
-    // Mapping for bookers
-    mapping(address => Booking) public _harvestBookers;
 
     // Mapping harvest season to farm
     mapping(uint256 => HarvestCrop) public _harvestSeason;
@@ -58,12 +47,6 @@ abstract contract Harvest {
             public
             virtual
             returns (bool);
-
-    /**
-     * bookHarvest
-     * params: _booker, _amount
-     */
-    function bookHarvest(uint256 _amount, uint256 _tokenId) public payable virtual returns (bool);
 
     /**
      * openHarvestSeason
