@@ -37,7 +37,7 @@ contract("Farm test", async accounts => {
             await instance.openPlantingSeason("Tomatoes", "Tomatoe seeds", tokenId);
             await instance.createHarvest(1600126318, 1, bigNumber, "Tomatoes", 38829);
         } catch(err) {
-            assert.equal(err.reason, "invalid token", "should fail with reason");
+            assert.equal(err.reason, "ERC721:invalid token", "should fail with reason");
         }
     });
     it("farm owner can create harvest contract", async() => {
@@ -55,7 +55,7 @@ contract("Farm test", async accounts => {
         try {
             await instance.createHarvest(1600126314, 3, bigNumber, "Tomatoes", tokenId);
         } catch(err) {
-            assert.equal(err.reason, "invalid harvest", "should fail with reason");
+            assert.equal(err.reason, "INVALID:harvest", "should fail with reason");
         }
     });
     it("farmer cannot  create what wasn't planted", async() => {
@@ -63,49 +63,59 @@ contract("Farm test", async accounts => {
         try {
             await instance.createHarvest(1600126319, 2, bigNumber, "Potatoes", tokenId);
         } catch(err) {
-            assert.equal(err.reason, "cannot reap what you never sow", "should fail with reason");
+            assert.equal(err.reason, "ERROR:reap what you sow", "should fail with reason");
+        }
+    });
+    it("should not book harvest with 0 fees", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("0", "ether"));
+        try {
+            await instance.bookHarvest(3, "Tomatoes", tokenId, { from: accounts[1], value: bigNumber });
+        } catch(err) {
+            assert.equal(err.reason, "INSUFFICIENT:funds or BOOK_AMOUNT:not possible", "should fail with reason");
+        }
+    });
+    it("book reasonable amount", async() => {
+        const bigNumber = web3.utils.toBN(web3.utils.toWei("6", "ether"));
+        try {
+            await instance.bookHarvest(4, "Tomatoes", tokenId, { from: accounts[1], value: bigNumber });
+        } catch(err) {
+            assert.equal(err.reason, "INSUFFICIENT:funds or BOOK_AMOUNT:not possible", "should fail with reason");
         }
     });
     it("buyer can book farm harvest", async() => {
         const bigNumber = web3.utils.toBN(web3.utils.toWei("6", "ether"));
-        const result = await instance.bookHarvest(3, tokenId, { from: accounts[1], value: bigNumber });
-        const log = result.logs[0].args;
-        assert.equal(log._booker, accounts[1], "booking account should be account 2");
-        assert.equal(Number(log._amnt), 3, "booking amount should be 3");
+        const result = await instance.bookHarvest(3, "Tomatoes", tokenId, { from: accounts[1], value: bigNumber });
+        const depositLog = result.logs[0].args;
+        const bookingLog = result.logs[1].args;
+        assert.equal(depositLog._payee, accounts[1], "deposit should be account 2");
+        assert.equal(Number(depositLog._value), bigNumber, "deposit amount should be 6 ether");
+        assert.equal(bookingLog._booker, accounts[1], "booker should be account 2");
+        assert.equal(bookingLog._amnt, 3, "booked amount should be 3");
     });
     it("farmer can create a new second wave of harvest", async() => {
         const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
         await instance.openPlantingSeason("Beans", "French seeds", tokenId);
-        const result = await instance.createHarvest(1600126359, 10, bigNumber, "Beans", tokenId);
+        const result = await instance.createHarvest(1600126359, 3, bigNumber, "Beans", tokenId);
         const log = result.logs[0].args;
         assert.equal(Number(log._date), 1600126359, "new harvest date should be 1600126359");
-        assert.equal(Number(log._supply), 10, "total supply should be 10");
+        assert.equal(Number(log._supply), 3, "total supply should be 3");
         assert.equal(Number(log._pricePerSupply), bigNumber, "price should be 2000000000000000000");
         assert.equal(String(log._cropName), "Beans", "crop type should be beans");
     });
     it("farmer should not create over-surplus", async() => {
         const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
         try {
-            await instance.createHarvest(1600126359, 10, bigNumber, "Beans", tokenId);
+            await instance.createHarvest(1600126359, 4, bigNumber, "Beans", tokenId);
         } catch(err) {
-            assert.equal(err.reason, "previous harvest season still in supply");
+            assert.equal(err.reason, "OVERSUPPLY:harvest", "should fail with reason");
         }
     });
-    it("farmer should not book from own farm", async() => {
+    it("should not book from own farm", async() => {
         const bigNumber = web3.utils.toBN(web3.utils.toWei("6", "ether"));
         try {
-            await instance.openHarvestSeason(tokenId, "Beans");
-            await instance.bookHarvest(3, tokenId, { from: accounts[1], value: bigNumber });
+            await instance.bookHarvest(3, "Beans", tokenId, { from: accounts[1], value: bigNumber });
         } catch(err) {
-            assert.equal(err.reason, "cannot book from own farm", "should fail with reason");
-        }
-    });
-    it("buyer cannot book more that available harvest supply", async() => {
-        const bigNumber = web3.utils.toBN(web3.utils.toWei("2", "ether"));
-        try {
-            await instance.bookHarvest(101, tokenId, { from: accounts[1], value: bigNumber });
-        } catch(err) {
-            assert.equal(err.reason, "no enough supply to cover your booking", "should fail with reason");
+            assert.equal(err.reason, "ILLEGAL:booking your farm", "should fail with reason");
         }
     });
     it("farm owner should not create harvest contract with invalid harvest date", async() => {
@@ -114,7 +124,7 @@ contract("Farm test", async accounts => {
             await instance.openPlantingSeason("Tomatoes", "Tomatoe seeds", tokenId);
             await instance.createHarvest(3234, 100, bigNumber, "Tomatoes", tokenId);
         } catch(err) {
-            assert.equal(err.reason, "invalid harvest", "should fail with reason");
+            assert.equal(err.reason, "INVALID:harvest", "should fail with reason");
         }
     });
     after(async() => {
