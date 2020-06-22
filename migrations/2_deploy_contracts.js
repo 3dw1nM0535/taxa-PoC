@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-const Book = artifacts.require("Registry");
+const Farm = artifacts.require("Farm");
 
 module.exports = function(deployer) {
-    deployer.deploy(Registry);
+    deployer.deploy(Farm);
 };
