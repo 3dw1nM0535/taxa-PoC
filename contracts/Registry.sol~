@@ -37,7 +37,6 @@ abstract contract Registry is ERC721 {
   // Map token to farm(tokenize farm)
   mapping(uint256 => Farm) public registry;
 
-  Farm[] public _registeredFarms;
   /**
    * @dev addFarm Tokenize farm and add to registry
    * @param _size, _lon, _lat, _fileHash, _soilType, _tokenId

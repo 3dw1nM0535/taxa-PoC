@@ -26,7 +26,6 @@ contract Farm is Registry {
     // Mint token and map tokenized farm
     _safeMint(msg.sender, _tokenId);
     registry[_tokenId] = Farm(_size, _lon, _lat, _fileHash, _soilType, msg.sender);
-    _registeredFarms.push(Farm(_size, _lon, _lat, _fileHash, _soilType, msg.sender));
     emit RegisterFarm(
       registry[_tokenId].size,
       registry[_tokenId].longitude,

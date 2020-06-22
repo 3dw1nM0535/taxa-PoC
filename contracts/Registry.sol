@@ -4,11 +4,6 @@ pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 
-/**
- * @dev Register farm
- * This will register farms and their owners
- */
-
 abstract contract Registry is ERC721 {
 
   constructor() internal ERC721('Foo', 'FOO') {}
@@ -37,7 +32,6 @@ abstract contract Registry is ERC721 {
   // Map token to farm(tokenize farm)
   mapping(uint256 => Farm) public registry;
 
-  Farm[] public _registeredFarms;
   /**
    * @dev addFarm Tokenize farm and add to registry
    * @param _size, _lon, _lat, _fileHash, _soilType, _tokenId
