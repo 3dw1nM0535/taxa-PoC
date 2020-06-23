@@ -45,6 +45,20 @@ contract("Farm", async accounts => {
     assert.equal(log._crop, "Tomatoes", "harvest crop should be Tomatoes");
     assert.equal(log._tokenId, tokenId, "tokenized farm id should be 88473"); 
   });
+  it("Should restrict harvest to farm owner", async() => {
+    try {
+      await instance.createHarvest(
+        1603459604,
+        2,
+        price,
+        "Tomatoes",
+        tokenId,
+        { from: accounts[2] }
+      );
+    } catch(err) {
+      assert.equal(err.reason, "RESTRICTED:only owner can harvest", "should fail with reason");
+    }
+  });
   it("Should not create second harvest rather resupply", async() => {
     try {
       await instance.createHarvest(
@@ -92,6 +106,13 @@ contract("Farm", async accounts => {
       assert.equal(err.reason, "INSUFFICIENT:booking amount", "should fail with reason");
     }
   });
+  it("Should not book own farm", async() => {
+    try {
+      await instance.bookHarvest(2, tokenId, { from: accounts[0], value: bookingFee });
+    } catch(err) {
+      assert.equal(err.reason, "RESTRICTED:owner cannot book harvest", "should fail with reason");
+    }
+  });
   it("Should book harvest", async() => {
     const result = await instance.bookHarvest(2, tokenId, { from: accounts[1], value: bookingFee });
     const log = result.logs[0].args;
@@ -99,7 +120,6 @@ contract("Farm", async accounts => {
     assert.equal(log._tokenId, tokenId, "booked tokenized farm harvest should be 88473");
     assert.equal(log._booker, accounts[1], "booker should be account 2");
     assert.equal(log._deposit.toString(), bookingFee.toString(), "booker deposit should be 2 ether");
-    console.log(log._deposit.toString());
   });
   it("Should always resupply for the future", async() => {
     try {
