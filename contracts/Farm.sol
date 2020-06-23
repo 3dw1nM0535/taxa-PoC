@@ -13,7 +13,7 @@ contract Farm is Registry, Harvest {
   using SafeMath for uint256;
 
   // Modifiers
-  modifier condition(bool _condition, string memory _msg) override {
+  modifier condition(bool _condition, string memory _msg) {
     require(_condition, _msg);
     _;
   }
@@ -61,6 +61,7 @@ contract Farm is Registry, Harvest {
     uint256 _tokenId
   )
     public
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner can harvest")
     override
   {
     if (_harvests[_tokenId].date == 0) {
@@ -79,6 +80,33 @@ contract Farm is Registry, Harvest {
   }
 
   /**
+   * @dev bookHarvest This allow booking harvest
+   * @param _volume, _tokenId
+   */
+  function bookHarvest(uint256 _volume, uint256 _tokenId)
+    public
+    condition(msg.sender != registry[_tokenId].owner, "RESTRICTED:owner cannot book harvest")
+    condition(_volume != 0, "INSUFFICIENT:booking amount")
+    condition(_volume <= _harvests[_tokenId].supply, "INSUFFICIENT:supply")
+    condition(_harvests[_tokenId].price.mul(_volume) == msg.value, "INSUFFICIENT:booking fees")
+    payable
+    override
+  {
+     // Register booking volume
+    _bookers[msg.sender].volume = _bookers[msg.sender].volume.add(_volume);
+    // Update supply
+    _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
+    _deposits[msg.sender] = _deposits[msg.sender].add(msg.value);
+    emit Booking(
+      _bookers[msg.sender].volume,
+      _tokenId,
+      msg.sender,
+      _deposits[msg.sender]
+    );
+
+  }
+
+  /**
    * @dev reSupply Resupply farm harvest
    * @param _date, _supply, _price, _crop, _tokenId
    */
@@ -89,6 +117,7 @@ contract Farm is Registry, Harvest {
     uint256 _tokenId
   )
     public
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner can resupply")
     condition(_harvests[_tokenId].supply == 0, 'OVERSUPPLY:previous harvest not exhausted')
     override
   {

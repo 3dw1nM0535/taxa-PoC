@@ -30,12 +30,6 @@ abstract contract Harvest is Book {
 	// Map harvest to farm
 	mapping(uint256 => HarvestType) public _harvests;
 
-  // Modifiers
-  modifier condition(bool _condition, string memory _msg) virtual {
-    require(_condition, _msg);
-    _;
-  }
-
 	/**
 	 * @dev createHarvest Allow farm to create harvest
 	 * @param _date, _supply, _price, _crop, _tokenId
@@ -68,22 +62,6 @@ abstract contract Harvest is Book {
     uint256 _tokenId
   )
     public
-    condition(_volume != 0, "INSUFFICIENT:booking amount")
-    condition(_volume <= _harvests[_tokenId].supply, "INSUFFICIENT:supply")
-    condition(_harvests[_tokenId].price.mul(_volume) == msg.value, "INSUFFICIENT:booking fees")
     payable
-    override
-  {
-    // Register booking volume
-    _bookers[msg.sender].volume = _bookers[msg.sender].volume.add(_volume);
-    // Update supply
-    _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
-    _deposits[msg.sender] = _deposits[msg.sender].add(msg.value);
-    emit Booking(
-      _bookers[msg.sender].volume,
-      _tokenId,
-      msg.sender,
-      _deposits[msg.sender]
-    );
-  }
+    virtual;
 }

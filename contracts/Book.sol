@@ -17,14 +17,5 @@ abstract contract Book {
 
   // Map booker fee to deposits
   mapping(address => uint256) public _deposits;
-
-  /**
-   * @dev bookHarvest Book farmer(s) harvest
-   * @param _volume, _tokenId
-   */
-  function bookHarvest(
-    uint256 _volume,
-    uint256 _tokenId
-  ) public payable virtual;
-}
+  }
 
