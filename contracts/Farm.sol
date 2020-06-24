@@ -12,10 +12,76 @@ contract Farm is Registry, Harvest {
   using StringUtils for string;
   using SafeMath for uint256;
 
+  // Farm stage
+  enum Stage {
+    Created,
+    CropSelection,
+    LandPreparation,
+    SeedSelection,
+    SeedSowing,
+    Irrigation,
+    CropGrowth,
+    Harvesting, 
+    Booking
+  }
+
+  // Seasons
+  enum Season {
+		Preparations,
+    Planting,
+    Harvesting
+  }
+
+  // Token season
+  struct TokenSeason {
+    Season season;
+  }
+
+  // Tokenized farm stage type
+  struct TokenStage{
+    Stage stage;
+  }
+
+  // Map token to its stage
+  mapping(uint256 => TokenStage) public tokenStage;
+
+  // Map token to its season
+  mapping(uint256 => TokenSeason) public tokenSeason;
+
   // Modifiers
   modifier condition(bool _condition, string memory _msg) {
     require(_condition, _msg);
     _;
+  }
+
+  modifier inStage(Stage _stage, uint256 _token) {
+    require(_stage == tokenStage[_token].stage, "INVALID:farm state");
+    _;
+  }
+
+  modifier inSeason(Season _season, uint256 _token) {
+    require(_season == tokenSeason[_token].season, "INVALID:season");
+    _;
+  }
+
+  // Proceed to the next state
+  function nextStage(uint256 _token) internal {
+    tokenStage[_token].stage = Stage(uint256(tokenStage[_token].stage).add(1));
+  }
+
+  // Proceed to the next season
+  function nextSeason(uint256 _token) internal {
+    tokenSeason[_token].season = Season(uint256(tokenSeason[_token].season).add(1));
+  }
+
+  modifier transitionNextStage(uint256 _token) {
+    _;
+    nextStage(_token);
+  }
+
+  modifier transitionNextSeason(uint256 _token) {
+    _;
+    nextSeason(_token);
   }
   
   /**
