@@ -4,34 +4,23 @@ pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/math/SafeMath.sol';
 import './Registry.sol';
-import './Harvest.sol';
-import './StringUtils.sol';
+import './IESeason.sol';
 
-contract Farm is Registry, Harvest {
+contract Farm is Registry, IESeason {
 
-  using StringUtils for string;
   using SafeMath for uint256;
 
-  // Events
-  event SeasonOpening(address indexed _sender, string _season);
-
-  // Seasons
-  enum Season {
-    Created,
-    Dormant,
-		Preparation,
-    Planting,
-    Harvesting,
-    Booking
-  }
-
-  // Token season
-  struct TokenSeason {
-    Season season;
-  }
-
   // Map token to its season
-  mapping(uint256 => TokenSeason) public tokenSeason;
+  mapping(uint256 => TokenSeason) private tokenSeason;
+
+  // Map tokenized farm to preparations data
+  mapping(uint256 => LandPreparations) private preparations;
+
+  // Map tokenized farm to planting data
+  mapping(uint256 => PlantingType) private plantings;
+  
+  // Map harvest to farm
+	mapping(uint256 => HarvestType) public _harvests;
 
   // Modifiers
   modifier condition(bool _condition, string memory _msg) {
@@ -117,6 +106,7 @@ contract Farm is Registry, Harvest {
    */
   function openSeason(uint256 _tokenId)
     public
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
     inSeason(_tokenId, Season.Dormant)
     transitionSeason(_tokenId)
   {
@@ -127,90 +117,78 @@ contract Farm is Registry, Harvest {
   }
 
   /**
-   * @dev createHarvest Farm creates harvest
-   * @param _date, _supply, _price, _crop, _tokenId
+   * @dev finishPreparations This takes account what the
+   * farmer has achieved preparing for planting season
+   * @param _tokenId _crop, _fertilizer Farmer should answer this params
    */
-  function createHarvest(
-    uint256 _date,
-    uint256 _supply,
-    uint256 _price,
-    string memory _crop,
-    uint256 _tokenId
-  )
+  function finishPreparations(uint256 _tokenId, string memory _crop, string memory _fertilizer)
     public
-    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner can harvest")
-    override
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
+    inSeason(_tokenId, Season.Preparation)
+    transitionSeason(_tokenId)
   {
-    if (_harvests[_tokenId].date == 0) {
-      // Its a new harvest
-      _harvests[_tokenId] = HarvestType(_date, _supply, _price, _crop);
-      emit Harvesting(
-        _harvests[_tokenId].date,
-        _harvests[_tokenId].supply,
-        _harvests[_tokenId].price,
-        _harvests[_tokenId].crop,
-        _tokenId
-      );
-    } else {
-      revert('INVALID:harvest');
-    }
+    preparations[_tokenId].crop = _crop;
+    preparations[_tokenId].fertilizer = _fertilizer;
+    emit Preparations(_tokenId, preparations[_tokenId].crop, preparations[_tokenId].fertilizer);
   }
 
   /**
-   * @dev bookHarvest This allow booking harvest
-   * @param _volume, _tokenId
+   * @dev finishPlanting This takes account what the farmer
+   * achieved during planting season and crop growth
+   * @param _tokenId, _seedUsed, _expectedYield, _maturityDays,
+   * _idealClimate, _seedSupplier 
    */
-  function bookHarvest(uint256 _volume, uint256 _tokenId)
+  function finishPlanting(
+    uint256 _tokenId,
+    string memory _seedUsed,
+    string memory _expectedYield,
+    string memory _maturityDays,
+    string memory _idealClimate,
+    string memory _seedSupplier
+  )
     public
-    condition(msg.sender != registry[_tokenId].owner, "RESTRICTED:owner cannot book harvest")
-    condition(_volume != 0, "INSUFFICIENT:booking amount")
-    condition(_volume <= _harvests[_tokenId].supply, "INSUFFICIENT:supply")
-    condition(_harvests[_tokenId].price.mul(_volume) == msg.value, "INSUFFICIENT:booking fees")
-    payable
-    override
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
+    inSeason(_tokenId, Season.Planting)
+    transitionSeason(_tokenId)
   {
-     // Register booking volume
-    _bookers[msg.sender].volume = _bookers[msg.sender].volume.add(_volume);
-    // Update supply
-    _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
-    _deposits[msg.sender] = _deposits[msg.sender].add(msg.value);
-    emit Booking(
-      _bookers[msg.sender].volume,
+    PlantingType memory p;
+    p = PlantingType(
+      _seedUsed,
+      _expectedYield,
+      _maturityDays,
+      _idealClimate,
+      _seedSupplier
+    );
+    plantings[_tokenId] = p;
+    emit Planting( 
       _tokenId,
-      msg.sender,
-      _deposits[msg.sender]
+      p.seedUsed,
+      p.expectedYield,
+      p.maturityDays,
+      p.idealClimate,
+      p.seedSupplier
     );
 
   }
 
   /**
-   * @dev reSupply Resupply farm harvest
-   * @param _date, _supply, _price, _crop, _tokenId
+   * @dev createHarvest Farm creates harvest
+   * @param _supply, _price, _tokenId
    */
-  function reSupply(
-    uint256 _date,
+  function createHarvest(
     uint256 _supply,
-    string memory _crop,
+    uint256 _price,
     uint256 _tokenId
   )
     public
-    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner can resupply")
-    condition(_harvests[_tokenId].supply == 0, 'OVERSUPPLY:previous harvest not exhausted')
-    override
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
+    inSeason(_tokenId, Season.Harvesting)
   {
-    if (_date > _harvests[_tokenId].date) { 
-      // Its a future harvest
-      _harvests[_tokenId].date = _date;
-      _harvests[_tokenId].supply = _harvests[_tokenId].supply.add(_supply);
-      _harvests[_tokenId].crop = _crop;
-      emit Resupply(
-	      _harvests[_tokenId].date,
-	      _harvests[_tokenId].supply,
-	      _harvests[_tokenId].crop,
-	      _tokenId
-      );
-    } else {
-      revert('INVALID:harvest for the future');
-    }
+    _harvests[_tokenId] = HarvestType(_supply, _price);
+    emit Harvesting(
+      _harvests[_tokenId].supply,
+      _harvests[_tokenId].price,
+      _tokenId
+    );
   }
 }
