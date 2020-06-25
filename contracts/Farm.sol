@@ -12,38 +12,23 @@ contract Farm is Registry, Harvest {
   using StringUtils for string;
   using SafeMath for uint256;
 
-  // Farm stage
-  enum Stage {
-    Created,
-    CropSelection,
-    LandPreparation,
-    SeedSelection,
-    SeedSowing,
-    Irrigation,
-    CropGrowth,
-    Harvesting, 
-    Booking
-  }
+  // Events
+  event SeasonOpening(address indexed _sender, string _season);
 
   // Seasons
   enum Season {
-		Preparations,
+    Created,
+    Dormant,
+		Preparation,
     Planting,
-    Harvesting
+    Harvesting,
+    Booking
   }
 
   // Token season
   struct TokenSeason {
     Season season;
   }
-
-  // Tokenized farm stage type
-  struct TokenStage{
-    Stage stage;
-  }
-
-  // Map token to its stage
-  mapping(uint256 => TokenStage) public tokenStage;
 
   // Map token to its season
   mapping(uint256 => TokenSeason) public tokenSeason;
@@ -54,34 +39,44 @@ contract Farm is Registry, Harvest {
     _;
   }
 
-  modifier inStage(Stage _stage, uint256 _token) {
-    require(_stage == tokenStage[_token].stage, "INVALID:farm state");
+  modifier inSeason(uint256 _tokenId, Season _season) {
+    require(_season == tokenSeason[_tokenId].season, "INVALID:season to do this");
     _;
-  }
-
-  modifier inSeason(Season _season, uint256 _token) {
-    require(_season == tokenSeason[_token].season, "INVALID:season");
-    _;
-  }
-
-  // Proceed to the next state
-  function nextStage(uint256 _token) internal {
-    tokenStage[_token].stage = Stage(uint256(tokenStage[_token].stage).add(1));
   }
 
   // Proceed to the next season
-  function nextSeason(uint256 _token) internal {
-    tokenSeason[_token].season = Season(uint256(tokenSeason[_token].season).add(1));
+  function nextSeason(uint256 _tokenId) internal {
+    tokenSeason[_tokenId].season = Season(uint256(tokenSeason[_tokenId].season) + 1);
   }
 
-  modifier transitionNextStage(uint256 _token) {
+  modifier transitionSeason(uint256 _tokenId) {
     _;
-    nextStage(_token);
+    nextSeason(_tokenId);
   }
 
-  modifier transitionNextSeason(uint256 _token) {
-    _;
-    nextSeason(_token);
+  /**
+   * @dev getSeasonKeyByValue This returns season enum value as a string
+   * @param _season Season value
+   */
+  function getSeasonKeyByValue(Season _season) internal pure returns (string memory) {
+    require(uint256(_season) <= 5, "INVALID:season");
+
+    // Loop
+    if (Season.Created == _season) return "Created";
+    if (Season.Dormant == _season) return "Dormant";
+    if (Season.Preparation == _season) return "Preparation";
+    if (Season.Planting == _season) return "Planting";
+    if (Season.Harvesting == _season) return "Harvesting";
+    if (Season.Booking == _season) return "Booking";
+  }
+
+  /**
+   * @dev getTokenSeason This returns the toke state
+   * @param _tokenId The tokenized farm token id
+   */
+  function getTokenSeason(uint256 _tokenId) public view returns (string memory) {
+    Season _s = tokenSeason[_tokenId].season;
+    return getSeasonKeyByValue(_s);
   }
   
   /**
@@ -98,7 +93,8 @@ contract Farm is Registry, Harvest {
   )
     public
     override
-    returns (bool)
+    inSeason(_tokenId, Season.Created)
+    transitionSeason(_tokenId)
   {
     // Mint token and map tokenized farm
     _safeMint(msg.sender, _tokenId);
@@ -112,7 +108,22 @@ contract Farm is Registry, Harvest {
       _tokenId,
       registry[_tokenId].owner
     );
-    return true;
+  }
+
+  /**
+   * @dev openSeason This changes the state of the farm-land
+   * from dormant to preparation for planting
+   * @param _tokenId Tokenized farm token id
+   */
+  function openSeason(uint256 _tokenId)
+    public
+    inSeason(_tokenId, Season.Dormant)
+    transitionSeason(_tokenId)
+  {
+    emit SeasonOpening(
+      msg.sender,
+      getSeasonKeyByValue(tokenSeason[_tokenId].season)
+    );
   }
 
   /**

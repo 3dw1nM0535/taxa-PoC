@@ -43,5 +43,5 @@ abstract contract Registry is ERC721 {
     string memory _fileHash,
     string memory _soilType,
     uint256 _tokenId
-  ) public virtual returns (bool);
+  ) public virtual;
 }
