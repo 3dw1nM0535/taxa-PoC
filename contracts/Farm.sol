@@ -5,8 +5,9 @@ pragma solidity >=0.4.22 <0.7.0;
 import '@openzeppelin/contracts/math/SafeMath.sol';
 import './Registry.sol';
 import './IESeason.sol';
+import './Book.sol';
 
-contract Farm is Registry, IESeason {
+contract Farm is Registry, IESeason, Book {
 
   using SafeMath for uint256;
 
@@ -181,8 +182,9 @@ contract Farm is Registry, IESeason {
     uint256 _tokenId
   )
     public
-    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
     inSeason(_tokenId, Season.Harvesting)
+    transitionSeason(_tokenId)
+    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
   {
     _harvests[_tokenId] = HarvestType(_supply, _price);
     emit Harvesting(
@@ -190,5 +192,25 @@ contract Farm is Registry, IESeason {
       _harvests[_tokenId].price,
       _tokenId
     );
+  }
+
+  /**
+   * @dev bookHarvest This allows booking for farm(s) harvest
+   * @param _tokenId, _volume Amount to be booked
+   */
+  function bookHarvest(uint256 _tokenId, uint256 _volume) 
+    public
+    condition(_volume != 0, "INVALID:0 amount")
+    condition(_volume <= _harvests[_tokenId].supply, "RESTRICTED:amount not possible")
+    condition(msg.sender != registry[_tokenId].owner, "RESTRICTED:owner cannot book")
+    condition(msg.value == _harvests[_tokenId].price.mul(_volume), "INSUFFICIENT:booking fees")
+    payable
+    inSeason(_tokenId, Season.Booking)
+    override
+  {
+    _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
+    _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
+    _deposits[msg.sender] = msg.value;
+    emit Booking(_bookers[msg.sender], _tokenId, msg.sender, _deposits[msg.sender]);
   }
 }
