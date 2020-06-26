@@ -4,15 +4,11 @@ pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/math/SafeMath.sol';
 import './Registry.sol';
-import './IESeason.sol';
-import './Book.sol';
+import './FarmSeason.sol';
 
-contract Farm is Registry, IESeason, Book {
+contract Farm is Registry, FarmSeason {
 
   using SafeMath for uint256;
-
-  // Map token to its season
-  mapping(uint256 => TokenSeason) private tokenSeason;
 
   // Map tokenized farm to preparations data
   mapping(uint256 => LandPreparations) private preparations;
@@ -20,30 +16,13 @@ contract Farm is Registry, IESeason, Book {
   // Map tokenized farm to planting data
   mapping(uint256 => PlantingType) private plantings;
   
-  // Map harvest to farm
-	mapping(uint256 => HarvestType) public _harvests;
-
+  
   // Modifiers
   modifier condition(bool _condition, string memory _msg) {
     require(_condition, _msg);
     _;
   }
-
-  modifier inSeason(uint256 _tokenId, Season _season) {
-    require(_season == tokenSeason[_tokenId].season, "INVALID:season to do this");
-    _;
-  }
-
-  // Proceed to the next season
-  function nextSeason(uint256 _tokenId) internal {
-    tokenSeason[_tokenId].season = Season(uint256(tokenSeason[_tokenId].season) + 1);
-  }
-
-  modifier transitionSeason(uint256 _tokenId) {
-    _;
-    nextSeason(_tokenId);
-  }
-
+  
   /**
    * @dev getSeasonKeyByValue This returns season enum value as a string
    * @param _season Season value
@@ -171,57 +150,4 @@ contract Farm is Registry, IESeason, Book {
     );
 
   }
-
-  /**
-   * @dev createHarvest Farm creates harvest
-   * @param _supply, _price, _tokenId
-   */
-  function createHarvest(
-    uint256 _supply,
-    uint256 _price,
-    uint256 _tokenId
-  )
-    public
-    inSeason(_tokenId, Season.Harvesting)
-    transitionSeason(_tokenId)
-    condition(msg.sender == registry[_tokenId].owner, "RESTRICTED:only owner")
-  {
-    _harvests[_tokenId] = HarvestType(_supply, _price);
-    emit Harvesting(
-      _harvests[_tokenId].supply,
-      _harvests[_tokenId].price,
-      _tokenId
-    );
-  }
-
-  /**
-   * @dev bookHarvest This allows booking for farm(s) harvest
-   * @param _tokenId, _volume Amount to be booked
-   */
-  function bookHarvest(uint256 _tokenId, uint256 _volume) 
-    public
-    condition(_volume != 0, "INVALID:0 amount")
-    condition(_volume <= _harvests[_tokenId].supply, "RESTRICTED:amount not possible")
-    condition(msg.sender != registry[_tokenId].owner, "RESTRICTED:owner cannot book")
-    condition(msg.value == _harvests[_tokenId].price.mul(_volume), "INSUFFICIENT:booking fees")
-    payable
-    inSeason(_tokenId, Season.Booking)
-    override
-  {
-    _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
-    _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
-    _deposits[msg.sender] = msg.value;
-    emit Booking(_bookers[msg.sender], _tokenId, msg.sender, _deposits[msg.sender]);
-  }
-
-  /**
-   * @dev cancelBook This cancels booking
-   * @param _tokenId, _booker
-   */
-  function cancelBook(uint256 _tokenId, address payable _booker)
-    public
-    condition(msg.sender != registry[_tokenId].owner, "RESTRICTED:owner cannot cancel")
-    condition()
-    override
-  {}  
 }

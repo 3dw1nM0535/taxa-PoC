@@ -5,7 +5,18 @@ pragma solidity >=0.4.22 <0.7.0;
 abstract contract Book {
   
   // Events
-  event Booking(uint256 _volume, uint256 _tokenId, address _booker, uint256 _deposit);
+  event Booking(
+	  uint256 _volume,
+    uint256 _tokenId,
+    address _booker,
+    uint256 _deposit
+  );
+  event CancelBook(
+    uint256 _supply,
+    address _booker,
+    uint256 _deposit,
+    uint256 _volume
+  );
 
   // Map book type to booker
   mapping(address => uint256) public _bookers;
@@ -21,8 +32,8 @@ abstract contract Book {
 
   /**
    * @dev cancelBook This allows booker to cancel bookings
-   * @param _tokenId, _booker
+   * @param _tokenId, _booker, _volume
    */
-  function cancelBook(uint256 _tokenId, address payable _booker) public virtual;
+  function cancelBook(uint256 _tokenId, address payable _booker, uint256 _volume) public virtual;
   }
 
