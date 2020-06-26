@@ -148,6 +148,5 @@ contract Farm is Registry, FarmSeason {
       p.idealClimate,
       p.seedSupplier
     );
-
   }
 }
