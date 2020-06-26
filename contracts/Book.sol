@@ -18,5 +18,11 @@ abstract contract Book {
    * @param _tokenId, _volume Amount to book
    */
   function bookHarvest(uint256 _tokenId, uint256 _volume) public payable virtual;
+
+  /**
+   * @dev cancelBook This allows booker to cancel bookings
+   * @param _tokenId, _booker
+   */
+  function cancelBook(uint256 _tokenId, address payable _booker) public virtual;
   }
 

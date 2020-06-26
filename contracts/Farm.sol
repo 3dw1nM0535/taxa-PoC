@@ -213,4 +213,15 @@ contract Farm is Registry, IESeason, Book {
     _deposits[msg.sender] = msg.value;
     emit Booking(_bookers[msg.sender], _tokenId, msg.sender, _deposits[msg.sender]);
   }
+
+  /**
+   * @dev cancelBook This cancels booking
+   * @param _tokenId, _booker
+   */
+  function cancelBook(uint256 _tokenId, address payable _booker)
+    public
+    condition(msg.sender != registry[_tokenId].owner, "RESTRICTED:owner cannot cancel")
+    condition()
+    override
+  {}  
 }
