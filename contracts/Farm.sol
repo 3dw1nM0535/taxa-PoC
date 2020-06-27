@@ -33,7 +33,6 @@ contract Farm is FarmSeason, Book {
     require(uint256(_season) <= 5, "INVALID:season");
 
     // Loop
-    if (Season.Created == _season) return "Created";
     if (Season.Dormant == _season) return "Dormant";
     if (Season.Preparation == _season) return "Preparation";
     if (Season.Planting == _season) return "Planting";
@@ -42,7 +41,7 @@ contract Farm is FarmSeason, Book {
   }
 
   /**
-   * @dev getTokenSeason This returns the toke state
+   * @dev getTokenSeason This returns the token state
    * @param _tokenId The tokenized farm token id
    */
   function getTokenSeason(uint256 _tokenId) public view returns (string memory) {
@@ -59,12 +58,7 @@ contract Farm is FarmSeason, Book {
     public
     inSeason(_tokenId, Season.Dormant)
     transitionSeason(_tokenId)
-  {
-    emit SeasonOpening(
-      msg.sender,
-      getSeasonKeyByValue(tokenSeason[_tokenId].season)
-    );
-  }
+  {}
 
   /**
    * @dev finishPreparations This takes account what the
@@ -157,25 +151,25 @@ contract Farm is FarmSeason, Book {
     uint256 _volume
   )
     public
-    condition(_bookers[_booker] > 0, "RESTRICTED:no booking")
-    condition(_volume <= _bookers[_booker], "RESTRICTED:unreasonable booking")
+    condition(_volume != 0, "INVALID:volume")
+    condition(_volume <= _bookers[_booker], "RESTRICTED:unreasonable volume")
+    inSeason(_tokenId, Season.Booking)
     override
   {
-    uint256 _bookerRefund = _harvests[_tokenId].price.mul(_volume);
-    uint256 _bookerDeposit = _deposits[_booker].sub(_bookerRefund);
-    _deposits[_booker] = _bookerDeposit;
-    // Update bookings
-    _bookers[_booker] = _bookers[_booker].sub(_volume);
-    // Update harvest
-    _harvests[_tokenId].supply = _harvests[_tokenId].supply.add(_volume);
-    // Refund
-    emit CancelBook(
-      _harvests[_tokenId].supply,
-      _booker,
-      _bookerDeposit,
-      _bookers[_booker]
-    );
-    _booker.transfer(_bookerRefund);
-  }
-
+      uint256 _bookerRefund = _harvests[_tokenId].price.mul(_volume);
+      uint256 _bookerDeposit = _deposits[_booker].sub(_bookerRefund);
+      _deposits[_booker] = _bookerDeposit;
+      // Update bookings
+      _bookers[_booker] = _bookers[_booker].sub(_volume);
+      // Update harvest
+      _harvests[_tokenId].supply = _harvests[_tokenId].supply.add(_volume);
+      // Refund
+      emit CancelBook(
+        _harvests[_tokenId].supply,
+        _booker,
+        _bookerDeposit,
+        _bookers[_booker]
+      );
+      _booker.transfer(_bookerRefund);
+   }
 }

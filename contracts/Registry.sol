@@ -59,12 +59,4 @@ contract Registry is ERC721 {
       registry[_tokenId].owner
     );
   }
-
-  /**
-   * @dev whoOwns This return owner of the tokenized farm
-   * @param _tokenId This is the tokenized farm
-   */
-  function whoOwns(uint256 _tokenId) public view returns (address) {
-    return registry[_tokenId].owner;
-  }
 }

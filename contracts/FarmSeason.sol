@@ -5,7 +5,6 @@ pragma solidity >=0.4.22 <0.7.0;
 abstract contract FarmSeason {
 
   // Events
-  event SeasonOpening(address _sender, string _season);
   event Preparations(uint256 _tokenId, string _crop, string _fertilizer);
   event Planting(
     uint256 _tokenId,
@@ -23,7 +22,6 @@ abstract contract FarmSeason {
  
   // Seasons
   enum Season {
-    Created,
     Dormant,
     Preparation,
     Planting,
