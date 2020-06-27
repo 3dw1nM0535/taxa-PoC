@@ -4,7 +4,7 @@ pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/token/ERC721/ERC721.sol';
 
-contract FarmRegistry is ERC721 {
+contract Registry is ERC721 {
 
   constructor() public ERC721('Foo', 'FOO') {}
 

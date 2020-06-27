@@ -1,6 +1,5 @@
 /* eslint-disable */
-
-const FarmRegistry = artifacts.require("FarmRegistry");
+const Registry = artifacts.require("Registry");
 
 let instance;
 let tokenId = 88473;
@@ -8,7 +7,7 @@ let tokenId = 88473;
 
 // Hook
 before(async() => {
-  instance = await FarmRegistry.deployed();
+  instance = await Registry.deployed();
 });
 
 contract("Registry", async accounts => {

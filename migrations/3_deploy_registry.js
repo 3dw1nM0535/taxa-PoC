@@ -1,7 +1,7 @@
 /* eslint-disable */
 
-const FarmRegistry = artifacts.require("FarmRegistry");
+const Registry = artifacts.require("Registry");
 
 module.exports = function(deployer) {
-  deployer.deploy(FarmRegistry);
+  deployer.deploy(Registry);
 }
