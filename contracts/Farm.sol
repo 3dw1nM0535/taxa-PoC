@@ -122,8 +122,6 @@ contract Farm is Registry, FarmSeason {
     uint256 _tokenId,
     string memory _seedUsed,
     string memory _expectedYield,
-    string memory _maturityDays,
-    string memory _idealClimate,
     string memory _seedSupplier
   )
     public
@@ -132,21 +130,8 @@ contract Farm is Registry, FarmSeason {
     transitionSeason(_tokenId)
   {
     PlantingType memory p;
-    p = PlantingType(
-      _seedUsed,
-      _expectedYield,
-      _maturityDays,
-      _idealClimate,
-      _seedSupplier
-    );
+    p = PlantingType(_seedUsed, _expectedYield, _seedSupplier);
     plantings[_tokenId] = p;
-    emit Planting( 
-      _tokenId,
-      p.seedUsed,
-      p.expectedYield,
-      p.maturityDays,
-      p.idealClimate,
-      p.seedSupplier
-    );
+    emit Planting(_tokenId, p.seedUsed, p.expectedYield, p.seedSupplier);
   }
 }

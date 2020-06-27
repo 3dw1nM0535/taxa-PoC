@@ -3,21 +3,14 @@
 pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/math/SafeMath.sol';
-import './Registry.sol';
 import './Book.sol';
+import './Registry.sol';
 import './FarmSeason.sol';
 
 contract Harvest is FarmSeason, Book, Registry {
   
   using SafeMath for uint256;
 
-  // Modifier
-  modifier condition(bool _condition, string memory _msg) {
-    require(_condition, _msg);
-    _;
-  }
-
-  // Override methods
   function addFarm(
     string memory _size,
     string memory _lon,
@@ -25,7 +18,15 @@ contract Harvest is FarmSeason, Book, Registry {
     string memory _fileHash,
     string memory _soilType,
     uint256 _tokenId
-  ) public override{}
+  ) public override virtual{}
+
+
+  // Modifier
+  modifier condition(bool _condition, string memory _msg) {
+    require(_condition, _msg);
+    _;
+  }
+
   // Map harvest to farm
 	mapping(uint256 => HarvestType) public _harvests;
 
@@ -50,7 +51,7 @@ contract Harvest is FarmSeason, Book, Registry {
       _tokenId
     );
   }
-  
+
   /**
    * @dev bookHarvest This allows booking of farm harvests
    * @param _tokenId, _volume Amount to book

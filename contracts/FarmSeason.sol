@@ -11,8 +11,6 @@ abstract contract FarmSeason {
     uint256 _tokenId,
     string _seedUsed,
     string _expectedYield,
-    string _maturityDays,
-    string _idealClimate,
     string _seedSupplier
   );
   event Harvesting(
@@ -51,8 +49,6 @@ abstract contract FarmSeason {
   struct PlantingType {
     string seedUsed;
     string expectedYield;
-    string maturityDays;
-    string idealClimate;
     string seedSupplier;
   }
   
