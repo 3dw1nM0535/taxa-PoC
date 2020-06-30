@@ -137,8 +137,37 @@ contract Farm is FarmSeason, Book {
     _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
     _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
     _deposits[msg.sender] = msg.value;
-    emit Booking(_bookers[msg.sender], _tokenId, msg.sender, _deposits[msg.sender]);
+    emit Booking(_bookers[msg.sender], _harvests[_tokenId].supply, _tokenId, msg.sender, _deposits[msg.sender]);
 
+  }
+
+  /**
+   * @dev confirmReceived This confirms bookings received
+   * @param _tokenId, _volume, _payee Volume to confirm
+   * received and payee(owner of tokenized farm) to receive
+   * payments
+   */
+  function confirmReceived(
+    uint256 _tokenId,
+    uint256 _volume,
+    address payable _payee
+  )
+    public
+    condition(_volume != 0, "INVALID:booking volume")
+    condition(_volume <= _bookers[msg.sender], "INVALID:bookings")
+    inSeason(_tokenId, Season.Booking)
+    override
+  {
+    // Burn booker volumes
+    _bookers[msg.sender] = _bookers[msg.sender].sub(_volume);
+    // Calculate owes to farmer
+    uint256 farmOwes = _harvests[_tokenId].price.mul(_volume);
+    // Burn booker deposit
+    _deposits[msg.sender] = _deposits[msg.sender].sub(farmOwes);
+    // Transfer owes to farmer
+    _payee.transfer(farmOwes);
+
+    emit Received(_bookers[msg.sender], _deposits[msg.sender]);
   }
 
   /**

@@ -7,8 +7,13 @@ abstract contract Book {
   // Events
   event Booking(
 	  uint256 _volume,
+    uint256 _supply,
     uint256 _tokenId,
     address _booker,
+    uint256 _deposit
+  );
+  event Received(
+    uint256 _volume,
     uint256 _deposit
   );
   event CancelBook(
@@ -35,5 +40,12 @@ abstract contract Book {
    * @param _tokenId, _booker, _volume
    */
   function cancelBook(uint256 _tokenId, address payable _booker, uint256 _volume) public virtual;
-  }
+
+  /**
+   * @dev confirmReceived This confirms the booker received his/her bookings
+   * @param _tokenId, _volume, _payee This is the tokenized farm harvest and the
+   * booking volume to confirm received
+   */
+  function confirmReceived(uint256 _tokenId, uint256 _volume, address payable _payee) public virtual;
+}
 
