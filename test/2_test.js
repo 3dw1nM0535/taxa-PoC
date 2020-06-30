@@ -174,6 +174,7 @@ contract("Farm", async accounts => {
       await instance.cancelBook(
         tokenId,
         accounts[1],
+        accounts[0],
         0
       );
     } catch(err) {
@@ -185,6 +186,7 @@ contract("Farm", async accounts => {
       await instance.cancelBook(
         tokenId,
         accounts[1],
+        accounts[0],
         6
       );
     } catch(err) {
@@ -196,6 +198,7 @@ contract("Farm", async accounts => {
       await instance.cancelBook(
         tokenId,
         accounts[2],
+        accounts[0],
         5
       );
     } catch(err) {
@@ -204,8 +207,9 @@ contract("Farm", async accounts => {
   });
   it("Booker cancels any volume in holdings", async() => {
     const result = await instance.cancelBook(
-    tokenId,
+      tokenId,
       accounts[1],
+      accounts[0],
       3
     );
     const log = result.logs[0].args;
@@ -213,12 +217,12 @@ contract("Farm", async accounts => {
     assert.equal(log._supply, 3, "Reverted supply should amount to 3");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 2 ether");
-    assert.equal(log._volume, 2, "New booker volume should be 2");
   });
   it("Booker cancels his/her bookings", async() => {
     const result = await instance.cancelBook(
       tokenId,
       accounts[1],
+      accounts[0],
       2
     );
     const log = result.logs[0].args;
@@ -226,7 +230,6 @@ contract("Farm", async accounts => {
     assert.equal(log._supply, 5, "Reverted supply should amount to 5");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 0 ether");
-    assert.equal(log._volume, 0, "New booker volume should be 0");
   });
 });
 
