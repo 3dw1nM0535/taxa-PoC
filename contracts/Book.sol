@@ -19,8 +19,7 @@ abstract contract Book {
   event CancelBook(
     uint256 _supply,
     address _booker,
-    uint256 _deposit,
-    uint256 _volume
+    uint256 _deposit
   );
 
   // Map book type to booker
@@ -37,9 +36,9 @@ abstract contract Book {
 
   /**
    * @dev cancelBook This allows booker to cancel bookings
-   * @param _tokenId, _booker, _volume
+   * @param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)
    */
-  function cancelBook(uint256 _tokenId, address payable _booker, uint256 _volume) public virtual;
+  function cancelBook(uint256 _tokenId, address payable _booker, address payable _payee, uint256 _volume) public virtual;
 
   /**
    * @dev confirmReceived This confirms the booker received his/her bookings

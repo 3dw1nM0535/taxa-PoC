@@ -10,6 +10,9 @@ contract Farm is FarmSeason, Book {
 
   using SafeMath for uint256;
 
+  // Booking cancellation penalty
+  uint256 private _percent = 3;
+
   // Map tokenized farm to preparations data
   mapping(uint256 => LandPreparations) private preparations;
 
@@ -170,13 +173,22 @@ contract Farm is FarmSeason, Book {
     emit Received(_bookers[msg.sender], _deposits[msg.sender]);
   }
 
+  function updateSupply(uint256 _tokenId, uint256 _volume) internal {
+    _harvests[_tokenId].supply = _harvests[_tokenId].supply.add(_volume);
+  }
+
+  function updateBookings(address payable _booker, uint256 _volume) internal {
+    _bookers[_booker] = _bookers[_booker].sub(_volume);
+  }
+
   /**
    * @dev cancelBook This allows booker to cancel bookings
-   * @param _tokenId, _booker, _volume Amount to revert to supply
+   * @param _tokenId, _booker, _payee(farmer), _volume Amount to revert to supply
    */
   function cancelBook(
     uint256 _tokenId,
     address payable _booker,
+    address payable _payee,
     uint256 _volume
   )
     public
@@ -185,20 +197,25 @@ contract Farm is FarmSeason, Book {
     inSeason(_tokenId, Season.Booking)
     override
   {
-      uint256 _bookerRefund = _harvests[_tokenId].price.mul(_volume);
-      uint256 _bookerDeposit = _deposits[_booker].sub(_bookerRefund);
-      _deposits[_booker] = _bookerDeposit;
-      // Update bookings
-      _bookers[_booker] = _bookers[_booker].sub(_volume);
-      // Update harvest
-      _harvests[_tokenId].supply = _harvests[_tokenId].supply.add(_volume);
-      // Refund
-      emit CancelBook(
-        _harvests[_tokenId].supply,
-        _booker,
-        _bookerDeposit,
-        _bookers[_booker]
-      );
-      _booker.transfer(_bookerRefund);
-   }
+    // Assumed refund(to penalize)
+    uint256 _bookerRefund = _harvests[_tokenId].price.mul(_volume);
+    // New booker deposit
+    uint256 _bookerDeposit = _deposits[_booker].sub(_bookerRefund);
+    _deposits[_booker] = _bookerDeposit;
+    // Apply 3% penalty(amount to refund booker)
+    uint256 _refund = _bookerRefund.sub(((uint256(3).div(uint256(100))).mul(_bookerRefund)));
+        // Update bookings
+    updateBookings(_booker, _volume);
+    // Update harvest
+    updateSupply(_tokenId, _volume);
+    // Refund
+    emit CancelBook(
+      _harvests[_tokenId].supply,
+      _booker,
+      _bookerDeposit
+    );
+    _booker.transfer(_refund);
+    uint256 _reward = _bookerRefund.sub(_refund);
+    _payee.transfer(_reward);
+  }
 }
