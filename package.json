@@ -12,6 +12,7 @@
     "carbon-icons": "^7.0.7",
     "ipfs": "^0.46.0",
     "node-sass": "^4.14.1",
+    "orbit-db": "^0.24.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
@@ -43,7 +44,6 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react": "^10.3.0",
     "redux-devtools": "^3.5.0"
   }
 }
