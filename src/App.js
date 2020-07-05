@@ -1,11 +1,12 @@
 import React from 'react';
+import Header from './components/Header';
 import './App.scss';
 
 const App = () => {
  return (
-    <div>
-      <h1>Welcome to Foo marketplace</h1>
-    </div>
+    <>
+      <Header /> 
+    </>
   );
 }
 
