@@ -25,6 +25,7 @@ module.exports = {
       network_id: "*"
     }
   },
+  contracts_build_directory: './src/build',
   compilers: {
     solc: {
       version: "0.6.8",
