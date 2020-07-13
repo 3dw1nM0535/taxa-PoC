@@ -2,21 +2,6 @@ import Farm from '../build/Farm.json'
 import Registry from '../build/Registry.json'
 import { randomNumber } from '../utils'
 
-import {
-  GRANT_LOCATION_PERMISSION,
-  GRANT_LOCATION_PERMISSION_ERROR,
-} from '../types'
-
-export const grantLocationPermission = state => ({
-  type: GRANT_LOCATION_PERMISSION,
-  state,
-})
-
-export const grantLocationPermissionError = error => ({
-  type: GRANT_LOCATION_PERMISSION_ERROR,
-  error,
-})
-
 // Init contract
 const initFarmContract = async () => {
   const chainId = await window.web3.eth.net.getId()

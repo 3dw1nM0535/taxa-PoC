@@ -9,18 +9,13 @@ import {
   SelectItem
 } from 'carbon-components-react';
 import Validator from 'validator';
-import { connect } from 'react-redux'
-import { grantLocationPermission, grantLocationPermissionError } from '../../actions'
-import { store } from '../../store'
 
-
-function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
+function RegisterFarm({ submit }) {
 
   const [size, setSize] = useState("")
   const [lon, setLon] = useState("")
   const [lat, setLat] = useState("")
   const [soil, setSoil] = useState("")
-  const [farmName, setFarmName] = useState("")
   const [file, setFile] = useState()
   const [sizeUnit, setSizeUnit] = useState("")
   const [error, setError] = useState({})
@@ -28,30 +23,25 @@ function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
   const [inputState, setInputState] = useState(false)
 
   // Validate input
-  function validate(farmSize, farmLocation, soilType, farmName, file, sizeUnit) {
+  function validate(farmSize, lon, lat, soilType, file, sizeUnit) {
     const error = {}
-    if (Validator.isEmpty(farmSize) || !Validator.isFloat(farmSize)) error.farmSize = 'Invalid size'
-    if (Validator.isEmpty(soilType) || !Validator.isAlpha(soilType)) error.soil = 'Invalid soil'
-    if (Validator.isEmpty(farmName) || !Validator.isAlpha(farmName.replace(/\s+/g, ''))) error.farmName = 'Invalid name'
+    if (!Validator.isFloat(farmSize)) error.farmSize = 'Invalid size'
+    if (lon.length === 0 || lat.length === 0) error.location = 'You must provide location data'
+    if (soilType.length === 0 || !Validator.isAlpha(soilType)) error.soil = 'Invalid soil'
     if (file === undefined) error.file = 'Invalid file'
     if (sizeUnit === undefined) error.unit = 'Invalid size unit'
-    if (Validator.isEmpty(sizeUnit) || !Validator.isAlpha(sizeUnit)) error.unit = 'Invalid size unit'
+    if (sizeUnit.length === 0) error.unit = 'Invalid size unit'
     return error
   }
 
   function onSuccess(position) {
     const longitude = position.coords.longitude
     const latitude = position.coords.latitude
-    const permissionsState = {}
     setLon(longitude)
     setLat(latitude)
-    permissionsState.locationPermissionsState = 'granted'
-    store.dispatch(grantLocationPermission({ ...permissionsState }))
+    setInputState(true)
   }
   function onError() {
-    const permissionsState = {}
-    permissionsState.locationPermissionsState = 'denied'
-    store.dispatch(grantLocationPermissionError({ ...permissionsState }))
     window.alert("Unable to get your current position")
   }
 
@@ -59,13 +49,10 @@ function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
   function handleGeolocationPermissions() {
     window.navigator.permissions.query({name: 'geolocation'}).then(function(result) {
       if (result.state === 'prompt') {
-        setInputState(true)
         window.navigator.geolocation.getCurrentPosition(onSuccess, onError)
       } else if (result.state === 'granted') {
-        setInputState(true)
         window.navigator.geolocation.getCurrentPosition(onSuccess, onError)
       } else if (result.state === 'denied') {
-        setInputState(true)
         window.navigator.geolocation.getCurrentPosition(onSuccess, onError)
       }
       result.onchange = function() {
@@ -78,7 +65,7 @@ function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
   // Submit form input
   function handleSubmit(e) {
     e.preventDefault()
-    const error = validate(size, soil, farmName, file, sizeUnit)
+    const error = validate(size, lon, lat, soil, file, sizeUnit)
     setError(error)
     if (Object.keys(error).length === 0) {
       submit(size, lon, lat, file, soil, sizeUnit)
@@ -133,10 +120,11 @@ function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
         <Button
           type="button"
           onClick={() => handleGeolocationPermissions()}
-          disabled={locationPermission === 'granted'}
+          disabled={inputState}
         >
-          {locationPermission === 'granted' ? 'Granted!' : 'Grant location access'}
+          Grant location access
         </Button>
+        {error.location && <span className="error--span">{error.location}</span>}
       </FormGroup>
       <TextInput
         id="test--soil-type"
@@ -145,18 +133,6 @@ function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
         invalidText={error.soil}
         defaultValue={soil}
         onChange={(e) => setSoil(e.target.value)}
-        required
-        size="sm"
-        type="text"
-      />
-      <TextInput
-        id="test--farm-name"
-        labelText="Farm name"
-        helperText="e.g Adagala Vineyard"
-        invalid={!!error.farmName}
-        invalidText={error.farmName}
-        defaultValue={farmName}
-        onChange={(e) => setFarmName(e.target.value)}
         required
         size="sm"
         type="text"
@@ -183,11 +159,5 @@ function RegisterFarm({ submit, grantLocationPermission, locationPermission }) {
   )
 }
 
-function mapStateToProps(state) {
-  return {
-    locationPermission: state.permissions.locationPermissionsState,
-  }
-}
-
-export default connect(mapStateToProps, { grantLocationPermission })(RegisterFarm);
+export default RegisterFarm;
 

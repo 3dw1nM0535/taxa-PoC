@@ -6,8 +6,6 @@ import {
 } from './wallet';
 import {
   addFarm,
-  grantLocationPermission,
-  grantLocationPermissionError,
 } from './farm'
 
 export {
@@ -15,7 +13,5 @@ export {
   walletChange,
   walletFound,
   netChange,
-  addFarm,
-  grantLocationPermission,
-  grantLocationPermissionError,
+  addFarm
 }
