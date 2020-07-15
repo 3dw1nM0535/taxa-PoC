@@ -23,6 +23,7 @@ function App({ wallet, loaded }) {
           await window.ethereum.enable()
         } else if (window.web3) {
           window.web3 = new Web3(window.web3.currentProvider)
+					await window.ethereum.enable()
         } else {
           window.alert("You need MetaMask wallet to interact with this application. You will be redirected to a site to download the wallet for use in accessing the Ethereum blockchain.")
           window.location.assign("https://metamask.io/download.html")
@@ -40,7 +41,7 @@ function App({ wallet, loaded }) {
       store.dispatch(walletChange({ ...walletAddress }))
     })
 
-    window.ethereum.on('networkChanged', (_chainId) => {
+    window.ethereum.on('chainChanged', (_chainId) => {
       walletAddress.netId = _chainId
       store.dispatch(netChange({ ...walletAddress }))
     })

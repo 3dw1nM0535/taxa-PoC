@@ -32,14 +32,13 @@ export const connectWallet = () => async dispatch => {
   if (window.ethereum) {
     window.web3 = new Web3(window.ethereum);
     await window.ethereum.enable()
-    window.ethereum.autoRefreshOnNetworkChange = false
     wallet.netId = await window.web3.eth.net.getId() 
     wallet.address = await window.web3.eth.getAccounts()
     wallet.addressBlockie = makeBlockie(String(wallet.address[0]))
     dispatch(walletFound({ ...wallet, loaded: true }))
   } else if (window.web3) {
     window.web3 = new Web3(window.web3.currentProvider)
-    window.ethereum.autoRefreshOnNetworkChange = false
+		await window.ethereum.enable() 
     wallet.netId = await window.web3.eth.net.getId()
     wallet.address = await window.web3.eth.getAccounts()
     wallet.addressBlockie = makeBlockie(String(wallet.address[0]))
