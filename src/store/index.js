@@ -16,6 +16,7 @@ const transformCircular = createTransform(
 const persistConfig = {
   key: 'root',
   storage,
+  whitelist: ['wallet'],
   transforms: [transformCircular],
 }
 

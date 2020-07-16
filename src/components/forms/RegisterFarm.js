@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Form,
   FormGroup,
@@ -6,11 +6,13 @@ import {
   Button,
   FileUploader,
   Select,
-  SelectItem
-} from 'carbon-components-react';
-import Validator from 'validator';
+  SelectItem,
+  InlineLoading
+} from 'carbon-components-react'
+import Validator from 'validator'
+import { connect } from 'react-redux'
 
-function RegisterFarm({ submit }) {
+function RegisterFarm({ submit, isSubmitting }) {
 
   const [size, setSize] = useState("")
   const [lon, setLon] = useState("")
@@ -27,7 +29,7 @@ function RegisterFarm({ submit }) {
     const error = {}
     if (!Validator.isFloat(farmSize)) error.farmSize = 'Invalid size'
     if (lon.length === 0 || lat.length === 0) error.location = 'You must provide location data'
-    if (soilType.length === 0 || !Validator.isAlpha(soilType)) error.soil = 'Invalid soil'
+    if (soilType.length === 0 || !Validator.isAlpha(soilType.replace(/\s+/g, ''))) error.soil = 'Invalid soil'
     if (file === undefined) error.file = 'Invalid file'
     if (sizeUnit === undefined) error.unit = 'Invalid size unit'
     if (sizeUnit.length === 0) error.unit = 'Invalid size unit'
@@ -61,6 +63,8 @@ function RegisterFarm({ submit }) {
     })
   }
 
+  
+
 
   // Submit form input
   function handleSubmit(e) {
@@ -71,6 +75,7 @@ function RegisterFarm({ submit }) {
       submit(size, lon, lat, file, soil, sizeUnit)
     }
   }
+
   return (
     <Form className="farm--input" onSubmit={(e) => handleSubmit(e)}>
       <FormGroup legendText="Farm size">
@@ -148,16 +153,31 @@ function RegisterFarm({ submit }) {
         />
         {error.file && <span className="error--span">{error.file}</span>}
       </FormGroup>
-      <Button
-        kind="primary"
-        type="submit"
-        disabled={false}
-      >
-        Register
-      </Button>
+      {isSubmitting ? (
+          <InlineLoading
+            description="Submitting data..."
+            iconDescription="Active loading indicator"
+            status={isSubmitting ? "active" : "finished"}
+            successDelay={1500}
+          />
+        ) : (
+          <Button
+            kind="primary"
+            type="submit"
+            disabled={false}
+          >
+          Register
+        </Button>
+      )}
     </Form>
   )
 }
 
-export default RegisterFarm;
+function mapStateToProps(state) {
+  return {
+    isSubmitting: !!state.loading.status,
+  }
+}
+
+export default connect(mapStateToProps)(RegisterFarm);
 

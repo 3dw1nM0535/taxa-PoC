@@ -42,7 +42,7 @@ function App({ wallet, loaded }) {
     })
 
     window.ethereum.on('chainChanged', (_chainId) => {
-      walletAddress.netId = _chainId
+      walletAddress.netId = Web3.utils.hexToNumber(_chainId)
       store.dispatch(netChange({ ...walletAddress }))
     })
   }

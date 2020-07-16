@@ -6,6 +6,7 @@ import {
 } from './wallet';
 import {
   addFarm,
+  submitting,
 } from './farm'
 
 export {
@@ -13,5 +14,6 @@ export {
   walletChange,
   walletFound,
   netChange,
-  addFarm
+  addFarm,
+  submitting,
 }
