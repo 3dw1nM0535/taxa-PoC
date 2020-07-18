@@ -46,7 +46,7 @@ function FooHeader ({ wallet, loaded }) {
             isActive={isSideNavExpanded}
           />
           <HeaderName href="#" prefix="">
-            Foo
+            Octopus
             <Tag type="green">Alpha</Tag>
           </HeaderName>
           <HeaderGlobalBar>
