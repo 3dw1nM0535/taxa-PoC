@@ -1,14 +1,16 @@
-import React, { useEffect } from 'react';
-import Web3 from 'web3';
-import { Switch, Route } from 'react-router-dom';
-import { connect } from 'react-redux';
-import './app.scss';
+import React, { useEffect } from 'react'
+import Web3 from 'web3'
+import { Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
+import './app.scss'
 
-import { store } from './store';
-import { walletChange, netChange } from './actions';
+import { store } from './store'
+import { walletChange, netChange } from './actions'
 
-import FooHeader from './components/Header';
-import { RegisterFarmPage } from './components/pages';
+import FooHeader from './components/Header'
+import { RegisterFarmPage } from './components/pages'
+import { Farm } from './components/pages/Farm'
+import { Farms } from './components/pages/Farms'
 
 import makeBlockie from 'ethereum-blockies-base64';
 
@@ -52,7 +54,9 @@ function App({ wallet, loaded }) {
     <>
       <FooHeader />
       <Switch>
-        <Route exact path="/add/farm" component={RegisterFarmPage} />
+        <Route exact path="/explore" component={Farms} />
+        <Route exact path="/farm/add" component={RegisterFarmPage} />
+        <Route exact path="/farm/:tokenId" component={Farm} />
       </Switch>
     </>
   )

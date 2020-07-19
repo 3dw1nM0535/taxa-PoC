@@ -28,7 +28,7 @@ const initRegistryContract = async () => {
 }
 
 function initBzz() {
-  window.web3.bzz.setProvider('http://swarm-gateways.net')
+  window.web3.bzz.setProvider('https://swarm-gateways.net')
 }
 
 async function uploadFile(file) {
@@ -36,6 +36,7 @@ async function uploadFile(file) {
   const hash = await window.web3.bzz.upload(file)
   return hash
 }
+
 export const addFarm = (_size, _lon, _lat, _file, _soil, _sizeUnit) => async dispatch => {
   const loadingState = {}
   const registryContract = await initRegistryContract()

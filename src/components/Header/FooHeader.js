@@ -67,8 +67,8 @@ function FooHeader ({ wallet, loaded }) {
           <UserPanel isUserPanelExpanded={isUserPanelExpanded} />
           <SideNav aria-label="Side navigation" isRail expanded={isSideNavExpanded}>
             <SideNavItems>
-              <SideNavLink renderIcon={Search32} href="#">Explore</SideNavLink>
-              <SideNavLink renderIcon={AddFilled32} href="/add/farm">Register Farm</SideNavLink>
+              <SideNavLink renderIcon={Search32} href="/explore">Explore</SideNavLink>
+              <SideNavLink renderIcon={AddFilled32} href="/farm/add">Register Farm</SideNavLink>
               <SideNavLink renderIcon={Sprout32} href="#">Harvests</SideNavLink>
               <SideNavLink renderIcon={EventSchedule32} href="#">Bookings</SideNavLink>
             </SideNavItems>

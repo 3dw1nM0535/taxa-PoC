@@ -1,9 +1,0 @@
-.bx--grid {
-  padding: $spacing-07 $spacing-04 0 $spacing-04;
-  margin: $spacing-07 0 $spacing-04 0;
-}
-
-.description--section {
-  text-align: center;
-}
-

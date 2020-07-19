@@ -1,0 +1,24 @@
+.farm--card {
+  margin-left: $spacing-07;
+  display: flex;
+  flex-flow: column wrap;
+}
+
+.img--container {
+  text-align: center;
+}
+
+.caption {
+  display: flex;
+  justify-content: space-between;
+}
+
+.token--caption {
+  @include carbon--type-style('productive-heading-03');
+  @include carbon--font-weight('semibold');
+}
+
+.size--caption {
+  @include carbon--type-style('productive-heading-03');
+}
+
