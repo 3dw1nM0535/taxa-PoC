@@ -1,7 +1,11 @@
 .farm--card {
-  margin-left: $spacing-07;
+  margin: 0 0 0 $spacing-07;
   display: flex;
   flex-flow: column wrap;
+}
+
+.spacing {
+  margin-left: $spacing-07;
 }
 
 .img--container {
@@ -13,12 +17,15 @@
   justify-content: space-between;
 }
 
-.token--caption {
-  @include carbon--type-style('productive-heading-03');
-  @include carbon--font-weight('semibold');
+hr {
+  height: 1px;
+  border-width: 0;
+  color: gray;
+  background-color: gray;
 }
 
-.size--caption {
-  @include carbon--type-style('productive-heading-03');
+.info--section {
+  text-align: center;
+  margin: $layout-02 $layout-03 0 $layout-03;
 }
 
