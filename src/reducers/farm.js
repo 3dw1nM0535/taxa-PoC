@@ -1,4 +1,6 @@
-import { REGISTER_FARM } from '../types';
+import {
+  REGISTER_FARM,
+} from '../types'
 
 export function farm(state = {}, action = {}) {
   switch(action.type) {
@@ -8,6 +10,6 @@ export function farm(state = {}, action = {}) {
         ...action.status,
       }
     default:
-      return state;
+      return state
   }
 }

@@ -1,183 +1,132 @@
-import React, { useState } from 'react'
-import {
-  Form,
-  FormGroup,
-  TextInput,
-  Button,
-  FileUploader,
-  Select,
-  SelectItem,
-  InlineLoading
-} from 'carbon-components-react'
+import PropTypes from 'prop-types'
+import React, { useState, useEffect } from 'react'
+import { Form, Input, Button, Select } from 'semantic-ui-react'
 import Validator from 'validator'
 import { connect } from 'react-redux'
+import { locationAccess } from '../../actions'
+import { store } from '../../store'
 
-function RegisterFarm({ submit, isSubmitting }) {
+import './forms.css'
+
+const options = [
+  { key: 'h', text: 'Hectares', value: 'ha' },
+  { key: 'a', text: 'Acres', value: 'acres' },
+]
+
+function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitude }) {
 
   const [size, setSize] = useState("")
-  const [lon, setLon] = useState("")
-  const [lat, setLat] = useState("")
+  const [unit, setUnit] = useState("")
   const [soil, setSoil] = useState("")
   const [file, setFile] = useState()
-  const [sizeUnit, setSizeUnit] = useState("")
   const [error, setError] = useState({})
 
-  const [inputState, setInputState] = useState(false)
-
-  // Validate input
-  function validate(farmSize, lon, lat, soilType, file, sizeUnit) {
-    const error = {}
-    if (!Validator.isFloat(farmSize)) error.farmSize = 'Invalid size'
-    if (lon.length === 0 || lat.length === 0) error.location = 'You must provide location data'
-    if (soilType.length === 0 || !Validator.isAlpha(soilType.replace(/\s+/g, ''))) error.soil = 'Invalid soil'
-    if (file === undefined) error.file = 'Invalid file'
-    if (sizeUnit === undefined) error.unit = 'Invalid size unit'
-    if (sizeUnit.length === 0) error.unit = 'Invalid size unit'
-    return error
+	function onsuccess(position) {
+    const longitude = String(position.coords.longitude)
+    const latitude = String(position.coords.latitude)
+		const location = { lon: longitude, lat: latitude }
+		store.dispatch(locationAccess({ ...location }))
   }
 
-  function onSuccess(position) {
-    const longitude = position.coords.longitude
-    const latitude = position.coords.latitude
-    setLon(longitude)
-    setLat(latitude)
-    setInputState(true)
-  }
-  function onError() {
-    window.alert("Unable to get your current position")
+  function onerror() {
+    window.alert('Unable to get your current position')
   }
 
-  // Handle geolocation permission
-  function handleGeolocationPermissions() {
-    window.navigator.permissions.query({name: 'geolocation'}).then(function(result) {
-      if (result.state === 'prompt') {
-        window.navigator.geolocation.getCurrentPosition(onSuccess, onError)
-      } else if (result.state === 'granted') {
-        window.navigator.geolocation.getCurrentPosition(onSuccess, onError)
-      } else if (result.state === 'denied') {
-        window.navigator.geolocation.getCurrentPosition(onSuccess, onError)
-      }
-      result.onchange = function() {
-        console.log(result.state)
-      }
-    })
+	useEffect(() => {
+		(() => {
+			navigator.permissions.query({name: 'geolocation'}).then(function(result) {
+				if (result.state === 'prompt') {
+					navigator.geolocation.getCurrentPosition(onsuccess, onerror)
+				} else if (result.state === 'granted') {
+					navigator.geolocation.getCurrentPosition(onsuccess, onerror)
+				}
+			})
+		})()
+	})
+
+  function validate(size, unit, soil, file) {
+    const errors = {}
+    if (size === '0' || Validator.isEmpty(size) || !Validator.isFloat(size)) errors.size = 'Invalid size'
+    if (Validator.isEmpty(unit)) errors.unit = 'Unit is required'
+    if (Validator.isEmpty(soil.replace(/\s+/g, '')) || !Validator.isAlpha(soil.replace(/\s+/g, ''))) errors.soil = 'Invalid soil'
+    if (file === undefined) errors.file = 'Farm image required'
+    return errors
   }
 
-  
-
-
-  // Submit form input
   function handleSubmit(e) {
     e.preventDefault()
-    const error = validate(size, lon, lat, soil, file, sizeUnit)
-    setError(error)
+    const error = validate(size, unit, soil, file)
+		setError(error)
     if (Object.keys(error).length === 0) {
-      submit(size, lon, lat, file, soil, sizeUnit)
+      const farmSize = size + unit
+			addFarm(farmSize, longitude, latitude, file, soil)
     }
   }
 
   return (
-    <Form className="farm--input" onSubmit={(e) => handleSubmit(e)}>
-      <FormGroup legendText="Farm size">
-        <TextInput
-          id="testSize"
-          labelText="How large is your farm? e.g 89.32ha"
-          helperText="e.g 89.73ha"
-          invalid={!!error.farmSize}
-          invalidText={error.farmSize}
-          defaultValue={size}
-          onChange={(e) => setSize(e.target.value)}
-          required
-          size="sm"
-          type="text"
-        />
-        <Select
-          id="select-1"
-          labelText="Choose farm size unit"
-          helperText="ha/acres"
-          defaultValue="placeholder-item"
-          disabled={false}
-          onChange={(e) => setSizeUnit(e.target.value)}
-          invalid={!!error.unit}
-          invalidText={error.unit}
-        >
-          <SelectItem
-            disabled
-            hidden
-            text="Choose size unit"
-            value="placeholder-item"
-          />
-          <SelectItem
-            disabled={false}
-            hidden={false}
-            text="Hectares"
-            value="ha"
-          />
-          <SelectItem
-            disabled={false}
-            hidden={false}
-            text="Acres"
-            value="acres"
-          />
-        </Select>
-      </FormGroup>
-      <FormGroup legendText="Location permission">
-        <Button
-          type="button"
-          onClick={() => handleGeolocationPermissions()}
-          disabled={inputState}
-        >
-          Grant location access
-        </Button>
-        {error.location && <span className="error--span">{error.location}</span>}
-      </FormGroup>
-      <TextInput
-        id="test--soil-type"
-        labelText="What is your farm's soil type?"
-        invalid={!!error.soil}
-        invalidText={error.soil}
-        defaultValue={soil}
-        onChange={(e) => setSoil(e.target.value)}
-        required
-        size="sm"
-        type="text"
+    <Form
+      className='form--container'
+      onSubmit={walletLoaded ? handleSubmit : null}
+      loading={loadingStatus}
+    >
+      <Form.Field
+        id='form-input-control-farm-size'
+        control={Input}
+        type='text'
+        label='Farm size'
+        value={size}
+        placeholder='Your farm land size'
+        onChange={(e, { value }) => setSize(value)}
+        error={error.size ? { content: `${error.size}`, pointing: 'above' } : false}
       />
-      <FormGroup legendText="Upload farm image">
-        <FileUploader
-          id="test--farm-image"
-          labelDescription="Everyone will see the state of your farm and can't be deleted from the blockchain"
-          buttonLabel="Select file"
-          filenameStatus="edit"
-          buttonKind="primary"
-          onChange={(e) => setFile(e.target.files)}
-        />
-        {error.file && <span className="error--span">{error.file}</span>}
-      </FormGroup>
-      {isSubmitting ? (
-          <InlineLoading
-            description="Submitting data..."
-            iconDescription="Active loading indicator"
-            status={isSubmitting ? "active" : "finished"}
-            successDelay={1500}
-          />
-        ) : (
-          <Button
-            kind="primary"
-            type="submit"
-            disabled={false}
-          >
-          Register
-        </Button>
-      )}
+      <Form.Field
+        onChange={(e, { value }) => setUnit(value)}
+        control={Select}
+        label='Farm size unit'
+        placeholder='Unit'
+        options={options}
+        error={error.unit ? { content: `${error.unit}`, pointing: 'above' } : false}
+      />
+      <Form.Field
+        id='form-input-soil'
+        control={Input}
+        type='text'
+        value={soil}
+        onChange={(e, { value }) => setSoil(value)}
+        label='Soil'
+        placeholder='Your farm soil type'
+        error={error.soil ? { content: `${error.soil}`, pointing: 'above' } : false}
+      />
+      <Form.Field
+        id='form-input-image'
+        control={Input}
+        type='file'
+        label='Farm image'
+        onChange={(e) => setFile(e.target.files[0])}
+        error={error.file ? { content: `${error.file}`, pointing: 'above' } : false}
+      />
+      {error.location && <span className='error--span'>{error.location}</span>}
+      <Form.Button control={Button} type='submit' color='green' content='Register' />
     </Form>
   )
 }
 
+RegisterFarm.propTypes = {
+  addFarm: PropTypes.func.isRequired,
+  loadingStatus: PropTypes.bool.isRequired,
+  walletLoaded: PropTypes.bool.isRequired,
+	longitude: PropTypes.string.isRequired,
+	latitude: PropTypes.string.isRequired,
+}
+
 function mapStateToProps(state) {
   return {
-    isSubmitting: !!state.loading.status,
+    loadingStatus: state.loading.status,
+    walletLoaded: state.wallet.loaded,
+		longitude: state.location.lon,
+		latitude: state.location.lat,
   }
 }
 
-export default connect(mapStateToProps)(RegisterFarm);
+export default connect(mapStateToProps)(RegisterFarm)
 

@@ -1,4 +1,8 @@
-import { CONNECT_WALLET, WALLET_CHANGE, NETWORK_CHANGE } from '../types';
+import {
+  CONNECT_WALLET,
+  WALLET_CHANGE,
+  NETWORK_CHANGE,
+} from '../types'
 
 export function wallet(state = { loaded: false }, action = {}) {
   switch(action.type) {
@@ -18,6 +22,7 @@ export function wallet(state = { loaded: false }, action = {}) {
         ...action.wallet,
       }
     default:
-      return state;
+      return state
   }
 }
+

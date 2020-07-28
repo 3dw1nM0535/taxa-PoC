@@ -102,16 +102,16 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.8+commit.0bbfe453\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"Harvesting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedUsed\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_expectedYield\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedSupplier\",\"type\":\"string\"}],\"name\":\"Planting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_crop\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_fertilizer\",\"type\":\"string\"}],\"name\":\"Preparations\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"tokenSeason\",\"outputs\":[{\"internalType\":\"enum FarmSeason.Season\",\"name\":\"season\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/lomolo/Projects/octopus/contracts/FarmSeason.sol\":\"FarmSeason\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/lomolo/Projects/octopus/contracts/FarmSeason.sol\":{\"keccak256\":\"0xba59b6ec69f3574563a2ef44e8f669343504c39ec76258b5e1a228c012b96dd1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d1bf67110364558148f0acc21c01ce1c58520c42fe21a97bbe9a78794955be67\",\"dweb:/ipfs/QmRuUdAAx7FGxbU3WocjbprGwMFDBUoM3MfQ6rBhaD9Jwy\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.8+commit.0bbfe453\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"Harvesting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedUsed\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_expectedYield\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedSupplier\",\"type\":\"string\"}],\"name\":\"Planting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_crop\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_fertilizer\",\"type\":\"string\"}],\"name\":\"Preparations\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"tokenSeason\",\"outputs\":[{\"internalType\":\"enum FarmSeason.Season\",\"name\":\"season\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/lomolo/Projects/taxa/contracts/FarmSeason.sol\":\"FarmSeason\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/lomolo/Projects/taxa/contracts/FarmSeason.sol\":{\"keccak256\":\"0xba59b6ec69f3574563a2ef44e8f669343504c39ec76258b5e1a228c012b96dd1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://d1bf67110364558148f0acc21c01ce1c58520c42fe21a97bbe9a78794955be67\",\"dweb:/ipfs/QmRuUdAAx7FGxbU3WocjbprGwMFDBUoM3MfQ6rBhaD9Jwy\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
   "sourceMap": "",
   "deployedSourceMap": "",
   "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.4.22 <0.7.0;\n\nabstract contract FarmSeason {\n\n  // Events\n  event Preparations(uint256 _tokenId, string _crop, string _fertilizer);\n  event Planting(\n    uint256 _tokenId,\n    string _seedUsed,\n    string _expectedYield,\n    string _seedSupplier\n  );\n  event Harvesting(\n\t\tuint256 _supply,\n\t\tuint256 _price,\n\t\tuint256 _tokenId\n\t);\n\n\n \n  // Seasons\n  enum Season {\n    Dormant,\n    Preparation,\n    Planting,\n    Harvesting,\n    Booking\n  }\n\n  // Tokennized farm season\n  struct TokenSeason {\n    Season season;\n  }\n\n  // Map tokenized farm to its season\n  mapping(uint256 => TokenSeason) public tokenSeason;\n\n  // Land preparations data\n  struct LandPreparations {\n    string crop;\n    string fertilizer;\n  }\n\n  // Planting data\n  struct PlantingType {\n    string seedUsed;\n    string expectedYield;\n    string seedSupplier;\n  }\n  \n  // Harvest type\n\tstruct HarvestType {\n\t\tuint256 supply;\n\t\tuint256 price;\n\t}\n\n  modifier inSeason(uint256 _tokenId, Season _season) {\n    require(_season == tokenSeason[_tokenId].season, \"INVALID:season to do this\");\n    _;\n  }\n\n  // Proceed to the next season\n  function nextSeason(uint256 _tokenId) internal {\n    tokenSeason[_tokenId].season = Season(uint256(tokenSeason[_tokenId].season) + 1);\n  }\n\n  modifier transitionSeason(uint256 _tokenId) {\n    _;\n    nextSeason(_tokenId);\n  }\n}\n\n",
-  "sourcePath": "/home/lomolo/Projects/octopus/contracts/FarmSeason.sol",
+  "sourcePath": "/home/lomolo/Projects/taxa/contracts/FarmSeason.sol",
   "ast": {
-    "absolutePath": "/home/lomolo/Projects/octopus/contracts/FarmSeason.sol",
+    "absolutePath": "/home/lomolo/Projects/taxa/contracts/FarmSeason.sol",
     "exportedSymbols": {
       "FarmSeason": [
         776
@@ -1522,7 +1522,7 @@
     "src": "33:1344:2"
   },
   "legacyAST": {
-    "absolutePath": "/home/lomolo/Projects/octopus/contracts/FarmSeason.sol",
+    "absolutePath": "/home/lomolo/Projects/taxa/contracts/FarmSeason.sol",
     "exportedSymbols": {
       "FarmSeason": [
         776
@@ -2938,7 +2938,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-07-16T12:54:46.628Z",
+  "updatedAt": "2020-07-24T20:12:22.141Z",
   "devdoc": {
     "methods": {}
   },

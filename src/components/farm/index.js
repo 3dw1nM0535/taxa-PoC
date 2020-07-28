@@ -1,7 +1,7 @@
 import { FarmCard } from './FarmCard'
-import { FarmComponent } from './FarmComponent'
+import { NoFarm } from './NoFarm'
 
 export {
   FarmCard,
-  FarmComponent,
+  NoFarm,
 }

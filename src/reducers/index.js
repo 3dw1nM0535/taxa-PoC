@@ -1,15 +1,15 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux'
 
 // Reducers
-import { wallet } from './wallet';
-import { farm } from './farm';
+import { farm } from './farm'
 import { loading } from './loading'
+import { wallet } from './wallet'
+import { location } from './location'
 
-const rootReducer = combineReducers({
-  wallet,
+export default combineReducers({
   farm,
   loading,
-});
-
-export default rootReducer;
+  wallet,
+	location,
+})
 

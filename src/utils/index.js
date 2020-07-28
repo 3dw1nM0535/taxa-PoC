@@ -1,7 +1,5 @@
-import {
-  randomNumber,
-} from './randomNumber'
+import { randomNumber } from './rand'
+import { truncateAddress } from './truncate'
 
-export {
-  randomNumber,
-}
+export { randomNumber, truncateAddress }
+

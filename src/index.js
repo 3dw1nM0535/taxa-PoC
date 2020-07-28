@@ -4,9 +4,10 @@ import { Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { PersistGate } from 'redux-persist/integration/react'
-import './index.scss'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+
+import 'semantic-ui-css/semantic.min.css'
 
 // Configure redux
 import { store, persistor } from './store'
@@ -29,7 +30,7 @@ ReactDOM.render(
         </Provider>
       </Router>
     </ApolloProvider>
-  </React.StrictMode>,
+   </React.StrictMode>,
   document.getElementById('root')
 );
 
@@ -37,3 +38,4 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+

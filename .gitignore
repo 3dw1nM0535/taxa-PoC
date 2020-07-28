@@ -31,3 +31,6 @@ yarn-error.log*
 *.md~
 *.env~
 *.scss~
+*.css~
+*.html~
+*.json~

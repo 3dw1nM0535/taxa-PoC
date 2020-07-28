@@ -1,25 +1,33 @@
-import React from 'react';
-import { Grid, Row, Column } from 'carbon-components-react';
+import React from 'react'
+import {
+  Grid,
+  Header,
+} from 'semantic-ui-react'
 import { connect } from 'react-redux'
+
+import { RegisterFarm } from '../forms'
 import { addFarm } from '../../actions'
-
-import { RegisterFarm } from '../forms';
-
 
 function RegisterFarmPage({ addFarm }) {
   return (
-    <Grid>
-      <Row>
-        <Column className="description--section">
-          <h1>Register your farm to the blockchain</h1>
-        </Column>
-        <Column>
-          <RegisterFarm submit={addFarm} />
-        </Column>
-      </Row>
+    <Grid columns={2} centered divided stackable>
+      <Grid.Row>
+        <Grid.Column>
+          <Header
+            as='h1'
+            style={{
+              fontSize: '3em',
+            }}
+            content='Register your farm to the blockchain'
+          />
+        </Grid.Column>
+        <Grid.Column>
+          <RegisterFarm addFarm={addFarm} />
+        </Grid.Column>
+      </Grid.Row>
     </Grid>
   )
 }
 
-export default connect(null, { addFarm })(RegisterFarmPage);
+export default connect(null, { addFarm })(RegisterFarmPage)
 
