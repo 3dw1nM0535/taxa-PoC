@@ -5,7 +5,7 @@ export function FarmCard({ farm }) {
   return (
     <Card as='a' fluid>
       <Image
-        src={`https://swarm-gateways.net/bzz:/${farm.imageHash}/nduma.jpeg`}
+        src={`https://ipfs.io/ipfs/${farm.imageHash}`}
         style={{ height: '200px' }}
       />
       <Card.Content>

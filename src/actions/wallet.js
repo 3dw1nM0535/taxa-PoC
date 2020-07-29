@@ -26,11 +26,13 @@ export const connectWallet = () => async dispatch => {
   const isMetaMaskInstalled = typeof window.ethereum !== 'undefined'
   if (isMetaMaskInstalled) {
     window.web3 = new Web3(window.ethereum)
+    await window.ethereum.enable()
     wallet.netId = Web3.utils.hexToNumber(await window.web3.eth.net.getId())
     wallet.address = await window.web3.eth.getAccounts()
     dispatch(walletFound({ ...wallet }))
   } else if (window.web3) {
     window.web3 = new Web3(window.web3.currentProvider)
+    await window.ethereum.enable()
     wallet.netId = Web3.utils.hexToNumber(await window.web3.eth.net.getId())
     wallet.address = await window.web3.eth.getAccounts()
     dispatch(walletFound({ ...wallet }))

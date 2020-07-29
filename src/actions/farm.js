@@ -1,4 +1,7 @@
 import Registry from '../build/Registry.json'
+import Farm from '../build/Farm.json'
+import ipfs from '../ipfs'
+import api from '../api'
 import { randomNumber } from '../utils'
 import { SUBMITTING } from '../types'
 
@@ -8,25 +11,19 @@ export const submitting  = status => ({
 })
 
 // Load registry contract
-const initRegistry = async () => {
+const initRegistry = async() => {
   const chainId = await window.web3.eth.net.getId()
   const networkData = Registry.networks[chainId]
   const registryContract = new window.web3.eth.Contract(Registry.abi, networkData.address)
   return registryContract
 }
 
-// Upload file to swarm
-function initBzz() {
-  window.web3.bzz.setProvider('https://swarm-gateways.net')
-}
-
-async function uploadFile(file) {
-  initBzz()
-  if (typeof file !== 'undefined') {
-    const hash = await window.web3.bzz.upload(file)
-    return hash
-  }
-  return
+// Load farm contract
+const initFarm = async() => {
+  const chainId = await window.web3.eth.net.getId()
+  const networkData = Farm.networks[chainId]
+  const farmContract = new window.web3.eth.Contract(Farm.abi, networkData.address)
+  return farmContract
 }
 
 export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
@@ -34,18 +31,21 @@ export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
   const registryContract = await initRegistry()
   const accounts = await window.web3.eth.getAccounts()
   const tokenId = randomNumber(999, 99999999)
-  const fileHash = await uploadFile(file)
   loading.status = true
   dispatch(submitting({ ...loading }))
+  const { cid } = await ipfs.add(file)
+  const fileHash = cid.string
   registryContract.methods.addFarm(size, lon, lat, fileHash, soil, tokenId).send({ from: accounts[0] })
     .on('transactionHash', () => {
       loading.status = false
       dispatch(submitting({ ...loading }))
     })
-    .on('confirmation', (confirmationNumber, receipt) => {
-      if (confirmationNumber === 24) {
-        const { _tokenId, _size, _soilType } = receipt.events.RegisterFarm.returnValues
-        console.log({ _tokenId, _size, _soilType })
+    .on('confirmation', async(confirmationNumber, receipt) => {
+      if (confirmationNumber === 1) {
+        const { _tokenId, _size, _soilType, _owner, _fileHash } = receipt.events.RegisterFarm.returnValues
+        const farmContract = await initFarm()
+        const _season = await farmContract.methods.getTokenSeason(Number(_tokenId)).call()
+        api.wallet.addFarm(_tokenId, _size, _soilType, _owner, _fileHash, _season).then(res => console.log('Success'))
       }
     })
     .on('error', error => {

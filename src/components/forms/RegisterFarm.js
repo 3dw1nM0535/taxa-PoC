@@ -53,13 +53,26 @@ function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitud
     return errors
   }
 
-  function handleSubmit(e) {
+  function captureFile(e) {
+    e.preventDefault()
+    const file = e.target.files[0]
+    const reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => convertToBuffer(reader)
+  }
+
+  async function convertToBuffer(reader) {
+    const buffer = await Buffer.from(reader.result)
+    setFile(buffer)
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault()
     const error = validate(size, unit, soil, file)
 		setError(error)
     if (Object.keys(error).length === 0) {
       const farmSize = size + unit
-			addFarm(farmSize, longitude, latitude, file, soil)
+      addFarm(farmSize, longitude, latitude, file, soil)
     }
   }
 
@@ -102,7 +115,7 @@ function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitud
         control={Input}
         type='file'
         label='Farm image'
-        onChange={(e) => setFile(e.target.files[0])}
+        onChange={captureFile}
         error={error.file ? { content: `${error.file}`, pointing: 'above' } : false}
       />
       {error.location && <span className='error--span'>{error.location}</span>}
