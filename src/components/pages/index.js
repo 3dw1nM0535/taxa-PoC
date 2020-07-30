@@ -1,10 +1,12 @@
 import { HomePage } from './HomePage'
 import RegisterFarmPage from './RegisterFarmPage'
-import { Farms } from './Farms'
+import { FarmsPage } from './Farms'
+import FarmPage from './FarmPage'
 
 export {
   HomePage,
   RegisterFarmPage,
-  Farms,
+  FarmsPage,
+  FarmPage,
 }
 

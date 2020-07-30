@@ -1,15 +1,16 @@
 import {
-  REGISTER_FARM,
+  QUERY_FARM,
 } from '../types'
 
 export function farm(state = {}, action = {}) {
   switch(action.type) {
-    case REGISTER_FARM:
+    case QUERY_FARM:
       return {
         ...state,
-        ...action.status,
+        ...action.farm,
       }
     default:
       return state
   }
 }
+

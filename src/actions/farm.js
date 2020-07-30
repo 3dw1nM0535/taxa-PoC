@@ -3,7 +3,10 @@ import Farm from '../build/Farm.json'
 import ipfs from '../ipfs'
 import api from '../api'
 import { randomNumber } from '../utils'
-import { SUBMITTING } from '../types'
+import {
+  SUBMITTING,
+  QUERY_FARM,
+} from '../types'
 
 export const submitting  = status => ({
   type: SUBMITTING,
@@ -54,3 +57,17 @@ export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
       window.alert(`Error: ${error.message}`)
     })
 }
+
+// Query farm from the blockchain
+export const queryFarm = farm => ({
+  type: QUERY_FARM,
+  farm,
+})
+
+export const getFarm = (tokenId) => async dispatch => {
+  const registryContract = await initRegistry()
+  const account = await window.web3.eth.getAccounts()
+  const { result } = await registryContract.methods.registry(tokenId).call({ from: account[0] })
+  console.log(result)
+}
+

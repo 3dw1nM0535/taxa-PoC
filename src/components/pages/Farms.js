@@ -4,7 +4,7 @@ import { gql, useQuery } from '@apollo/client'
 
 import { FarmCard, NoFarm } from '../farm' 
 
-export function Farms() {
+export function FarmsPage() {
 
   const GET_FARMS = gql`
     query GetFarms {
