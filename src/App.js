@@ -21,7 +21,7 @@ function App({ loaded, connectWallet }) {
   useEffect(() => {
     (() => {
       const isMetaMaskInstalled = typeof window.ethereum !== 'undefined'
-      if (isMetaMaskInstalled && loaded) {
+      if (isMetaMaskInstalled) {
         window.web3 = new Web3(window.ethereum)
       } else if (window.web3) {
         window.web3 = new Web3(window.web3.currentProvider)
@@ -53,9 +53,9 @@ function App({ loaded, connectWallet }) {
     <ResponsiveContainer>
       <Switch>
         <Route exact path='/' component={HomePage} />
-        <Route exact path='/tokenize/' component={RegisterFarmPage} />
-        <Route exact path='/farms/' component={FarmsPage} />
         <Route path='/farm/:tokenId/' component={FarmPage} />
+        <Route exact path='/farms/' component={FarmsPage} />
+        <Route exact path='/tokenize/' component={RegisterFarmPage} />
       </Switch>
     </ResponsiveContainer>
   )

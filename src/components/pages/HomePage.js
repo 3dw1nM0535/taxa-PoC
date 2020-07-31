@@ -32,8 +32,11 @@ HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
 }
 
-export const HomePage = () => (
-  <Segment vertical inverted textAlign='center'>
-    <HomepageHeading />
-  </Segment>
-)
+export function HomePage() {
+  return (
+    <Segment vertical inverted textAlign='center'>
+      <HomepageHeading />
+    </Segment>
+  )
+}
+

@@ -1,37 +1,38 @@
+import Contract from 'web3-eth-contract'
 import Registry from '../build/Registry.json'
 import Farm from '../build/Farm.json'
 import ipfs from '../ipfs'
 import api from '../api'
 import { randomNumber } from '../utils'
+import { store } from '../store'
 import {
   SUBMITTING,
   QUERY_FARM,
 } from '../types'
 
-export const submitting  = status => ({
+const submitting  = status => ({
   type: SUBMITTING,
   status,
 })
 
-// Load registry contract
-const initRegistry = async() => {
+// Get chani id
+async function getChainId() {
   const chainId = await window.web3.eth.net.getId()
-  const networkData = Registry.networks[chainId]
-  const registryContract = new window.web3.eth.Contract(Registry.abi, networkData.address)
-  return registryContract
+  return chainId
 }
 
-// Load farm contract
-const initFarm = async() => {
-  const chainId = await window.web3.eth.net.getId()
-  const networkData = Farm.networks[chainId]
-  const farmContract = new window.web3.eth.Contract(Farm.abi, networkData.address)
-  return farmContract
+// Get contract address
+async function networkAddress(contract) {
+  const chainId = await getChainId()
+  const networkMeta = contract.networks[chainId]
+  return networkMeta.address
 }
 
 export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
   const loading = {}
-  const registryContract = await initRegistry()
+  const registryContractAddress = await networkAddress(Registry)
+  const farmContractAddress = await networkAddress(Farm)
+  const registryContract = new window.web3.eth.Contract(Registry.abi, registryContractAddress)
   const accounts = await window.web3.eth.getAccounts()
   const tokenId = randomNumber(999, 99999999)
   loading.status = true
@@ -46,7 +47,7 @@ export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
     .on('confirmation', async(confirmationNumber, receipt) => {
       if (confirmationNumber === 1) {
         const { _tokenId, _size, _soilType, _owner, _fileHash } = receipt.events.RegisterFarm.returnValues
-        const farmContract = await initFarm()
+        const farmContract = new window.web3.eth.Contract(Farm.abi, farmContractAddress)
         const _season = await farmContract.methods.getTokenSeason(Number(_tokenId)).call()
         api.wallet.addFarm(_tokenId, _size, _soilType, _owner, _fileHash, _season).then(res => console.log('Success'))
       }
@@ -64,10 +65,35 @@ export const queryFarm = farm => ({
   farm,
 })
 
+const getNetAddress = (contract) => {
+  const { wallet } = store.getState()
+  const network = contract.networks[wallet.netId]
+  return network.address
+}
+
+const getFarmSeason = async(token, contract) => {
+  const address = getNetAddress(contract)
+  const farmContract = new Contract(Farm.abi, address)
+  const season = await farmContract.methods.getTokenSeason(token).call()
+  return season
+}
+
 export const getFarm = (tokenId) => async dispatch => {
-  const registryContract = await initRegistry()
-  const account = await window.web3.eth.getAccounts()
-  const { result } = await registryContract.methods.registry(tokenId).call({ from: account[0] })
-  console.log(result)
+  const { wallet } = store.getState()
+  const networkData = Registry.networks[wallet.netId]
+  Contract.setProvider(window.web3.currentProvider)
+  const registryContract = new Contract(Registry.abi, networkData.address)
+  const result = await registryContract.methods.registry(tokenId).call({ from: wallet.address[0] })
+  const farmSeason = await getFarmSeason(Number(tokenId), Farm)
+  const farm = {
+    size: result.size,
+    soil: result.soilType,
+    imageHash: result.fileHash,
+    lon: result.longitude,
+    lat: result.latitude,
+    owner: result.owner,
+    season: farmSeason,
+  }
+  dispatch(queryFarm({ ...farm }))
 }
 

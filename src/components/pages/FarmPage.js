@@ -4,10 +4,15 @@ import { connect } from 'react-redux'
 import { getFarm } from '../../actions'
 import { useParams } from 'react-router-dom'
 
-function FarmPage({ getFarm }) {
+function FarmPage({ loading, getFarm }) {
 
   const { tokenId } = useParams()
-  getFarm(tokenId)
+
+  useEffect(() => {
+    (async() => {
+      await getFarm(tokenId)
+    })()
+  })
 
   return (
     <h1>Farm page</h1>
@@ -16,7 +21,14 @@ function FarmPage({ getFarm }) {
 
 FarmPage.propTypes = {
   getFarm: PropTypes.func.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
-export default connect(null, { getFarm })(FarmPage)
+function mapStateToProps(state) {
+  return {
+    loading: state.loading.status,
+  }
+}
+
+export default connect(mapStateToProps, { getFarm })(FarmPage)
 

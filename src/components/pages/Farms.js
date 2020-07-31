@@ -1,8 +1,9 @@
 import React from 'react'
-import { Grid, Loader, Message, } from 'semantic-ui-react'
+import { Grid, Message, } from 'semantic-ui-react'
 import { gql, useQuery } from '@apollo/client'
 
 import { FarmCard, NoFarm } from '../farm' 
+import { LoaderComponent } from '../loading'
 
 export function FarmsPage() {
 
@@ -21,11 +22,9 @@ export function FarmsPage() {
   const { loading, data, error } = useQuery(GET_FARMS)
 
   if (loading) return (
-    <Grid stackable columns={1} style={{ margin: '1em 1em 1em 1em' }}>
-      <Grid.Column width={16}>
-        <Loader active inline='centered' size='massive' />
-      </Grid.Column>
-    </Grid>
+    <>
+      <LoaderComponent loading />
+    </>
   )
 
   if (error) return (
