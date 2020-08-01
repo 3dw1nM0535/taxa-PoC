@@ -1,10 +1,8 @@
-import Contract from 'web3-eth-contract'
 import Registry from '../build/Registry.json'
 import Farm from '../build/Farm.json'
 import ipfs from '../ipfs'
 import api from '../api'
 import { randomNumber } from '../utils'
-import { store } from '../store'
 import {
   SUBMITTING,
   QUERY_FARM,
@@ -64,36 +62,4 @@ export const queryFarm = farm => ({
   type: QUERY_FARM,
   farm,
 })
-
-const getNetAddress = (contract) => {
-  const { wallet } = store.getState()
-  const network = contract.networks[wallet.netId]
-  return network.address
-}
-
-const getFarmSeason = async(token, contract) => {
-  const address = getNetAddress(contract)
-  const farmContract = new Contract(Farm.abi, address)
-  const season = await farmContract.methods.getTokenSeason(token).call()
-  return season
-}
-
-export const getFarm = (tokenId) => async dispatch => {
-  const { wallet } = store.getState()
-  const networkData = Registry.networks[wallet.netId]
-  Contract.setProvider(window.web3.currentProvider)
-  const registryContract = new Contract(Registry.abi, networkData.address)
-  const result = await registryContract.methods.registry(tokenId).call({ from: wallet.address[0] })
-  const farmSeason = await getFarmSeason(Number(tokenId), Farm)
-  const farm = {
-    size: result.size,
-    soil: result.soilType,
-    imageHash: result.fileHash,
-    lon: result.longitude,
-    lat: result.latitude,
-    owner: result.owner,
-    season: farmSeason,
-  }
-  dispatch(queryFarm({ ...farm }))
-}
 

@@ -3,7 +3,6 @@ import Web3 from 'web3'
 import {
   CONNECT_WALLET,
   WALLET_CHANGE,
-  NETWORK_CHANGE,
   METAMASK_DISCONNECT,
 } from '../types'
 
@@ -17,11 +16,6 @@ export const walletChange = wallet => ({
   wallet,
 })
 
-export const networkChange = wallet => ({
-  type: NETWORK_CHANGE,
-  wallet,
-})
-
 export const disconnectMetaMask = () => ({
   type: METAMASK_DISCONNECT,
 })
@@ -31,12 +25,10 @@ export const connectWallet = () => async dispatch => {
   const isMetaMaskInstalled = typeof window.ethereum !== 'undefined'
   if (isMetaMaskInstalled) {
     window.web3 = new Web3(window.ethereum)
-    wallet.netId = Web3.utils.hexToNumber(await window.web3.eth.net.getId())
     wallet.address = await window.ethereum.request({ method: 'eth_requestAccounts' })
     dispatch(walletFound({ ...wallet }))
   } else if (window.web3) {
     window.web3 = new Web3(window.web3.currentProvider)
-    wallet.netId = Web3.utils.hexToNumber(await window.web3.eth.net.getId())
     wallet.address = await window.web3.eth.getAccounts()
     dispatch(walletFound({ ...wallet }))
   } else {

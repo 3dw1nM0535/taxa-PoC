@@ -1,3 +1,4 @@
+import Web3 from 'web3'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router } from 'react-router-dom'
@@ -6,6 +7,8 @@ import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { PersistGate } from 'redux-persist/integration/react'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
+
+import { networkChange } from './actions'
 
 import 'semantic-ui-css/semantic.min.css'
 
@@ -18,6 +21,18 @@ const client = new ApolloClient({
   uri: 'http://localhost:4000/query',
   cache: new InMemoryCache(),
 })
+
+const isMetaMaskInstalled = typeof window.ethereum !== 'undefined'
+const network = {}
+if (isMetaMaskInstalled) {
+  window.web3 = new Web3(window.ethereum)
+  network.netId = window.ethereum.networkVersion
+  store.dispatch(networkChange({ ...network }))
+} else if (window.web3) {
+  window.web3 = new Web3(window.web3.currentProvider)
+  network.netId = window.ethereum.networkVersion
+  store.dispatch(networkChange({ ...network }))
+}
 
 ReactDOM.render(
   <React.StrictMode>

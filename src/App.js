@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import React, { useEffect } from 'react'
+import React from 'react'
 import Web3 from 'web3'
 import { connect } from 'react-redux'
-import { connectWallet, walletChange, networkChange, disconnectMetaMask } from './actions'
+import { walletChange, networkChange, disconnectMetaMask } from './actions'
 import { store } from './store'
 import { Switch, Route } from 'react-router-dom'
 
@@ -14,20 +14,9 @@ import {
   FarmPage,
 } from './components/pages'
 
-function App({ loaded, connectWallet }) {
+function App({ loaded }) {
 
   let walletAddress = {}
-
-  useEffect(() => {
-    (() => {
-      const isMetaMaskInstalled = typeof window.ethereum !== 'undefined'
-      if (isMetaMaskInstalled) {
-        window.web3 = new Web3(window.ethereum)
-      } else if (window.web3) {
-        window.web3 = new Web3(window.web3.currentProvider)
-      }
-    })()
-  })
 
   if (loaded) {
     window.ethereum.on('accountsChanged', async(accounts) => {
@@ -40,8 +29,9 @@ function App({ loaded, connectWallet }) {
       } 
     })
     window.ethereum.on('chainChanged', (_chainId) => {
-      walletAddress.netId = Web3.utils.hexToNumber(_chainId)
-      store.dispatch(networkChange({ ...walletAddress }))
+      const network = {}
+      network.netId = Web3.utils.hexToNumber(_chainId)
+      store.dispatch(networkChange({ ...network }))
     })
     window.ethereum.on('disconnect', (error) => {
       store.dispath(disconnectMetaMask())
@@ -63,7 +53,6 @@ function App({ loaded, connectWallet }) {
 
 App.propTypes = {
   loaded: PropTypes.bool.isRequired,
-  connectWallet: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -72,5 +61,5 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { connectWallet })(App)
+export default connect(mapStateToProps)(App)
 

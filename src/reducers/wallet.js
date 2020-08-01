@@ -1,7 +1,6 @@
 import {
   CONNECT_WALLET,
   WALLET_CHANGE,
-  NETWORK_CHANGE,
   METAMASK_DISCONNECT
 } from '../types'
 
@@ -13,11 +12,6 @@ export function wallet(state = { loaded: false }, action = {}) {
         loaded: true,
       }
     case WALLET_CHANGE:
-      return {
-        ...state,
-        ...action.wallet,
-      }
-    case NETWORK_CHANGE:
       return {
         ...state,
         ...action.wallet,
