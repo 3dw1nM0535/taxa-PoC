@@ -10,6 +10,7 @@
     "dotenv": "^8.2.0",
     "ethereum-blockies-base64": "^1.0.2",
     "flatted": "^3.0.4",
+    "google-map-react": "^2.0.4",
     "graphql": "^15.3.0",
     "history": "^5.0.0",
     "ipfs-http-client": "^45.0.0",
