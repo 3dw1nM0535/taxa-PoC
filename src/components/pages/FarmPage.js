@@ -9,13 +9,13 @@ import Registry from '../../build/Registry.json'
 import { store } from '../../store'
 import { FarmComponent } from '../farm'
 
-function FarmPage({ loaded, netId, loading }) {
+function FarmPage({ loaded, netId }) {
   
   const { tokenId } = useParams()
 
   useEffect(() => {
 
-    const getFarmSeason = async(token, contract, netVersion) => {
+    async function getFarmSeason (token, contract, netVersion) {
       const networkData = Farm.networks[netVersion]
       const farmContract = new Contract(Farm.abi, networkData.address)
       const season = await farmContract.methods.getTokenSeason(token).call()
@@ -27,6 +27,8 @@ function FarmPage({ loaded, netId, loading }) {
       Contract.setProvider(window.web3.currentProvider)
       const registryContract = new Contract(Registry.abi, networkData.address)
       const result = await registryContract.methods.registry(Number(tokenId)).call()
+      const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${result.latitude},${result.longitude}&key=${process.env.REACT_APP_GEOCODE_KEY}`)
+      const data = await response.json()
       const farmSeason = await getFarmSeason(Number(tokenId), Farm, netId)
       const farm = {
         size: result.size,
@@ -36,6 +38,7 @@ function FarmPage({ loaded, netId, loading }) {
         lat: result.latitude,
         owner: result.owner,
         season: farmSeason,
+        location: data.results[0],
       }
       store.dispatch(queryFarm({ ...farm }))
     })()
@@ -49,7 +52,6 @@ function FarmPage({ loaded, netId, loading }) {
 }
 
 FarmPage.propTypes = {
-  loading: PropTypes.bool.isRequired,
   netId: PropTypes.number.isRequired,
   loaded: PropTypes.bool.isRequired,
 }

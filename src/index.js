@@ -18,7 +18,7 @@ import history from './history'
 
 // Configure Apollo
 const client = new ApolloClient({
-  uri: 'http://localhost:4000/query',
+  uri: `${process.env.REACT_APP_GRAPHQL_API}`,
   cache: new InMemoryCache(),
 })
 
