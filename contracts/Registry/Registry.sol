@@ -10,6 +10,7 @@ contract Registry is ERC721 {
 
   // Events
   event RegisterFarm(
+    string _name,
     string _size,
     string _lon,
     string _lat,
@@ -21,6 +22,7 @@ contract Registry is ERC721 {
 
   // Farm type
   struct Farm {
+    string name;
     string size;
     string longitude;
     string latitude;
@@ -37,6 +39,7 @@ contract Registry is ERC721 {
    * @param _size, _lon, _lat, _fileHash, _soilType, _tokenId
    */
   function addFarm(
+    string memory _name,
     string memory _size,
     string memory _lon,
     string memory _lat,
@@ -48,8 +51,9 @@ contract Registry is ERC721 {
   {
     // Mint token and map tokenized farm
     _safeMint(msg.sender, _tokenId);
-    registry[_tokenId] = Farm(_size, _lon, _lat, _fileHash, _soilType, msg.sender);
+    registry[_tokenId] = Farm(_name, _size, _lon, _lat, _fileHash, _soilType, msg.sender);
     emit RegisterFarm(
+      registry[_tokenId].name,
       registry[_tokenId].size,
       registry[_tokenId].longitude,
       registry[_tokenId].latitude,
@@ -60,3 +64,4 @@ contract Registry is ERC721 {
     );
   }
 }
+
