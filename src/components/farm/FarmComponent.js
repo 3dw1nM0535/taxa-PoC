@@ -50,7 +50,7 @@ export function FarmComponent({ farmData }) {
         </Grid.Column>
         <Grid.Column>
           <Segment.Group>
-            <Segment>
+            <Segment secondary>
               <Header as='h1'>Owner</Header>
             </Segment>
             <Segment>
@@ -107,7 +107,7 @@ export function FarmComponent({ farmData }) {
             </Segment>
           </Segment.Group>
           <Segment.Group>
-            <Segment>
+            <Segment secondary>
               <Header as='h1'>Size</Header>
             </Segment>
             <Segment>
@@ -115,7 +115,7 @@ export function FarmComponent({ farmData }) {
             </Segment>
           </Segment.Group>
           <Segment.Group>
-            <Segment>
+            <Segment secondary>
               <Header as='h1'>Soil</Header>
             </Segment>
             <Segment>
@@ -123,7 +123,7 @@ export function FarmComponent({ farmData }) {
             </Segment>
           </Segment.Group>
           <Segment.Group>
-            <Segment>
+            <Segment secondary>
               <Header as='h1'>Location</Header>
             </Segment>
             <Segment style={{ height: '50vh', width: '100%' }}>
@@ -154,7 +154,7 @@ export function FarmComponent({ farmData }) {
             </Segment>
           </Segment.Group>
           <Segment.Group>
-            <Segment>
+            <Segment secondary>
               <Header as='h1'># Token ID</Header>
             </Segment>
             <Segment>

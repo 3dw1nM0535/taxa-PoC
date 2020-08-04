@@ -48,16 +48,17 @@ class MobileContainer extends Component {
         getWidth={getWidth}
         maxWidth={Responsive.onlyMobile.maxWidth}
       >
+        <Sidebar.Pushable>
         <Sidebar
           as={Menu}
-          animation='push'
-          inverted
+          animation='overlay'
           onHide={this.handleSidebarHide}
+          icon='labeled'
+          inverted
           vertical
           visible={sidebarOpened}
         >
           <Menu.Item
-            href='/'
             as='a'
             header>
             taxa
@@ -66,71 +67,22 @@ class MobileContainer extends Component {
             </Label>
           </Menu.Item>
           <Menu.Item
-            active={location.pathname === '/get-started/'}
-            href='/'
-            name='Get Started'
-            as='a'
-          />
-          <Menu.Item
             active={location.pathname === '/farms/'}
-            name='Farms'
             as='a'
             href='/farms/'
-          />
+          >
+            <Icon name='search' />
+            Farms
+          </Menu.Item>
           <Menu.Item
             active={location.pathname === '/tokenize/'}
             href='/tokenize/'
-            name='Register Your Farm'
             as='a'
-          />
-          <Menu.Item position='right'>
-            {wallet.loaded ? (
-                    <span>
-									    <CopyToClipboard
-										    text={wallet.address[0]}
-										    onCopy={() => setTimeout(() => {
-											    this.handleCopy(false)
-											    this.handleCopied(true)
-
-											    setTimeout(() => {
-												    this.handleCopy(true)
-												    this.handleCopied(false)
-											    }, 3000)
-										    }, 500)}
-									      >
-										      <span>
-											      {copied &&
-                            <Label
-                              style={{ paddingRight: '2.7em', paddingLeft: '2.7em' }}
-                              horizontal color='green'
-                              size='big'
-                            >
-                              Copied
-                            </Label>}
-											      {copying &&
-                            <Label
-                              stype={{ paddingRight: '1em', paddingLeft: '1em' }}
-                              horizontal
-                              size='big'
-                            >
-                              {truncateAddress(wallet.address[0], 10)}
-                            </Label>}
-										      </span>
-									      </CopyToClipboard>
-                      </span>
-) : (
-										<Button
-											as='a'
-											color='green'
-											onClick={connectWallet}
-										>
-                    	<Icon name='plug' />
-                    	Connect Wallet
-                  	</Button>
-									)}
+          >
+            <Icon name='add' />
+            Add farm
           </Menu.Item>
-        </Sidebar>
-
+         </Sidebar>
         <Sidebar.Pusher dimmed={sidebarOpened}>
           <Segment
             textAlign='center'
@@ -140,7 +92,7 @@ class MobileContainer extends Component {
             <Container>
               <Menu inverted pointing secondary size='large'>
                 <Menu.Item onClick={this.handleToggle}>
-                  <Icon name='sidebar' />
+                  <Icon name='chevron right' size='large' />
                 </Menu.Item>
                 <Menu.Item position='right'>
                   {wallet.loaded ? (
@@ -194,6 +146,7 @@ class MobileContainer extends Component {
 
           {children}
         </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </Responsive>
     )
   }

@@ -3,8 +3,8 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import {
   Responsive,
-  Visibility,
   Segment,
+  Sidebar,
   Menu,
   Container,
   Icon,
@@ -28,8 +28,8 @@ class DesktopContainer extends Component {
 		copied: false,
 	}
 
-  hideFixedMenu = () => this.setState({ fixed: false })
-  showFixedMenu = () => this.setState({ fixed: true })
+  handleSidebarHide = () => this.setState({ sidebarOpened: false })
+  handleToggle = () => this.setState({ sidebarOpened: true })
 	handleCopy = () => this.setState(prevState => ({
 		copying: !prevState.copying
 	}))
@@ -39,56 +39,63 @@ class DesktopContainer extends Component {
 
   render() {
     const { children, wallet, connectWallet, location } = this.props
-    const { fixed, copying, copied } = this.state
+    const { copying, copied, sidebarOpened } = this.state
 
     return (
-      <Responsive getWidth={getWidth} minWidth={Responsive.onlyTablet.minWidth}>
-        <Visibility
-          once={false}
-          onBottomPassed={this.showFixedMenu}
-          onBottomPassedReverse={this.hideFixedMenu}
+      <Responsive
+        as={Sidebar.Pushable}
+        getWidth={getWidth}
+        minWidth={Responsive.onlyTablet.minWidth}
+      >
+        <Sidebar.Pushable>
+        <Sidebar
+          as={Menu}
+          animation='overlay'
+          icon='labeled'
+          onHide={this.handleSidebarHide}
+          inverted
+          vertical
+          visible={sidebarOpened}
         >
+          <Menu.Item
+            as='a'
+            header>
+            taxa
+            <Label color='brown' horizontal>
+              Beta
+            </Label>
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/farms/'}
+            as='a'
+            href='/farms/'
+          >
+            <Icon name='search' />
+            Farms
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/tokenize/'}
+            href='/tokenize/'
+            as='a'
+          >
+            <Icon name='add' />
+            Add farm
+          </Menu.Item>
+        </Sidebar>
+
+        <Sidebar.Pusher dimmed={sidebarOpened}>
           <Segment
             textAlign='center'
             inverted
             vertical
           >
-            <Menu
-              fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
-              size='large'
-            >
-              <Container>
-                <Menu.Item
-                  as='a'
-                  href='/'
-                  header>
-                  taxa
-                  <Label color='brown' horizontal>
-                    Beta
-                  </Label>
+            <Container>
+              <Menu inverted pointing secondary size="small">
+                <Menu.Item onClick={this.handleToggle}>
+                  <Icon name='chevron right' size='large' />
                 </Menu.Item>
-                <Menu.Item
-                  active={location.pathname === '/get-started/'}
-                  name='Get Started'
-                  as='a'
-                />
-                <Menu.Item
-                  active={location.pathname === '/farms/'}
-                  name='Farms'
-                  as='a'
-                  href='/farms/'
-                />
-                <Menu.Item
-                  active={location.pathname === '/tokenize/'}
-                  name='Register Your Farm'
-                  as='a'
-                  href='/tokenize/'
-                />
                 <Menu.Item position='right'>
-									{wallet.loaded ? (
+                  {wallet.loaded ? (
                     <span>
 									    <CopyToClipboard
 										    text={wallet.address[0]}
@@ -102,12 +109,12 @@ class DesktopContainer extends Component {
 											    }, 3000)
 										    }, 500)}
 									      >
-										      <span>
+									        <span>
 											      {copied &&
                             <Label
                               style={{ paddingRight: '2.7em', paddingLeft: '2.7em' }}
                               horizontal color='green'
-                              size='medium'
+                              size='big'
                             >
                               Copied
                             </Label>}
@@ -115,7 +122,7 @@ class DesktopContainer extends Component {
                             <Label
                               stype={{ paddingRight: '1em', paddingLeft: '1em' }}
                               horizontal
-                              size='medium'
+                              size='big'
                             >
                               {truncateAddress(wallet.address[0], 10)}
                             </Label>}
@@ -133,11 +140,13 @@ class DesktopContainer extends Component {
                   	</Button>
 									)}
 								</Menu.Item>
-              </Container>
-            </Menu>
+              </Menu>
+            </Container>
           </Segment>
-        </Visibility>
-        {children}
+
+          {children}
+        </Sidebar.Pusher>
+        </Sidebar.Pushable>
       </Responsive>
     )
   }

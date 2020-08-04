@@ -10,7 +10,13 @@ import { addFarm } from '../../actions'
 
 function RegisterFarmPage({ addFarm }) {
   return (
-    <Grid columns={2} centered divided stackable>
+    <Grid
+      style={{ margin: '1em 1em 1em 1em' }}
+      columns={2}
+      centered
+      divided
+      stackable
+    >
       <Grid.Row>
         <Grid.Column>
           <Header
