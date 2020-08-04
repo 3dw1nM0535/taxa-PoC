@@ -14,6 +14,7 @@ before(async() => {
 contract("Registry", async accounts => {
   it("Should tokenize farm(register)", async() => {
     const result = await instance.addFarm(
+      "Arunga Vineyard",
       "0.9ha",
       "36.89323",
       "-1.29748",
@@ -22,6 +23,7 @@ contract("Registry", async accounts => {
       tokenId
     );
     const log = result.logs[1].args;
+    assert.equal(log._name, "Arunga Vineyard", "farm name should be Arunga Vineyard");
     assert.equal(log._size, "0.9ha", "farm size should be 0.9ha");
     assert.equal(log._lon, "36.89323", "farm longitude should be 39.89323");
     assert.equal(log._lat, "-1.29748", "farm latitude should be -1.29748");
