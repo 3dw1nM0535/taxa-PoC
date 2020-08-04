@@ -15,8 +15,10 @@ before(async() => {
 
 contract("Farm", async accounts => {
   it("Farmer can open season", async() => {
-    await instance.openSeason(tokenId);
+    const result = await instance.openSeason(tokenId);
+    const log = result.logs[0].args;
     season = await instance.getTokenSeason(tokenId);
+    assert.equal(log._seasonNumber.toString(), '1', 'Season number should be 1');
     assert.equal(season, "Preparation", "Season should be Preparation");
   });
   it("Farm accounts for season preparations(crop selection etc)", async() => {
