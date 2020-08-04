@@ -3,8 +3,8 @@
 pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/math/SafeMath.sol';
-import './Book.sol';
-import './FarmSeason.sol';
+import '../Booking/Book.sol';
+import '../Season/FarmSeason.sol';
 
 abstract contract Harvest is FarmSeason, Book {
   
@@ -16,7 +16,6 @@ abstract contract Harvest is FarmSeason, Book {
     _;
   }
 
-  
   /**
    * @dev createHarvest This allow farmer to broadcast harvest
    * @param _supply, _price, _tokenId Supply ejected from the farm

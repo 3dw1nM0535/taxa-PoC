@@ -3,8 +3,8 @@
 pragma solidity >=0.4.22 <0.7.0;
 
 import '@openzeppelin/contracts/math/SafeMath.sol';
-import './Season/FarmSeason.sol';
-import './Booking/Book.sol';
+import '../Season/FarmSeason.sol';
+import '../Booking/Book.sol';
 
 contract Farm is FarmSeason, Book {
 
@@ -61,9 +61,12 @@ contract Farm is FarmSeason, Book {
     public
     inSeason(_tokenId, Season.Dormant)
     transitionSeason(_tokenId)
-    {
-      numberOfSeason[_tokenId]++;
-    }
+  {
+    numberOfSeason[_tokenId]++;
+    emit SeasonOpening(
+      numberOfSeason[_tokenId]
+    );
+  }
 
   /**
    * @dev finishPreparations This takes account what the

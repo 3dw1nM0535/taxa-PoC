@@ -5,6 +5,9 @@ pragma solidity >=0.4.22 <0.7.0;
 abstract contract FarmSeason {
 
   // Events
+  event SeasonOpening(
+    uint256 _seasonNumber
+  );
   event Preparations(uint256 _tokenId, string _crop, string _fertilizer);
   event Planting(
     uint256 _tokenId,
@@ -36,6 +39,8 @@ abstract contract FarmSeason {
 
   // Map tokenized farm to its season
   mapping(uint256 => TokenSeason) public tokenSeason;
+  // Map tokenized farm to numberOfSeasons
+  mapping(uint256 => uint256) public numberOfSeason;
 
   // Land preparations data
   struct LandPreparations {
