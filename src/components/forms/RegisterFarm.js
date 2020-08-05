@@ -15,6 +15,7 @@ const options = [
 
 function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitude }) {
 
+  const [name, setName] = useState("")
   const [size, setSize] = useState("")
   const [unit, setUnit] = useState("")
   const [soil, setSoil] = useState("")
@@ -44,8 +45,9 @@ function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitud
 		})()
 	})
 
-  function validate(size, unit, soil, file) {
+  function validate(name, size, unit, soil, file) {
     const errors = {}
+    if (Validator.isEmpty(name) || !Validator.isAlpha(name.replace(/\s+/g, ''))) errors.name = 'Invalid name'
     if (size === '0' || Validator.isEmpty(size) || !Validator.isFloat(size)) errors.size = 'Invalid size'
     if (Validator.isEmpty(unit)) errors.unit = 'Unit is required'
     if (Validator.isEmpty(soil.replace(/\s+/g, '')) || !Validator.isAlpha(soil.replace(/\s+/g, ''))) errors.soil = 'Invalid soil'
@@ -68,11 +70,11 @@ function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitud
 
   async function handleSubmit(e) {
     e.preventDefault()
-    const error = validate(size, unit, soil, file)
+    const error = validate(name, size, unit, soil, file)
 		setError(error)
     if (Object.keys(error).length === 0) {
       const farmSize = size + unit
-      addFarm(farmSize, longitude, latitude, file, soil)
+      addFarm(name, farmSize, longitude, latitude, file, soil)
     }
   }
 
@@ -82,6 +84,16 @@ function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitud
       onSubmit={walletLoaded ? handleSubmit : null}
       loading={loadingStatus}
     >
+      <Form.Field
+        id='form-input-control-farm-name'
+        control={Input}
+        type='text'
+        label='Farm name'
+        value={name}
+        placeholder='Your farm name'
+        onChange={(e, { value }) => setName(value)}
+        error={error.name ? { content: `${error.name}`, pointing: 'above' } : false}
+      />
       <Form.Field
         id='form-input-control-farm-size'
         control={Input}

@@ -26,11 +26,23 @@ function FarmPage({ loaded, netId }) {
       const networkData = Registry.networks[netId]
       Contract.setProvider(window.web3.currentProvider)
       const registryContract = new Contract(Registry.abi, networkData.address)
-      const result = await registryContract.methods.registry(Number(tokenId)).call()
+      let result;
+      try {
+        result = await registryContract.methods.registry(tokenId).call()
+      } catch(error) {
+        console.log(error)
+      }
       const response = await fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${result.latitude},${result.longitude}&key=${process.env.REACT_APP_GEOCODE_KEY}`)
       const data = await response.json()
-      const farmSeason = await getFarmSeason(Number(tokenId), Farm, netId)
+      let farmSeason;
+      try {
+        farmSeason = await getFarmSeason(tokenId, Farm, netId)
+      } catch(error) {
+        console.log(error)
+      }
       const farm = {
+        token: tokenId,
+        name: result.name,
         size: result.size,
         soil: result.soilType,
         imageHash: result.fileHash,

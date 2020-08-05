@@ -193,7 +193,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -212,7 +213,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -236,7 +238,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -255,7 +258,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -274,7 +278,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -293,7 +298,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -398,7 +404,8 @@
       "name": "bookHarvest",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -16936,15 +16943,29 @@
           ],
           "name": "Received",
           "type": "event"
+        },
+        "0xefea724755081ebfa846cf2ebb00290b455dd6ca77568ad8b247518d86875556": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_seasonNumber",
+              "type": "uint256"
+            }
+          ],
+          "name": "SeasonOpening",
+          "type": "event"
         }
       },
       "links": {},
-      "address": "0x4cf31951C9b565B264b3e8Fc3dBFe707920B65f5",
-      "transactionHash": "0x07d03fb20dac885ac37cc0a5be4cdb6392e221b3421cc842454fe3ce9891b7aa"
+      "address": "0x22F4101887c5E450b10De83091b8f06c7863189b",
+      "transactionHash": "0x622d807cb9b18727aa98365648b163a4d614168647992c6ca977514348d9a36b"
     }
   },
   "schemaVersion": "3.2.0",
-  "updatedAt": "2020-08-04T21:34:06.822Z",
+  "updatedAt": "2020-08-05T11:32:55.766Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "bookHarvest(uint256,uint256)": {

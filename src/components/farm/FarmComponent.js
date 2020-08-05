@@ -16,12 +16,10 @@ import {
 import { truncateAddress } from '../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import GoogleMapReact from 'google-map-react'
-import { useParams } from 'react-router-dom'
 import { LocationPin } from './Location'
 
-export function FarmComponent({ farmData, wallet }) {
+export function FarmComponent({ farmData, account }) {
   
-  const { tokenId } = useParams()
   const [copying, setCopying] = useState(true)
   const [copied, setCopied] = useState(false)
 
@@ -42,20 +40,18 @@ export function FarmComponent({ farmData, wallet }) {
                 'https://react.semantic-ui.com/images/wireframe/square-image.png' : `https://ipfs.io/ipfs/${farmData.imageHash}`} fluid />
             </Segment>
             <Segment>
-              { wallet.address === undefined ? null : wallet.address === farmData.owner ? (
-                  <Button
-                    color={farmData.season === 'Dormant' ? 'brown' : farmData.season === 'Harvest' ? 'green' : null}
-                  >
-                    Change Season
-                  </Button>
-                ) : null } 
+              <Button
+                color={farmData.season === 'Dormant' ? 'brown' : farmData.season === 'Harvest' ? 'green' : null}
+              >
+                Change Season
+              </Button>
             </Segment>
           </Segment.Group>
         </Grid.Column>
         <Grid.Column>
           <Segment.Group>
             <Segment secondary>
-              <Header as='h1'>Owner</Header>
+              <Header as='h1'>{farmData.name}</Header>
             </Segment>
             <Segment>
               <Table definition>
@@ -129,7 +125,7 @@ export function FarmComponent({ farmData, wallet }) {
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>#tokenId</Table.Cell>
-                    <Table.Cell>{tokenId}</Table.Cell>
+                    <Table.Cell>{farmData.token}</Table.Cell>
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>State</Table.Cell>
@@ -188,13 +184,13 @@ export function FarmComponent({ farmData, wallet }) {
 
 FarmComponent.propTypes = {
   farmData: PropTypes.object.isRequired,
-  wallet: PropTypes.object.isRequired,
+  account: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
     farmData: state.farm,
-    wallet: state.wallet,
+    account: state.wallet,
   }
 }
 

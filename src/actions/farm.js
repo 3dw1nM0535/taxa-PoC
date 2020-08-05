@@ -26,7 +26,7 @@ async function networkAddress(contract) {
   return networkMeta.address
 }
 
-export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
+export const addFarm = (name, size, lon, lat, file, soil) => async dispatch => {
   const loading = {}
   const registryContractAddress = await networkAddress(Registry)
   const farmContractAddress = await networkAddress(Farm)
@@ -37,7 +37,7 @@ export const addFarm = (size, lon, lat, file, soil) => async dispatch => {
   dispatch(submitting({ ...loading }))
   const { cid } = await ipfs.add(file)
   const fileHash = cid.string
-  registryContract.methods.addFarm(size, lon, lat, fileHash, soil, tokenId).send({ from: accounts[0] })
+  registryContract.methods.addFarm(name, size, lon, lat, fileHash, soil, tokenId).send({ from: accounts[0] })
     .on('transactionHash', () => {
       loading.status = false
       dispatch(submitting({ ...loading }))
