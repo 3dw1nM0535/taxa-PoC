@@ -36,7 +36,7 @@ contract Registry is ERC721 {
 
   /**
    * @dev addFarm Tokenize farm and add to registry
-   * @param _size, _lon, _lat, _fileHash, _soilType, _tokenId
+   * @param _name, _size, _lon, _lat, _fileHash, _soilType, _tokenId
    */
   function addFarm(
     string memory _name,
