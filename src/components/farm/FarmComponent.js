@@ -12,11 +12,25 @@ import {
   Popup,
   Icon,
   Table,
+  Tab,
 } from 'semantic-ui-react'
 import { truncateAddress } from '../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import GoogleMapReact from 'google-map-react'
 import { LocationPin } from './Location'
+
+import { Harvest, Booking } from '../farm'
+
+const panes = [
+  {
+    menuItem: 'Harvests',
+    render: () => <Tab.Pane><Harvest /></Tab.Pane>
+  },
+  {
+    menuItem: 'Bookings',
+    render: () => <Tab.Pane><Booking /></Tab.Pane>
+  }
+]
 
 export function FarmComponent({ farmData, account }) {
   
@@ -176,6 +190,13 @@ export function FarmComponent({ farmData, account }) {
               }, 3000))} 
             </Segment>
           </Segment.Group>
+        </Grid.Column>
+      </Grid.Row>
+      <Grid.Row>
+        <Grid.Column widths={16}>
+          <Tab
+            panes={panes}
+          />
         </Grid.Column>
       </Grid.Row>
     </Grid>

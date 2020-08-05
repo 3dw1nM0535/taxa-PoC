@@ -114,16 +114,18 @@ class DesktopContainer extends Component {
                             <Label
                               style={{ paddingRight: '2.7em', paddingLeft: '2.7em' }}
                               horizontal color='green'
-                              size='big'
+                              size='large'
                             >
+                              <Icon name='user circle' />
                               Copied
                             </Label>}
 											      {copying &&
                             <Label
                               stype={{ paddingRight: '1em', paddingLeft: '1em' }}
                               horizontal
-                              size='big'
+                              size='large'
                             >
+                              <Icon name='user circle' />
                               {truncateAddress(wallet.address[0], 10)}
                             </Label>}
 										      </span>
