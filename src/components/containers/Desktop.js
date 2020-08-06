@@ -113,7 +113,8 @@ class DesktopContainer extends Component {
 											      {copied &&
                             <Label
                               style={{ paddingRight: '2.7em', paddingLeft: '2.7em' }}
-                              horizontal color='green'
+                              horizontal
+                              color='violet'
                               size='large'
                             >
                               <Icon name='user circle' />
@@ -124,6 +125,7 @@ class DesktopContainer extends Component {
                               stype={{ paddingRight: '1em', paddingLeft: '1em' }}
                               horizontal
                               size='large'
+                              color='violet'
                             >
                               <Icon name='user circle' />
                               {truncateAddress(wallet.address[0], 10)}
@@ -134,7 +136,7 @@ class DesktopContainer extends Component {
 ) : (
 										<Button
 											as='a'
-											color='green'
+											color='violet'
 											onClick={connectWallet}
 										>
                     	<Icon name='plug' />

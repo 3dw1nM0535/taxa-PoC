@@ -1,9 +1,10 @@
 import React from 'react'
-import { Grid, Message, } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import { gql, useQuery } from '@apollo/client'
 
 import { FarmCard, NoFarm } from '../farm' 
 import { LoaderComponent } from '../loading'
+import { ErrorComponent } from '../error'
 
 export function FarmsPage() {
 
@@ -28,11 +29,7 @@ export function FarmsPage() {
   )
 
   if (error) return (
-    <Grid stackable columns={1} style={{ margin: '1em 1em 1em 1em' }}>
-      <Grid.Column width={16}>
-        <Message negative><Message.Header>Encountered error</Message.Header><p>{error.message}</p></Message>
-      </Grid.Column>
-    </Grid>
+    <ErrorComponent error={error} />  
   )
 
   return (

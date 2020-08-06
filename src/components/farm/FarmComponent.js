@@ -81,7 +81,7 @@ export function FarmComponent({ farmData, account }) {
                           <Label
                             as='a'
                             target='blank'
-                            color='grey'
+                            color='violet'
                             href={`https://etherscan.io/address/${farmData.owner}`}
                           >
                             {farmData.owner === undefined ? null : truncateAddress(farmData.owner, 25)}
@@ -107,8 +107,9 @@ export function FarmComponent({ farmData, account }) {
                             {copied &&
                               <Label
                                 as={Button}
-                                horizontal color='green'
+                                horizontal
                                 size='medium'
+                                color='violet'
                               >
                                 Copied
                               </Label>}
@@ -117,6 +118,7 @@ export function FarmComponent({ farmData, account }) {
                                 as={Button}
                                 horizontal
                                 size='medium'
+                                color='violet'
                               >
                                 Copy
                               </Label>}
@@ -193,7 +195,7 @@ export function FarmComponent({ farmData, account }) {
         </Grid.Column>
       </Grid.Row>
       <Grid.Row>
-        <Grid.Column widths={16}>
+        <Grid.Column width={16}>
           <Tab
             panes={panes}
           />
