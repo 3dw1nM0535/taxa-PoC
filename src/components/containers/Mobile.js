@@ -2,7 +2,6 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import {
-  Responsive,
   Segment,
   Menu,
   Container,
@@ -15,12 +14,7 @@ import { connect } from 'react-redux'
 import { connectWallet } from '../../actions'
 import { truncateAddress } from '../../utils'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
-
-const getWidth = () => {
-  const isSSR = typeof window === 'undefined'
-
-  return isSSR ? Responsive.onlyTablet.minWidth : window.innerWidth
-}
+import { Media } from './Media'
 
 class MobileContainer extends Component {
 	state = {
@@ -43,11 +37,7 @@ class MobileContainer extends Component {
     const { sidebarOpened, copying, copied } = this.state
 
     return (
-      <Responsive
-        as={Sidebar.Pushable}
-        getWidth={getWidth}
-        maxWidth={Responsive.onlyMobile.maxWidth}
-      >
+      <Media at='mobile'>
         <Sidebar.Pushable>
         <Sidebar
           as={Menu}
@@ -151,7 +141,7 @@ class MobileContainer extends Component {
           {children}
         </Sidebar.Pusher>
         </Sidebar.Pushable>
-      </Responsive>
+      </Media>
     )
   }
 }
