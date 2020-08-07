@@ -29,7 +29,7 @@ export function FarmHeader({ farm }) {
       <Grid.Row>
         <Grid.Column>
           <Segment placeholder>
-            <Segment basic textAlign='right'>
+            <Segment basic>
               {farm.season === undefined ? (
                 <LabelPlaceholder />
               ) : (
@@ -176,6 +176,10 @@ export function FarmHeader({ farm }) {
                         />
                       )} 
                     </Table.Cell>
+                  </Table.Row>
+                  <Table.Row>
+                    <Table.Cell>Completed Seasons</Table.Cell>
+                    <Table.Cell>{farm.seasons === undefined ? <LabelPlaceholder /> : farm.seasons}</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>
