@@ -1,5 +1,6 @@
 import {
   QUERY_FARM,
+  SEASON_OPEN,
 } from '../types'
 
 export function farm(state = {}, action = {}) {
@@ -8,6 +9,11 @@ export function farm(state = {}, action = {}) {
       return {
         ...state,
         ...action.farm,
+      }
+    case SEASON_OPEN:
+      return {
+        ...state,
+        ...action.resp,
       }
     default:
       return state

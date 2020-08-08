@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
+import Contract from 'web3-eth-contract'
+import Farm from '../../build/Farm.json'
+import { connect } from 'react-redux'
 import makeBlockie from 'ethereum-blockies-base64'
 import {
   Header,
@@ -10,6 +13,9 @@ import {
   Grid,
   Table,
   Popup,
+  Modal,
+  Form,
+  Input,
 } from 'semantic-ui-react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { truncateAddress } from '../../utils'
@@ -18,11 +24,54 @@ import {
   LabelPlaceholder,
   ImagePlaceholder,
 } from './HeaderPlaceholder'
+import { store } from '../../store'
+import { openSeason } from '../../actions'
 
-export function FarmHeader({ farm }) {
+function FarmHeader({ farm, loaded, netId, tokenId, address }) {
 
   const [copying, setCopying] = useState(true)
   const [copied, setCopied] = useState(false)
+  const [buttonLoading, setButtonLoading] = useState(false)
+  const [isModalVisible, setIsModalVisible] = useState(false)
+
+  async function handleOpenSeason() {
+    try {
+      setButtonLoading(true)
+      const networkData = Farm.networks[netId]
+      Contract.setProvider(window.web3.currentProvider)
+      const farmContract = new Contract(Farm.abi, networkData.address)
+      await farmContract.methods.openSeason(tokenId).send({from: address})
+        .on('transactionHash', () => {
+          setButtonLoading(false)
+        })
+        .on('confirmation', async(confirmationNumber, receipt) => {
+          if (confirmationNumber === 1) {
+            const resp = {}
+            resp.season = await farmContract.methods.getTokenSeason(tokenId).call()
+            store.dispatch(openSeason({ ...resp }))
+          }
+        })
+    } catch(error) {
+      setButtonLoading(false)
+      console.log(error)
+    }
+  }
+
+  function handleFarmPreparation() {
+    setIsModalVisible(true)
+  }
+
+  function handleFarmPlanting() {
+    console.log('clicked')
+  }
+
+  function handleFarmHarvesting() {
+    console.log('clicked')
+  }
+
+  function handleNull() {
+    console.log('null happened')
+  }
 
   return (
     <Grid stackable columns={2}>
@@ -51,13 +100,54 @@ export function FarmHeader({ farm }) {
                   fluid
                 />
               )} 
-              <Button
-                color='violet'
-                floated='left'
-                style={{ marginTop: '1em' }}
+              {farm.season === undefined ? <LabelPlaceholder /> : (
+                <Button
+                  color='violet'
+                  loading={buttonLoading}
+                  floated='left'
+                  onClick={loaded && farm.season === 'Dormant' ? () => handleOpenSeason() : 
+                      loaded && farm.season === 'Preparation' ? () => handleFarmPreparation() :
+                      loaded && farm.season === 'Planting' ? () => handleFarmPlanting() :
+                      loaded && farm.season === 'Harvesting' ? () => handleFarmHarvesting() :
+                      handleNull
+                  }
+                  style={{ marginTop: '1em' }}
+                >
+                  {farm.season === 'Dormant' ? 'Open Season' : 
+                      farm.season === 'Preparation' ? 'Complete Preparations' :
+                      farm.season === 'Planting' ? 'Complete Planting' : null
+                  }
+                </Button>
+              )} 
+              <Modal
+                size='mini'
+                open={isModalVisible}
+                dimmer='blurring'
+                onClose={() => setIsModalVisible(false)}
               >
-                Change Season
-              </Button>
+                <Modal.Content>
+                  <Form
+                    onSubmit={(e) => e.preventDefault()}
+                  >
+                    <Form.Field
+                      id='form-input-control-crop'
+                      control={Input}
+                      width={16}
+                      label='Which crop are you planting this season?'
+                      placeholder='Crop'
+                    />
+                    
+                  </Form>
+                </Modal.Content>
+                <Modal.Actions>
+                  <Button
+                    color='violet'
+                    onClick={() => console.log('submitting')}
+                  >
+                    Confirm
+                  </Button>
+                </Modal.Actions>
+              </Modal>
             </Segment>
           </Segment>
         </Grid.Column>
@@ -191,5 +281,20 @@ export function FarmHeader({ farm }) {
 
 FarmHeader.propTypes = {
   farm: PropTypes.object.isRequired,
+  loaded: PropTypes.bool.isRequired,
+  netId: PropTypes.number.isRequired,
+  tokenId: PropTypes.number.isRequired,
+  address: PropTypes.string.isRequired,
 }
+
+function mapStateToProps(state) {
+  return {
+    loaded: state.wallet.loaded,
+    netId: state.network.netId,
+    tokenId: Number(state.farm.token),
+    address: state.wallet.address[0],
+  }
+}
+
+export default connect(mapStateToProps)(FarmHeader)
 

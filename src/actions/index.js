@@ -1,6 +1,7 @@
 import {
   addFarm,
   queryFarm,
+  openSeason,
 } from './farm'
 import { connectWallet, walletFound, disconnectMetaMask, walletChange } from './wallet'
 import {
@@ -25,4 +26,5 @@ export {
   walletFound,
   disconnectMetaMask,
   queryFarm,
+  openSeason,
 }

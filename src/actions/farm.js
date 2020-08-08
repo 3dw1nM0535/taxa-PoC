@@ -6,6 +6,7 @@ import { randomNumber } from '../utils'
 import {
   SUBMITTING,
   QUERY_FARM,
+  SEASON_OPEN,
 } from '../types'
 
 const submitting  = status => ({
@@ -61,5 +62,10 @@ export const addFarm = (name, size, lon, lat, file, soil) => async dispatch => {
 export const queryFarm = farm => ({
   type: QUERY_FARM,
   farm,
+})
+
+export const openSeason = resp => ({
+  type: SEASON_OPEN,
+  resp,
 })
 
