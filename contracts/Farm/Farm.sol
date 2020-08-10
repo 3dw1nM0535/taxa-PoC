@@ -209,7 +209,7 @@ contract Farm is FarmSeason, Book {
     _deposits[_booker] = _bookerDeposit;
     // Apply 3% penalty(amount to refund booker)
     uint256 _refund = _bookerRefund.sub(((uint256(3).div(uint256(100))).mul(_bookerRefund)));
-        // Update bookings
+    // Update bookings
     updateBookings(_booker, _volume);
     // Update harvest
     updateSupply(_tokenId, _volume);
