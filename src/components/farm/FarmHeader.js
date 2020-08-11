@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types'
-import Validator from 'validator'
 import React, { useState } from 'react'
 import Contract from 'web3-eth-contract'
 import Farm from '../../build/Farm.json'
@@ -14,11 +13,6 @@ import {
   Grid,
   Table,
   Popup,
-  Modal,
-  Form,
-  Checkbox,
-  Input,
-  Select,
 } from 'semantic-ui-react'
 import { CopyToClipboard } from 'react-copy-to-clipboard'
 import { truncateAddress } from '../../utils'
@@ -29,24 +23,16 @@ import {
 } from './HeaderPlaceholder'
 import { store } from '../../store'
 import { openSeason } from '../../actions'
+import { PreparationModal } from './PreparationModal'
 
-const options = [
-  { key: 'a', text: 'Artificial Fertilizer', value: 'Artificial' },
-  { key: 'o', text: 'Organic Fertilizer', value: 'Organic' }
-]
 
 function FarmHeader({ farm, loaded, netId, tokenId, account }) {
 
   const [copying, setCopying] = useState(true)
   const [copied, setCopied] = useState(false)
-  const [buttonLoading, setButtonLoading] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
-  const [checkboxChecked, setCheckboxChecked] = useState(false)
-  const [fertilizer, setFertilizer] = useState("")
-  const [fertilizerName, setFertilizerName] = useState("")
-  const [crop, setCrop] = useState("")
-  const [error, setError] = useState({})
-
+  const [buttonLoading, setButtonLoading] = useState(false)
+  
   async function handleOpenSeason() {
     try {
       setButtonLoading(true)
@@ -63,6 +49,9 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
             resp.season = await farmContract.methods.getTokenSeason(tokenId).call()
             store.dispatch(openSeason({ ...resp }))
           }
+        })
+        .on('error', error => {
+          console.log(error)
         })
     } catch(error) {
       setButtonLoading(false)
@@ -82,40 +71,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
     console.log('clicked')
   }
 
-  function handleNull() {
-    console.log('null happened')
-  }
   
-  function handleChange(e, { value }) {
-    setFertilizer(value)
-    setFertilizerName("")
-  }
-  
-  function validate(crop, fertilizer, fertilizerName) {
-    const errors = {}
-    if (Validator.isEmpty(crop) || !Validator.isAlpha(crop.replace(/\s+/g, ''))) errors.crop = 'Invalid crop'
-    if (checkboxChecked) {
-      if (Validator.isEmpty(fertilizer) || !Validator.isAlpha(fertilizer.replace(/\s+/g, ''))) errors.fertilizer = 'Invalid fertilizer input'
-    }
-    if (!Validator.isEmpty(fertilizer) && fertilizer === 'Artificial') {
-      if (Validator.isEmpty(fertilizerName)) errors.fertilizerName = 'Invalid name'
-    }
-    return errors
-  }
-
-  function handleSubmit(e) {
-    e.preventDefault()
-    const error = validate(crop, fertilizer, fertilizerName)
-    setError(error)
-    if (Object.keys(error).length === 0) {
-      if (fertilizer === 'Artificial') {
-        const formattedName = `${fertilizer}(${fertilizerName})`
-        console.log({crop, fertilizer, formattedName})
-      } else if (fertilizer === 'Organic') {
-        console.log({crop, fertilizer})
-      }
-    }
-  }
 
   return (
     <Grid stackable columns={2}>
@@ -144,85 +100,43 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                   fluid
                 />
               )} 
-              {farm.season === undefined ? <LabelPlaceholder /> : (
-                <Button
-                  color='violet'
-                  loading={buttonLoading}
-                  floated='left'
-                  onClick={loaded && farm.season === 'Dormant' ? () => handleOpenSeason() : 
-                      loaded && farm.season === 'Preparation' ? () => handleFarmPreparation() :
-                      loaded && farm.season === 'Planting' ? () => handleFarmPlanting() :
-                      loaded && farm.season === 'Harvesting' ? () => handleFarmHarvesting() :
-                      handleNull
-                  }
-                  style={{ marginTop: '1em' }}
-                >
-                  {farm.season === 'Dormant' ? 'Open Season' : 
-                      farm.season === 'Preparation' ? 'Complete Preparations' :
-                      farm.season === 'Planting' ? 'Complete Planting' : null
-                  }
-                </Button>
-              )} 
-              <Modal
-                size='tiny'
-                open={isModalVisible}
-                onClose={() => setIsModalVisible(false)}
-              >
-                <Modal.Header>Land preparations</Modal.Header>
-                <Modal.Content>
-                  <Form
-                    onSubmit={handleSubmit}
-                  >
-                    <Form.Field
-                      id='form-control-input-crop'
-                      label='Which crop do you choose for this planting season?'
-                      control={Input}
-                      value={crop}
-                      placeholder='Crop selection'
-                      onChange={(e, { value }) => setCrop(value)}
-                      error={error.crop ? { content: `${error.crop}`, pointing: 'above' } : false}
-                    />
-                    <Form.Field
-                      id='form-control-checkbox-fertilizer'
-                      label='Do you use fertilizer during land preparations? (ignore if otherwise)'
-                      control={Checkbox}
-                      onChange={() => setCheckboxChecked(!checkboxChecked)}
-                    />
-                    {checkboxChecked && 
-                      <Form.Field
-                        id='form-control-select-fertilizer'
-                        label='Type of fertilizer used'
-                        control={Select}
-                        options={options}
-                        placeholder='Fertlizer'
-                        onChange={handleChange}
-                        error={error.fertilizer ? { content: `${error.fertilizer}`, pointing: 'above' } : false}
-                      />
-                    }
-                    {fertilizer === 'Artificial' && checkboxChecked &&
-                      <Form.Field
-                        id='form-control-input-artificial-name'
-                        label='Name of the artificial fertilizer?'
-                        control={Input}
-                        value={fertilizerName}
-                        placeholder='Fertilizer name'
-                        onChange={(e, { value }) => setFertilizerName(value)}
-                        error={error.fertilizerName ? { content: `${error.fertilizerName}` } : false}
-                      />
-                    }
-                    <Form.Button control={Button} type='submit' color='violet' content='Confirm Preparations' /> 
-                  </Form>
-                </Modal.Content>
-                <Modal.Actions>
-                  <Button
-                    negative
-                    onClick={() => setIsModalVisible(false)}
-                  >
-                    Close
-                  </Button>
-                  
-                </Modal.Actions>
-              </Modal>
+              {account.address === undefined ? null :
+                  farm.season === undefined ? <LabelPlaceholder /> :
+                  farm.season === 'Dormant' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
+                    <Button
+                      color='violet'
+                      onClick={loaded ? () => handleOpenSeason() : null}
+                    ></Button>
+                  ) :
+                  farm.season === 'Preparation' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
+                    <Button
+                      color='violet'
+                      loading={buttonLoading}
+                      floated='left'
+                      onClick={loaded ? () => handleFarmPreparation() : null}
+                      style={{ marginTop: '1em' }}
+                    >
+                      Preparations
+                    </Button>
+                  ) :
+                  farm.season === 'Planting' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
+                    <Button
+                      color='violet'
+                      onClick={loaded ? () => handleFarmPlanting() : null}
+                    >
+                      Planting
+                    </Button>
+                  ) :
+                  farm.season === 'Harvesting' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
+                    <Button
+                      color='violet'
+                      onClick={loaded ? () => handleFarmHarvesting() : null}
+                    >
+                      Harvesting
+                    </Button>
+                  ) :
+                  null} 
+              <PreparationModal farm={farm} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} /> 
             </Segment>
           </Segment>
         </Grid.Column>
@@ -368,6 +282,7 @@ function mapStateToProps(state) {
     netId: state.network.netId,
     tokenId: Number(state.farm.token),
     account: state.wallet,
+    farm: state.farm,
   }
 }
 
