@@ -212,7 +212,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -231,7 +232,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -255,7 +257,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -274,7 +277,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -293,7 +297,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -312,7 +317,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -331,7 +337,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -436,7 +443,8 @@
       "name": "bookHarvest",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -18140,15 +18148,35 @@
           ],
           "name": "SeasonOpening",
           "type": "event"
+        },
+        "0xe4e37e67a6ba4e17043783620cd641b7f127e2b1f7ff54f0877d979f0c37cca0": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "string",
+              "name": "_tokenState",
+              "type": "string"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_completeSeason",
+              "type": "uint256"
+            }
+          ],
+          "name": "SeasonClosing",
+          "type": "event"
         }
       },
       "links": {},
-      "address": "0x22F4101887c5E450b10De83091b8f06c7863189b",
-      "transactionHash": "0x622d807cb9b18727aa98365648b163a4d614168647992c6ca977514348d9a36b"
+      "address": "0x5252626926F0c80bb49cB818a8746bD2F48fB69F",
+      "transactionHash": "0x9fec1bbe71d406590bc5f7c8ccd9c43d6aa340c0a6f1d274b1e8b7daecc09595"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-12T16:03:55.016Z",
+  "updatedAt": "2020-08-12T16:13:18.227Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "bookHarvest(uint256,uint256)": {
