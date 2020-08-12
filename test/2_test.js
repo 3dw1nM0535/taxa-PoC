@@ -17,9 +17,11 @@ contract("Farm", async accounts => {
   it("Farmer can open season", async() => {
     const result = await instance.openSeason(tokenId);
     const log = result.logs[0].args;
+    const currentSeasonNumber = await instance.currentSeason(tokenId);
     season = await instance.getTokenSeason(tokenId);
     assert.equal(log._seasonNumber.toString(), '1', 'Season number should be 1');
     assert.equal(season, "Preparation", "Season should be Preparation");
+    assert.equal(currentSeasonNumber, 1, "Current season should be 1");
   });
   it("Farm accounts for season preparations(crop selection etc)", async() => {
     const result = await instance.finishPreparations(
@@ -47,7 +49,7 @@ contract("Farm", async accounts => {
     assert.equal(log._seedUsed, "Prostar F1", "seed should be Prostar F1");
     assert.equal(log._expectedYield, "180,000Kg/Acre", "expected yield should be 180,000Kg/Acre");
     assert.equal(log._seedSupplier, "Kenya Seed Company", "seed supplier should be Kenya Seed Company");
-    assert.equal(season, "Harvesting", "Transition season should be Harvesting");
+    assert.equal(season, "Crop Growth", "Transition season should be Harvesting");
   });
   it("Farmer can reap what he/she sow", async() => {
     const result = await instance.createHarvest(
@@ -60,7 +62,7 @@ contract("Farm", async accounts => {
     assert.equal(log._supply, 10, "harvest supply should be 10");
     assert.equal(log._price.toString(), price.toString(), "harvest price should be 1 ether");
     assert.equal(log._tokenId, tokenId, "Token id should be 88473");
-    assert.equal(season, "Booking", "Transition season should be Booking");
+    assert.equal(season, "Harvesting", "Transition season should be Booking");
   });
   it("Booker should not book with 0 volume", async() => {
     try {
@@ -232,6 +234,13 @@ contract("Farm", async accounts => {
     assert.equal(log._supply, 5, "Reverted supply should amount to 5");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 0 ether");
+  });
+  it('Farmer should be able to close season', async() => {
+    const result = await instance.closeSeason(tokenId);
+    const log = result.logs[0].args;
+    const completeSeason = await instance.completedSeasons(tokenId)
+    assert.equal(log._tokenState, "Dormant", "Should reset to Dormant");
+    assert.equal(completeSeason, 1, "Completed seasons should be 1");
   });
 });
 
