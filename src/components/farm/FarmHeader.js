@@ -23,7 +23,9 @@ import {
 } from './HeaderPlaceholder'
 import { store } from '../../store'
 import { openSeason } from '../../actions'
-import { PreparationModal } from './PreparationModal'
+import PreparationModal from './PreparationModal'
+import PlantingModal from './PlantingModal'
+import HarvestModal from './HarvestModal'
 
 
 function FarmHeader({ farm, loaded, netId, tokenId, account }) {
@@ -31,6 +33,8 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
   const [copying, setCopying] = useState(true)
   const [copied, setCopied] = useState(false)
   const [isModalVisible, setIsModalVisible] = useState(false)
+  const [openPlantingModal, setOpenPlantingModal] = useState(false)
+  const [openHarvestModal, setOpenHarvestModal] = useState(false)
   const [buttonLoading, setButtonLoading] = useState(false)
   
   async function handleOpenSeason() {
@@ -64,11 +68,11 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
   }
 
   function handleFarmPlanting() {
-    console.log('clicked')
+    setOpenPlantingModal(true)
   }
 
   function handleFarmHarvesting() {
-    console.log('clicked')
+    setOpenHarvestModal(true)
   }
 
   
@@ -136,7 +140,9 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                     </Button>
                   ) :
                   null} 
-              <PreparationModal farm={farm} isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} /> 
+              <PreparationModal isModalVisible={isModalVisible} setIsModalVisible={setIsModalVisible} /> 
+              <PlantingModal openPlantingModal={openPlantingModal} setOpenPlantingModal={setOpenPlantingModal} />
+              <HarvestModal openHarvestModal={openHarvestModal} setOpenHarvestModal={setOpenHarvestModal} />
             </Segment>
           </Segment>
         </Grid.Column>

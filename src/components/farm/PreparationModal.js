@@ -1,4 +1,4 @@
-//import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import React, { useState } from 'react'
 import Validator from 'validator'
 import {
@@ -9,14 +9,14 @@ import {
   Checkbox,
   Select,
 } from 'semantic-ui-react'
-//import { connect } from 'react-redux'
+import { connect } from 'react-redux'
 
 const options = [
   { key: 'a', text: 'Artificial Fertilizer', value: 'Artificial' },
   { key: 'o', text: 'Organic Fertilizer', value: 'Organic' }
 ]
 
-export function PreparationModal({farm, isModalVisible, setIsModalVisible}) {
+function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
 
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const [fertilizer, setFertilizer] = useState("")
@@ -71,7 +71,7 @@ export function PreparationModal({farm, isModalVisible, setIsModalVisible}) {
       <Modal.Header>Land preparations</Modal.Header>
       <Modal.Content>
         <Form
-          onSubmit={handleSubmit}
+          onSubmit={loaded ? handleSubmit : null}
         >
           <Form.Field
             id='form-control-input-crop'
@@ -125,17 +125,18 @@ export function PreparationModal({farm, isModalVisible, setIsModalVisible}) {
   )
 }
 
-/*
- *PreparationModal.propTypes = {
- *  farm: PropTypes.object.isRequired,
- *}
- *
- *function mapStateToProp(state) {
- *  return {
- *    farm: state.farm,
- *  }
- *}
- *
- *export default connect(mapStateToProp)(PreparationModal)
- */
+PreparationModal.propTypes = {
+  farm: PropTypes.object.isRequired,
+  loaded: PropTypes.bool.isRequired,
+}
+
+function mapStateToProp(state) {
+  return {
+    farm: state.farm,
+    loaded: state.wallet.loaded,
+  }
+}
+
+export default connect(mapStateToProp)(PreparationModal)
+
 
