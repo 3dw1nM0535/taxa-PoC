@@ -20,16 +20,18 @@ abstract contract FarmSeason {
 		uint256 _price,
 		uint256 _tokenId
 	);
+  event SeasonClosing(
+    string _tokenState,
+    uint256 _completeSeason
+  );
 
-
- 
   // Seasons
   enum Season {
     Dormant,
     Preparation,
     Planting,
-    Harvesting,
-    Booking
+    Growth,
+    Harvesting
   }
 
   // Tokennized farm season
@@ -40,7 +42,10 @@ abstract contract FarmSeason {
   // Map tokenized farm to its season
   mapping(uint256 => TokenSeason) public tokenSeason;
   // Map tokenized farm to numberOfSeasons
-  mapping(uint256 => uint256) public numberOfSeason;
+  mapping(uint256 => uint256) public completedSeasons;
+
+  // Current season
+  mapping(uint256 => uint256) public currentSeason;
 
   // Land preparations data
   struct LandPreparations {
@@ -75,5 +80,17 @@ abstract contract FarmSeason {
     _;
     nextSeason(_tokenId);
   }
+
+  /*
+   * @dev openSeason Farmer opens new season
+   * @param _tokenId tokenized farm id
+   */
+  function openSeason(uint256 _tokenId) virtual public;
+
+  /*
+   * @dev closeSeason This reset tokenized farm state after depleting harvest supply
+   * @param _tokenId Tokenized farm id
+   */
+  function closeSeason(uint256 _tokenId) virtual public;
 }
 

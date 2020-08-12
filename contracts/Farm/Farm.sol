@@ -39,8 +39,8 @@ contract Farm is FarmSeason, Book {
     if (Season.Dormant == _season) return "Dormant";
     if (Season.Preparation == _season) return "Preparation";
     if (Season.Planting == _season) return "Planting";
+    if (Season.Growth == _season) return "Crop Growth";
     if (Season.Harvesting == _season) return "Harvesting";
-    if (Season.Booking == _season) return "Booking";
   }
 
   /**
@@ -59,12 +59,13 @@ contract Farm is FarmSeason, Book {
    */
   function openSeason(uint256 _tokenId)
     public
+    override
     inSeason(_tokenId, Season.Dormant)
     transitionSeason(_tokenId)
   {
-    numberOfSeason[_tokenId]++;
+    currentSeason[_tokenId]++;
     emit SeasonOpening(
-      numberOfSeason[_tokenId]
+      currentSeason[_tokenId]
     );
   }
 
@@ -115,7 +116,7 @@ contract Farm is FarmSeason, Book {
     uint256 _tokenId
   )
     public
-    inSeason(_tokenId, Season.Harvesting)
+    inSeason(_tokenId, Season.Growth)
     transitionSeason(_tokenId)
   {
     _harvests[_tokenId] = HarvestType(_supply, _price);
@@ -139,7 +140,7 @@ contract Farm is FarmSeason, Book {
     condition(_volume <= _harvests[_tokenId].supply, "RESTRICTED:amount not possible")
     condition(msg.value == _harvests[_tokenId].price.mul(_volume), "INSUFFICIENT:booking fees")
     payable
-    inSeason(_tokenId, Season.Booking)
+    inSeason(_tokenId, Season.Harvesting)
     override
   {
     _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
@@ -163,7 +164,7 @@ contract Farm is FarmSeason, Book {
     public
     condition(_volume != 0, "INVALID:booking volume")
     condition(_volume <= _bookers[msg.sender], "INVALID:bookings")
-    inSeason(_tokenId, Season.Booking)
+    inSeason(_tokenId, Season.Harvesting)
     override
   {
     // Burn booker volumes
@@ -199,7 +200,7 @@ contract Farm is FarmSeason, Book {
     public
     condition(_volume != 0, "INVALID:volume")
     condition(_volume <= _bookers[_booker], "RESTRICTED:unreasonable volume")
-    inSeason(_tokenId, Season.Booking)
+    inSeason(_tokenId, Season.Harvesting)
     override
   {
     // Assumed refund(to penalize)
@@ -223,4 +224,22 @@ contract Farm is FarmSeason, Book {
     uint256 _reward = _bookerRefund.sub(_refund);
     _payee.transfer(_reward);
   }
+
+  /*
+   * @dev closeSeason This reset tokenized farm season after depleting harvest
+   * @param _tokenId Tokenized farm id
+   */
+  function closeSeason(uint256 _tokenId)
+    public
+    override
+    inSeason(_tokenId, Season.Harvesting)
+    {
+      tokenSeason[_tokenId].season = Season(uint256(0));
+      completedSeasons[_tokenId]++;
+      string memory _newTokenSeason = getTokenSeason(_tokenId);
+      emit SeasonClosing(
+        _newTokenSeason,
+        completedSeasons[_tokenId]
+      );
+    }
 }
