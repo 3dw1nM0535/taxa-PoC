@@ -8,7 +8,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 
-import { networkChange } from './actions'
+import { networkChange, disconnectMetaMask } from './actions'
 
 import 'semantic-ui-css/semantic.min.css'
 
@@ -24,6 +24,8 @@ const client = new ApolloClient({
 
 const isMetaMaskInstalled = typeof window.ethereum !== 'undefined'
 const network = {}
+const { wallet } = store.getState()
+
 if (isMetaMaskInstalled) {
   window.web3 = new Web3(window.ethereum)
   network.netId = window.ethereum.networkVersion
@@ -32,6 +34,9 @@ if (isMetaMaskInstalled) {
   window.web3 = new Web3(window.web3.currentProvider)
   network.netId = window.ethereum.networkVersion
   store.dispatch(networkChange({ ...network }))
+} else if(wallet.loaded && wallet.address === undefined) {
+  // Safe checks
+  store.dispatch(disconnectMetaMask())
 }
 
 ReactDOM.render(
