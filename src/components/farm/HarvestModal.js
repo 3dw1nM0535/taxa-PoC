@@ -103,5 +103,6 @@ function mapStateToProps(state) {
     loaded: state.wallet.loaded,
   }
 }
+
 export default connect(mapStateToProps)(HarvestModal)
 
