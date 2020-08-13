@@ -9,7 +9,7 @@ import {
   SEASON_OPEN,
 } from '../types'
 
-const submitting  = status => ({
+export const submitting  = status => ({
   type: SUBMITTING,
   status,
 })

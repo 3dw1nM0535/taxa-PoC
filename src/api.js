@@ -23,6 +23,39 @@ const ADD_FARM = gql`
     }
   }
 `
+
+const UPDATE_SEASON = gql`
+  mutation UpdateFarmSeason(
+    $token: Int!
+    $season: String!
+  ) {
+    updateFarmSeason(input: {
+      token: $token
+      season: $season
+    }) {
+     updatedAt 
+    }
+  }
+`
+
+const UPDATE_PREPARATIONS = gql`
+  mutation UpdateFarmPreparations(
+    $token: Int!
+    $seasonNumber: Int!
+    $crop: String!
+    $fertilizer: String!
+  ) {
+    updateFarmPreparations(input: {
+      token: $token
+      seasonNumber: $seasonNumber
+      crop: $crop
+      fertilizer: $fertilizer
+    }) {
+      updatedAt
+    }
+  }
+`
+
 export default {
   wallet: {
     addFarm: (_tokenId, _size, _soilType, _owner, _fileHash, _season) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
@@ -37,6 +70,26 @@ export default {
       }
     })
     .then(res => console.log('Success'))
+  },
+  farm: {
+    updateSeason: (_token, _season) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_SEASON),
+      variables: {
+        token: Number(_token),
+        season: String(_season),
+      }
+    })
+    .then(res => console.log('Success')),
+    updatePreparations: (_token, _currentSeason, _crop, _fertilizer) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_PREPARATIONS),
+      variables: {
+        token: Number(_token),
+        seasonNumber: Number(_currentSeason),
+        crop: String(_crop),
+        fertilizer: String(_fertilizer),
+      }
+    })
+    .then(res => console.log('Success')),
   }
 }
 

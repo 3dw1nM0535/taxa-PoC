@@ -83,6 +83,7 @@ function PlantingModal({farm, loaded, openPlantingModal, setOpenPlantingModal}) 
             control={Select}
             options={options}
             value={unit}
+            placeholder='Harvest supply unit'
             onChange={(e, { value }) => setUnit(value)}
             error={error.unit ? { content: `${error.unit}`, pointing: 'above' } : false}
           />

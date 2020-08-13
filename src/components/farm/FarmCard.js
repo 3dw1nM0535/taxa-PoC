@@ -18,7 +18,13 @@ export function FarmCard({ farm }) {
       <Card.Content extra>
         <Label
           content={farm.season}
-          color={farm.season === 'Dormant' ? 'brown' : farm.season === 'Harvest' ? 'green' : ''}
+          color={farm.season === 'Dormant' ? 'grey'
+            : farm.season === 'Preparation' ? 'blue'
+            : farm.season === 'Planting' ? 'brown'
+            : farm.season === 'Crop Growth' ? 'yellow'
+            : farm.season === 'Harvesting' ? 'green'
+            : null}
+          size='tiny'
           horizontal
         />
       </Card.Content>

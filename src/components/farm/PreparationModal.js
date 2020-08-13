@@ -10,13 +10,21 @@ import {
   Select,
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import Farm from '../../build/Farm.json'
+import { initContract } from '../../utils'
+import api from '../../api'
+import { store } from '../../store'
+import { submitting, openSeason } from '../../actions'
+import { useParams } from 'react-router-dom'
 
 const options = [
   { key: 'a', text: 'Artificial Fertilizer', value: 'Artificial' },
   { key: 'o', text: 'Organic Fertilizer', value: 'Organic' }
 ]
 
-function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
+function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible, setIsModalVisible}) {
+
+  const { tokenId } = useParams()
 
   const [checkboxChecked, setCheckboxChecked] = useState(false)
   const [fertilizer, setFertilizer] = useState("")
@@ -32,6 +40,7 @@ function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
   function handleCheckbox() {
     setCheckboxChecked(!checkboxChecked)
     setFertilizer("")
+    setFertilizerName("")
   }
   
   function validate(crop, fertilizer, fertilizerName) {
@@ -46,18 +55,33 @@ function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
     return errors
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const error = validate(crop, fertilizer, fertilizerName)
     setError(error)
     if (Object.keys(error).length === 0) {
-      if (fertilizer === 'Artificial') {
-        const formattedName = `${fertilizer}(${fertilizerName})`
-        console.log({crop, fertilizer, formattedName})
-      } else if (fertilizer === 'Organic') {
-        console.log({crop, fertilizer})
-      } else {
-        console.log({crop})
+      const appLoading = {}
+      appLoading.status = true
+      store.dispatch(submitting({ ...appLoading }))
+      const formattedName = fertilizer === 'Artificial' ? `${fertilizer}(${fertilizerName})` : fertilizer
+      const farmContract = initContract(Farm, netId)
+      try {
+        await farmContract.methods.finishPreparations(tokenId, crop, formattedName).send({from: wallet.address[0]})
+          .on('transactionHash', () => {})
+          .on('confirmation', async(confirmationNumber, receipt) => {
+            if (confirmationNumber === 1) {
+              const {_tokenId, _crop, _fertilizer} = receipt.events.Preparations.returnValues
+              const updatedFarm = {}
+              updatedFarm.season = await farmContract.methods.getTokenSeason(_tokenId).call()
+              updatedFarm.presentSeason = await farmContract.methods.currentSeason(_tokenId).call()
+              const _currentSeason = updatedFarm.presentSeason
+              await api.farm.updatePreparations(_tokenId, _currentSeason, _crop, _fertilizer)
+              store.dispatch(openSeason({ ...updatedFarm }))
+            }
+          })
+          .on('error', error => console.log(error))
+      } catch(error) {
+        console.log(error)
       }
     }
   }
@@ -75,7 +99,7 @@ function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
         >
           <Form.Field
             id='form-control-input-crop'
-            label='Which crop do you choose for this planting season?'
+            label='Which crop did you choose for this planting season?'
             control={Input}
             value={crop}
             placeholder='Crop selection'
@@ -110,7 +134,7 @@ function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
               error={error.fertilizerName ? { content: `${error.fertilizerName}` } : false}
             />
           }
-          <Form.Button control={Button} type='submit' color='violet' content='Confirm Preparations' /> 
+          <Form.Button loading={loading} control={Button} type='submit' color='violet' content='Confirm Preparations' /> 
         </Form>
        </Modal.Content>
        <Modal.Actions>
@@ -128,15 +152,20 @@ function PreparationModal({loaded, farm, isModalVisible, setIsModalVisible}) {
 PreparationModal.propTypes = {
   farm: PropTypes.object.isRequired,
   loaded: PropTypes.bool.isRequired,
+  netId: PropTypes.number.isRequired,
+  wallet: PropTypes.object.isRequired,
+  loading: PropTypes.bool.isRequired,
 }
 
 function mapStateToProp(state) {
   return {
     farm: state.farm,
     loaded: state.wallet.loaded,
+    netId: state.network.netId,
+    wallet: state.wallet,
+    loading: state.loading.status,
   }
 }
 
 export default connect(mapStateToProp)(PreparationModal)
-
 

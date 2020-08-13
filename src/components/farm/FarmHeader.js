@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types'
 import React, { useState } from 'react'
-import Contract from 'web3-eth-contract'
 import Farm from '../../build/Farm.json'
 import { connect } from 'react-redux'
 import makeBlockie from 'ethereum-blockies-base64'
@@ -26,6 +25,8 @@ import { openSeason } from '../../actions'
 import PreparationModal from './PreparationModal'
 import PlantingModal from './PlantingModal'
 import HarvestModal from './HarvestModal'
+import { initContract } from '../../utils'
+import api from '../../api'
 
 
 function FarmHeader({ farm, loaded, netId, tokenId, account }) {
@@ -40,9 +41,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
   async function handleOpenSeason() {
     try {
       setButtonLoading(true)
-      const networkData = Farm.networks[netId]
-      Contract.setProvider(window.web3.currentProvider)
-      const farmContract = new Contract(Farm.abi, networkData.address)
+      const farmContract = initContract(Farm, netId)
       await farmContract.methods.openSeason(tokenId).send({from: account.address[0]})
         .on('transactionHash', () => {
           setButtonLoading(false)
@@ -51,6 +50,8 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
           if (confirmationNumber === 1) {
             const resp = {}
             resp.season = await farmContract.methods.getTokenSeason(tokenId).call()
+            resp.presentSeason = await farmContract.methods.currentSeason(tokenId).call()
+            await api.farm.updateSeason(tokenId, resp.season)
             store.dispatch(openSeason({ ...resp }))
           }
         })
@@ -88,7 +89,13 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
               ) : (
                 <Label
                   content={farm.season}
-                  color='violet'
+                  color={farm.season === 'Dormant' ? 'grey'
+                    : farm.season === 'Preparation' ? 'blue'
+                    : farm.season === 'Planting' ? 'brown'
+                    : farm.season === 'Crop Growth' ? 'yellow'
+                    : farm.season === 'Harvesting' ? 'green'
+                    : null}
+                  size='tiny'
                   horizontal
                 />
               )} 
@@ -108,35 +115,46 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                   farm.season === undefined ? <LabelPlaceholder /> :
                   farm.season === 'Dormant' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
                     <Button
-                      color='violet'
+                      color='grey'
+                      loading={buttonLoading}
+                      floated='left'
                       onClick={loaded ? () => handleOpenSeason() : null}
-                    ></Button>
+                      style={{ marginTop: '1em' }}
+                    >
+                      Open Season
+                    </Button>
                   ) :
                   farm.season === 'Preparation' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
                     <Button
-                      color='violet'
+                      color='blue'
                       loading={buttonLoading}
                       floated='left'
                       onClick={loaded ? () => handleFarmPreparation() : null}
                       style={{ marginTop: '1em' }}
                     >
-                      Preparations
+                      Confirm Preparations
                     </Button>
                   ) :
                   farm.season === 'Planting' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
                     <Button
-                      color='violet'
+                      color='brown'
+                      floated='left'
+                      loading={buttonLoading}
+                      style={{ marginTop: '1em' }}
                       onClick={loaded ? () => handleFarmPlanting() : null}
                     >
-                      Planting
+                      Confirm Planting
                     </Button>
                   ) :
                   farm.season === 'Harvesting' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
                     <Button
                       color='violet'
+                      floated='left'
+                      loading={buttonLoading}
+                      style={{ marginTop: '1em' }}
                       onClick={loaded ? () => handleFarmHarvesting() : null}
                     >
-                      Harvesting
+                      Confirm Harvesting
                     </Button>
                   ) :
                   null} 
@@ -256,7 +274,13 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                       {farm.season === undefined ? <LabelPlaceholder /> : (
                         <Label
                           content={farm.season}
-                          color='violet'
+                          color={farm.season === 'Dormant' ? 'grey'
+                            : farm.season === 'Preparation' ? 'blue'
+                            : farm.season === 'Planting' ? 'brown'
+                            : farm.season === 'Crop Growth' ? 'yellow'
+                            : farm.season === 'Harvesting' ? 'green'
+                            : null}
+                          size='tiny'
                           horizontal
                         />
                       )} 
@@ -264,7 +288,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                   </Table.Row>
                   <Table.Row>
                     <Table.Cell>Completed Seasons</Table.Cell>
-                    <Table.Cell>{farm.seasons === undefined ? <LabelPlaceholder /> : farm.seasons}</Table.Cell>
+                    <Table.Cell>{farm.completeSeasons === undefined ? <LabelPlaceholder /> : farm.completeSeasons}</Table.Cell>
                   </Table.Row>
                 </Table.Body>
               </Table>
