@@ -37,10 +37,12 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
   const [openPlantingModal, setOpenPlantingModal] = useState(false)
   const [openHarvestModal, setOpenHarvestModal] = useState(false)
   const [buttonLoading, setButtonLoading] = useState(false)
+  const [buttonDisabled, setButtonDisabled] = useState(false)
   
   async function handleOpenSeason() {
     try {
       setButtonLoading(true)
+      setButtonDisabled(true)
       const farmContract = initContract(Farm, netId)
       await farmContract.methods.openSeason(tokenId).send({from: account.address[0]})
         .on('transactionHash', () => {
@@ -53,6 +55,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
             resp.presentSeason = await farmContract.methods.currentSeason(tokenId).call()
             await api.farm.updateSeason(tokenId, resp.season)
             store.dispatch(openSeason({ ...resp }))
+            setButtonDisabled(false)
           }
         })
         .on('error', error => {
@@ -92,7 +95,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                   color={farm.season === 'Dormant' ? 'grey'
                     : farm.season === 'Preparation' ? 'blue'
                     : farm.season === 'Planting' ? 'brown'
-                    : farm.season === 'Crop Growth' ? 'yellow'
+                    : farm.season === 'Crop Growth' ? 'red'
                     : farm.season === 'Harvesting' ? 'green'
                     : null}
                   size='tiny'
@@ -119,6 +122,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                       loading={buttonLoading}
                       floated='left'
                       onClick={loaded ? () => handleOpenSeason() : null}
+                      disabled={buttonDisabled}
                       style={{ marginTop: '1em' }}
                     >
                       Open Season
@@ -146,15 +150,26 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                       Confirm Planting
                     </Button>
                   ) :
-                  farm.season === 'Harvesting' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
+                  farm.season === 'Crop Growth' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
                     <Button
-                      color='violet'
+                      color='red'
                       floated='left'
                       loading={buttonLoading}
                       style={{ marginTop: '1em' }}
                       onClick={loaded ? () => handleFarmHarvesting() : null}
                     >
-                      Confirm Harvesting
+                      Confirm Harvest 
+                    </Button>
+                  ) :
+                  farm.season === 'Harvesting' && String(account.address[0]) === String(farm.owner).toLowerCase() ? (
+                    <Button
+                      color='red'
+                      floated='left'
+                      loading={buttonLoading}
+                      style={{ marginTop: '1em' }}
+                      onClick={loaded ? () => console.log('Closing...') : null}
+                    >
+                      Close Season
                     </Button>
                   ) :
                   null} 
@@ -277,7 +292,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
                           color={farm.season === 'Dormant' ? 'grey'
                             : farm.season === 'Preparation' ? 'blue'
                             : farm.season === 'Planting' ? 'brown'
-                            : farm.season === 'Crop Growth' ? 'yellow'
+                            : farm.season === 'Crop Growth' ? 'red'
                             : farm.season === 'Harvesting' ? 'green'
                             : null}
                           size='tiny'

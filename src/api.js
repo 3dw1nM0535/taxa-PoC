@@ -38,6 +38,26 @@ const UPDATE_SEASON = gql`
   }
 `
 
+const UPDATE_PLANTINGS = gql`
+  mutation UpdateFarmPlantings(
+    $seedUsed: String!
+    $expectedYield: String!
+    $seasonNumber: Int!
+    $token: Int!
+    $seedSupplier: String!
+  ) {
+    updateFarmPlantings(input: {
+      seedUsed: $seedUsed
+      expectedYield: $expectedYield
+      seasonNumber: $seasonNumber
+      token: $token
+      seedSupplier: $seedSupplier
+    }) {
+      token
+    }
+  }
+`
+
 const UPDATE_PREPARATIONS = gql`
   mutation UpdateFarmPreparations(
     $token: Int!
@@ -87,6 +107,17 @@ export default {
         seasonNumber: Number(_currentSeason),
         crop: String(_crop),
         fertilizer: String(_fertilizer),
+      }
+    })
+    .then(res => console.log('Success')),
+    updatePlantings: (_seedUsed, _expectedYield, _currentSeason, _tokenId, _seedSupplier) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_PLANTINGS),
+      variables: {
+        seedUsed: String(_seedUsed),
+        expectedYield: String(_expectedYield),
+        seasonNumber: Number(_currentSeason),
+        token: Number(_tokenId),
+        seedSupplier: String(_seedSupplier),
       }
     })
     .then(res => console.log('Success')),

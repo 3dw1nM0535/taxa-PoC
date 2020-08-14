@@ -8,6 +8,7 @@ import {
   Select,
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import Validator from 'validator'
 
 const options = [
   { key: 'kg', text: 'kilogram', value: 'kg' },
@@ -15,18 +16,19 @@ const options = [
   { key: 't', text: 'tonne', value: 'tonne' }
 ]
 
-function HarvestModal({loaded, farm, openHarvestModal, setOpenHarvestModal}) {
+function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenHarvestModal}) {
 
   const [supply, setSupply] = useState(0)
   const [price, setPrice] = useState("")
   const [unit, setUnit] = useState("")
   const [error, setError] = useState({})
+  const [buttonDisabled, setButtonDisabled] = useState(false)
 
   function validate(supply, price, unit) {
     const errors = {}
     if (supply <= 0) errors.supply = 'Supply cannot be 0'
     if (price <= 0) errors.price = 'Price cannot be 0'
-    if (validate.isEmpty(unit)) errors.unit = 'Invalid unit'
+    if (Validator.isEmpty(unit)) errors.unit = 'Invalid unit'
     return errors
   }
 
@@ -35,14 +37,15 @@ function HarvestModal({loaded, farm, openHarvestModal, setOpenHarvestModal}) {
     const error = validate(supply, price, unit)
     setError(error)
     if (Object.keys(error).length === 0) {
-      console.log('submitting...')
+      const formattedSupply = `${supply}${unit}`
+      console.log({formattedSupply, price})
     }
   }
 
   return (
     <Modal
       size='tiny'
-      open={farm.seaon === 'Harvesting' && openHarvestModal}
+      open={farm.season === 'Crop Growth' && openHarvestModal}
     >
       <Modal.Header>Harvesting</Modal.Header>
       <Modal.Content>
@@ -61,6 +64,8 @@ function HarvestModal({loaded, farm, openHarvestModal, setOpenHarvestModal}) {
           <Form.Field
             id='form-control-select-supply-unit'
             control={Select}
+            label='Supply unit?'
+            placeholder='kg/g/tonnes'
             options={options}
             value={unit}
             onChange={(e, { value }) => setUnit(value)}
@@ -69,21 +74,21 @@ function HarvestModal({loaded, farm, openHarvestModal, setOpenHarvestModal}) {
           <Form.Field
             id='form-control-input-price'
             control={Input}
+            label='What is your price per supply?'
             type='number'
-            lable='Price per supply?'
             value={price}
             onChange={(e, { value }) => setPrice(value)}
             error={error.price ? { content: `${error.price}`, pointing: 'above' } : false}
           />
-          <Form.Button control={Button} type='submit' color='violet' content='Confirm Harvest' />
+          <Form.Button disabled={buttonDisabled} loading={loading} control={Button} type='submit' color='violet' content='Confirm Harvest' />
         </Form>
       </Modal.Content>
       <Modal.Actions>
         <Button
-          color='violet'
+          color='red'
           onClick={() => setOpenHarvestModal(false)}
         >
-          Confirm Harvest
+          Close
         </Button>
       </Modal.Actions>
     </Modal>
@@ -93,6 +98,8 @@ function HarvestModal({loaded, farm, openHarvestModal, setOpenHarvestModal}) {
 HarvestModal.propTypes = {
   farm: PropTypes.object.isRequired,
   loaded: PropTypes.bool.isRequired,
+  loading: PropTypes.bool.isRequired,
+  wallet: PropTypes.object.isRequired,
   openHarvestModal: PropTypes.bool.isRequired,
   setOpenHarvestModal: PropTypes.func.isRequired,
 }
@@ -101,6 +108,8 @@ function mapStateToProps(state) {
   return {
     farm: state.farm,
     loaded: state.wallet.loaded,
+    loading: state.loading.status,
+    wallet: state.wallet,
   }
 }
 

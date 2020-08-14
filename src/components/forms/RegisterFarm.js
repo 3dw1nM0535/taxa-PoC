@@ -131,7 +131,7 @@ function RegisterFarm({ addFarm, loadingStatus, walletLoaded, longitude, latitud
         error={error.file ? { content: `${error.file}`, pointing: 'above' } : false}
       />
       {error.location && <span className='error--span'>{error.location}</span>}
-      <Form.Button control={Button} type='submit' color='violet' content='Register' />
+      <Form.Button loading={loadingStatus} disabled={loadingStatus} control={Button} type='submit' color='violet' content='Register' />
     </Form>
   )
 }

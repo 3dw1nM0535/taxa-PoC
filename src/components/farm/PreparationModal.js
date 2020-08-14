@@ -31,6 +31,7 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
   const [fertilizerName, setFertilizerName] = useState("")
   const [crop, setCrop] = useState("")
   const [error, setError] = useState({})
+  const [buttonDisabled, setButtonDisabled] = useState(false)
 
   function handleChange(e, { value }) {
     setFertilizer(value)
@@ -63,11 +64,15 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
       const appLoading = {}
       appLoading.status = true
       store.dispatch(submitting({ ...appLoading }))
+      setButtonDisabled(true)
       const formattedName = fertilizer === 'Artificial' ? `${fertilizer}(${fertilizerName})` : fertilizer
       const farmContract = initContract(Farm, netId)
       try {
         await farmContract.methods.finishPreparations(tokenId, crop, formattedName).send({from: wallet.address[0]})
-          .on('transactionHash', () => {})
+          .on('transactionHash', () => {
+            appLoading.status = false
+            store.dispatch(submitting({ ...appLoading }))
+          })
           .on('confirmation', async(confirmationNumber, receipt) => {
             if (confirmationNumber === 1) {
               const {_tokenId, _crop, _fertilizer} = receipt.events.Preparations.returnValues
@@ -75,8 +80,10 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
               updatedFarm.season = await farmContract.methods.getTokenSeason(_tokenId).call()
               updatedFarm.presentSeason = await farmContract.methods.currentSeason(_tokenId).call()
               const _currentSeason = updatedFarm.presentSeason
+              await api.farm.updateSeason(_tokenId, updatedFarm.season)
               await api.farm.updatePreparations(_tokenId, _currentSeason, _crop, _fertilizer)
               store.dispatch(openSeason({ ...updatedFarm }))
+              setButtonDisabled(false)
             }
           })
           .on('error', error => console.log(error))
@@ -134,7 +141,7 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
               error={error.fertilizerName ? { content: `${error.fertilizerName}` } : false}
             />
           }
-          <Form.Button loading={loading} control={Button} type='submit' color='violet' content='Confirm Preparations' /> 
+          <Form.Button disabled={buttonDisabled} loading={loading} control={Button} type='submit' color='violet' content='Confirm Preparations' /> 
         </Form>
        </Modal.Content>
        <Modal.Actions>

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   Button,
@@ -10,12 +11,19 @@ import { gql, useQuery } from '@apollo/client'
 
 import { LoaderComponent } from '../loading'
 import { ErrorComponent } from '../error'
+import { connect } from 'react-redux'
 
-export function Harvest() {
+function Harvest({ farm }) {
 
   const GET_SEASONS = gql`
-    query GetSeasons {
-      getSeasons {
+    query GetSeasons(
+      $token: Int!
+      $seasonNumber: Int!
+    ) {
+      getSeasons(input: {
+        token: $token
+        seasonNumber: $seasonNumber
+      }) {
         id
         token
         crop
@@ -29,7 +37,12 @@ export function Harvest() {
     }
   `
 
-  const { loading, data, error } = useQuery(GET_SEASONS)
+  const { loading, data, error } = useQuery(GET_SEASONS, {
+    variables: {
+      token: `${farm.token !== undefined ? +farm.token : 0}`,
+      seasonNumber: `${farm.presentSeason !== undefined ? +farm.presentSeason : 0}`,
+    }
+  })
   
   if (loading) return (
     <>
@@ -39,7 +52,7 @@ export function Harvest() {
 
   if (error) return (
     <>
-      <ErrorComponent error />
+      <ErrorComponent error={error} />
     </>
   )
 
@@ -92,4 +105,16 @@ export function Harvest() {
     </>
   )
 }
+
+Harvest.propTypes = {
+  farm: PropTypes.object.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    farm: state.farm,
+  }
+}
+
+export default connect(mapStateToProps)(Harvest)
 

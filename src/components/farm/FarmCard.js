@@ -21,7 +21,7 @@ export function FarmCard({ farm }) {
           color={farm.season === 'Dormant' ? 'grey'
             : farm.season === 'Preparation' ? 'blue'
             : farm.season === 'Planting' ? 'brown'
-            : farm.season === 'Crop Growth' ? 'yellow'
+            : farm.season === 'Crop Growth' ? 'red'
             : farm.season === 'Harvesting' ? 'green'
             : null}
           size='tiny'
