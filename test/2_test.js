@@ -23,6 +23,13 @@ contract("Farm", async accounts => {
     assert.equal(season, "Preparation", "Season should be Preparation");
     assert.equal(currentSeasonNumber, 1, "Current season should be 1");
   });
+  it("Edge Case(not in season edge case)", async() => {
+    try {
+      await instance.closeSeason(tokenId);
+    } catch(error) {
+      assert.equal(error.reason, "INVALID:season to do this", "should fail with reason");
+    }
+  });
   it("Farm accounts for season preparations(crop selection etc)", async() => {
     const result = await instance.finishPreparations(
       tokenId,
@@ -34,7 +41,19 @@ contract("Farm", async accounts => {
     assert.equal(log._tokenId, tokenId, "Token id should be 88473")
     assert.equal(log._crop, "Tomatoes", "Crop selection should be Tomatoes");
     assert.equal(log._fertilizer, "Jobe's Organics 9026 Fertilizer");
-    assert.equal(season, "Planting", "Seaon transition should be Planting");
+    assert.equal(season, "Planting", "Season transition should be Planting");
+  });
+  it("Edge Case(not in season edge case)", async() => {
+    try {
+      await instance.createHarvest(
+        10,
+        price,
+        "kg",
+        tokenId
+      );
+    } catch(error) {
+      assert.equal(error.reason, "INVALID:season to do this", "should fail with reason");
+    }
   });
   it("Farm accounts for plantings(seeds, supplier etc)", async() => {
     const result = await instance.finishPlanting(
@@ -55,6 +74,7 @@ contract("Farm", async accounts => {
     const result = await instance.createHarvest(
       10,
       price,
+      "kg",
       tokenId
     );
     const log = result.logs[0].args;
@@ -62,6 +82,7 @@ contract("Farm", async accounts => {
     assert.equal(log._supply, 10, "harvest supply should be 10");
     assert.equal(log._price.toString(), price.toString(), "harvest price should be 1 ether");
     assert.equal(log._tokenId, tokenId, "Token id should be 88473");
+    assert.equal(log._supplyUnit, "kg", "Supply unit should be kilogram");
     assert.equal(season, "Harvesting", "Transition season should be Booking");
   });
   it("Booker should not book with 0 volume", async() => {
