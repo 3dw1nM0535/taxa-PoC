@@ -113,16 +113,18 @@ contract Farm is FarmSeason, Book {
   function createHarvest(
     uint256 _supply,
     uint256 _price,
+    string memory _supplyUnit,
     uint256 _tokenId
   )
     public
     inSeason(_tokenId, Season.Growth)
     transitionSeason(_tokenId)
   {
-    _harvests[_tokenId] = HarvestType(_supply, _price);
+    _harvests[_tokenId] = HarvestType(_supply, _price, _supplyUnit);
     emit Harvesting(
       _harvests[_tokenId].supply,
       _harvests[_tokenId].price,
+      _harvests[_tokenId].supplyUnit,
       _tokenId
     );
   }

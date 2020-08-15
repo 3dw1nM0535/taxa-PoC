@@ -18,6 +18,12 @@
         },
         {
           "indexed": false,
+          "internalType": "string",
+          "name": "_supplyUnit",
+          "type": "string"
+        },
+        {
+          "indexed": false,
           "internalType": "uint256",
           "name": "_tokenId",
           "type": "uint256"
@@ -198,27 +204,27 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.8+commit.0bbfe453\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"Harvesting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedUsed\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_expectedYield\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedSupplier\",\"type\":\"string\"}],\"name\":\"Planting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_crop\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_fertilizer\",\"type\":\"string\"}],\"name\":\"Preparations\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_tokenState\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_completeSeason\",\"type\":\"uint256\"}],\"name\":\"SeasonClosing\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_seasonNumber\",\"type\":\"uint256\"}],\"name\":\"SeasonOpening\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"closeSeason\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"completedSeasons\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"currentSeason\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"openSeason\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"tokenSeason\",\"outputs\":[{\"internalType\":\"enum FarmSeason.Season\",\"name\":\"season\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol\":\"FarmSeason\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol\":{\"keccak256\":\"0x05c2c79f550360a9ede1d508f2e6b56af566ef2c21db377abd1a58873231240b\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://f2515b62c8a1e2b817940d3fe5a51fb5cbb566aa39b21006c42411c8da7b62d4\",\"dweb:/ipfs/QmYe5T8Bq8RJTxeqEZFeHyfohV9TBP4zB3tteCNSyyfVFp\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.8+commit.0bbfe453\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_price\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_supplyUnit\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"Harvesting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedUsed\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_expectedYield\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_seedSupplier\",\"type\":\"string\"}],\"name\":\"Planting\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_crop\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_fertilizer\",\"type\":\"string\"}],\"name\":\"Preparations\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"string\",\"name\":\"_tokenState\",\"type\":\"string\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_completeSeason\",\"type\":\"uint256\"}],\"name\":\"SeasonClosing\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_seasonNumber\",\"type\":\"uint256\"}],\"name\":\"SeasonOpening\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"closeSeason\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"completedSeasons\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"currentSeason\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"openSeason\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"tokenSeason\",\"outputs\":[{\"internalType\":\"enum FarmSeason.Season\",\"name\":\"season\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol\":\"FarmSeason\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol\":{\"keccak256\":\"0x7df628e8a4f4bef08635027046082d582c0a4601451000d8a95029b52f90f0b0\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9627d0c2572deb2479e83ef49e08544b132ef3840f6e13a0f877b74661d5d42d\",\"dweb:/ipfs/QmepwVx6KR8AkCcytpXKHGMF61JPUzFSEV1NmwozNUnJUU\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.4.22 <0.7.0;\n\nabstract contract FarmSeason {\n\n  // Events\n  event SeasonOpening(\n    uint256 _seasonNumber\n  );\n  event Preparations(uint256 _tokenId, string _crop, string _fertilizer);\n  event Planting(\n    uint256 _tokenId,\n    string _seedUsed,\n    string _expectedYield,\n    string _seedSupplier\n  );\n  event Harvesting(\n\t\tuint256 _supply,\n\t\tuint256 _price,\n\t\tuint256 _tokenId\n\t);\n  event SeasonClosing(\n    string _tokenState,\n    uint256 _completeSeason\n  );\n\n  // Seasons\n  enum Season {\n    Dormant,\n    Preparation,\n    Planting,\n    Growth,\n    Harvesting\n  }\n\n  // Tokennized farm season\n  struct TokenSeason {\n    Season season;\n  }\n\n  // Map tokenized farm to its season\n  mapping(uint256 => TokenSeason) public tokenSeason;\n  // Map tokenized farm to numberOfSeasons\n  mapping(uint256 => uint256) public completedSeasons;\n\n  // Current season\n  mapping(uint256 => uint256) public currentSeason;\n\n  // Land preparations data\n  struct LandPreparations {\n    string crop;\n    string fertilizer;\n  }\n\n  // Planting data\n  struct PlantingType {\n    string seedUsed;\n    string expectedYield;\n    string seedSupplier;\n  }\n  \n  // Harvest type\n\tstruct HarvestType {\n\t\tuint256 supply;\n\t\tuint256 price;\n\t}\n\n  modifier inSeason(uint256 _tokenId, Season _season) {\n    require(_season == tokenSeason[_tokenId].season, \"INVALID:season to do this\");\n    _;\n  }\n\n  // Proceed to the next season\n  function nextSeason(uint256 _tokenId) internal {\n    tokenSeason[_tokenId].season = Season(uint256(tokenSeason[_tokenId].season) + 1);\n  }\n\n  modifier transitionSeason(uint256 _tokenId) {\n    _;\n    nextSeason(_tokenId);\n  }\n\n  /*\n   * @dev openSeason Farmer opens new season\n   * @param _tokenId tokenized farm id\n   */\n  function openSeason(uint256 _tokenId) virtual public;\n\n  /*\n   * @dev closeSeason This reset tokenized farm state after depleting harvest supply\n   * @param _tokenId Tokenized farm id\n   */\n  function closeSeason(uint256 _tokenId) virtual public;\n}\n\n",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.4.22 <0.7.0;\n\nabstract contract FarmSeason {\n\n  // Events\n  event SeasonOpening(\n    uint256 _seasonNumber\n  );\n  event Preparations(uint256 _tokenId, string _crop, string _fertilizer);\n  event Planting(\n    uint256 _tokenId,\n    string _seedUsed,\n    string _expectedYield,\n    string _seedSupplier\n  );\n  event Harvesting(\n\t\tuint256 _supply,\n\t\tuint256 _price,\n    string _supplyUnit,\n\t\tuint256 _tokenId\n\t);\n  event SeasonClosing(\n    string _tokenState,\n    uint256 _completeSeason\n  );\n\n  // Seasons\n  enum Season {\n    Dormant,\n    Preparation,\n    Planting,\n    Growth,\n    Harvesting\n  }\n\n  // Tokennized farm season\n  struct TokenSeason {\n    Season season;\n  }\n\n  // Map tokenized farm to its season\n  mapping(uint256 => TokenSeason) public tokenSeason;\n  // Map tokenized farm to numberOfSeasons\n  mapping(uint256 => uint256) public completedSeasons;\n\n  // Current season\n  mapping(uint256 => uint256) public currentSeason;\n\n  // Land preparations data\n  struct LandPreparations {\n    string crop;\n    string fertilizer;\n  }\n\n  // Planting data\n  struct PlantingType {\n    string seedUsed;\n    string expectedYield;\n    string seedSupplier;\n  }\n  \n  // Harvest type\n\tstruct HarvestType {\n\t\tuint256 supply;\n\t\tuint256 price;\n    string supplyUnit;\n\t}\n\n  modifier inSeason(uint256 _tokenId, Season _season) {\n    require(_season == tokenSeason[_tokenId].season, \"INVALID:season to do this\");\n    _;\n  }\n\n  // Proceed to the next season\n  function nextSeason(uint256 _tokenId) internal {\n    tokenSeason[_tokenId].season = Season(uint256(tokenSeason[_tokenId].season) + 1);\n  }\n\n  modifier transitionSeason(uint256 _tokenId) {\n    _;\n    nextSeason(_tokenId);\n  }\n\n  /*\n   * @dev openSeason Farmer opens new season\n   * @param _tokenId tokenized farm id\n   */\n  function openSeason(uint256 _tokenId) virtual public;\n\n  /*\n   * @dev closeSeason This reset tokenized farm state after depleting harvest supply\n   * @param _tokenId Tokenized farm id\n   */\n  function closeSeason(uint256 _tokenId) virtual public;\n}\n\n",
   "sourcePath": "/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol",
   "ast": {
     "absolutePath": "/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol",
     "exportedSymbols": {
       "FarmSeason": [
-        1054
+        1067
       ]
     },
-    "id": 1055,
+    "id": 1068,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 918,
+        "id": 927,
         "literals": [
           "solidity",
           ">=",
@@ -238,9 +244,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1054,
+        "id": 1067,
         "linearizedBaseContracts": [
-          1054
+          1067
         ],
         "name": "FarmSeason",
         "nodeType": "ContractDefinition",
@@ -248,22 +254,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 922,
+            "id": 931,
             "name": "SeasonOpening",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 921,
+              "id": 930,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 920,
+                  "id": 929,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_seasonNumber",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 922,
+                  "scope": 931,
                   "src": "138:21:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -272,7 +278,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 919,
+                    "id": 928,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "138:7:5",
@@ -292,22 +298,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 930,
+            "id": 939,
             "name": "Preparations",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 929,
+              "id": 938,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 924,
+                  "id": 933,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 930,
+                  "scope": 939,
                   "src": "186:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -316,7 +322,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 923,
+                    "id": 932,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "186:7:5",
@@ -330,13 +336,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 926,
+                  "id": 935,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_crop",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 930,
+                  "scope": 939,
                   "src": "204:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -345,7 +351,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 925,
+                    "id": 934,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "204:6:5",
@@ -359,13 +365,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 928,
+                  "id": 937,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_fertilizer",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 930,
+                  "scope": 939,
                   "src": "218:18:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -374,7 +380,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 927,
+                    "id": 936,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "218:6:5",
@@ -394,22 +400,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 940,
+            "id": 949,
             "name": "Planting",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 939,
+              "id": 948,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 932,
+                  "id": 941,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "261:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -418,7 +424,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 931,
+                    "id": 940,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "261:7:5",
@@ -432,13 +438,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 934,
+                  "id": 943,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_seedUsed",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "283:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -447,7 +453,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 933,
+                    "id": 942,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "283:6:5",
@@ -461,13 +467,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 936,
+                  "id": 945,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_expectedYield",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "305:21:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -476,7 +482,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 935,
+                    "id": 944,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "305:6:5",
@@ -490,13 +496,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 938,
+                  "id": 947,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_seedSupplier",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "332:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -505,7 +511,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 937,
+                    "id": 946,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "332:6:5",
@@ -525,22 +531,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 948,
+            "id": 959,
             "name": "Harvesting",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 947,
+              "id": 958,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 942,
+                  "id": 951,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_supply",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 948,
+                  "scope": 959,
                   "src": "380:15:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -549,7 +555,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 941,
+                    "id": 950,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "380:7:5",
@@ -563,13 +569,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 944,
+                  "id": 953,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_price",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 948,
+                  "scope": 959,
                   "src": "399:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -578,7 +584,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 943,
+                    "id": 952,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "399:7:5",
@@ -592,58 +598,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 946,
+                  "id": 955,
                   "indexed": false,
                   "mutability": "mutable",
-                  "name": "_tokenId",
+                  "name": "_supplyUnit",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 948,
-                  "src": "417:16:5",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 945,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "417:7:5",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "376:60:5"
-            },
-            "src": "360:77:5"
-          },
-          {
-            "anonymous": false,
-            "documentation": null,
-            "id": 954,
-            "name": "SeasonClosing",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 953,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 950,
-                  "indexed": false,
-                  "mutability": "mutable",
-                  "name": "_tokenState",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 954,
-                  "src": "465:18:5",
+                  "scope": 959,
+                  "src": "419:18:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -651,10 +613,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 949,
+                    "id": 954,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "465:6:5",
+                    "src": "419:6:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -665,14 +627,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 952,
+                  "id": 957,
                   "indexed": false,
                   "mutability": "mutable",
-                  "name": "_completeSeason",
+                  "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 954,
-                  "src": "489:23:5",
+                  "scope": 959,
+                  "src": "441:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -680,10 +642,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 951,
+                    "id": 956,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "489:7:5",
+                    "src": "441:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -693,77 +655,150 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "459:57:5"
+              "src": "376:84:5"
             },
-            "src": "440:77:5"
+            "src": "360:101:5"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 965,
+            "name": "SeasonClosing",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 964,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 961,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "_tokenState",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 965,
+                  "src": "489:18:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 960,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "489:6:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 963,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "_completeSeason",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 965,
+                  "src": "513:23:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 962,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "513:7:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "483:57:5"
+            },
+            "src": "464:77:5"
           },
           {
             "canonicalName": "FarmSeason.Season",
-            "id": 960,
+            "id": 971,
             "members": [
               {
-                "id": 955,
+                "id": 966,
                 "name": "Dormant",
                 "nodeType": "EnumValue",
-                "src": "552:7:5"
+                "src": "576:7:5"
               },
               {
-                "id": 956,
+                "id": 967,
                 "name": "Preparation",
                 "nodeType": "EnumValue",
-                "src": "565:11:5"
+                "src": "589:11:5"
               },
               {
-                "id": 957,
+                "id": 968,
                 "name": "Planting",
                 "nodeType": "EnumValue",
-                "src": "582:8:5"
+                "src": "606:8:5"
               },
               {
-                "id": 958,
+                "id": 969,
                 "name": "Growth",
                 "nodeType": "EnumValue",
-                "src": "596:6:5"
+                "src": "620:6:5"
               },
               {
-                "id": 959,
+                "id": 970,
                 "name": "Harvesting",
                 "nodeType": "EnumValue",
-                "src": "608:10:5"
+                "src": "632:10:5"
               }
             ],
             "name": "Season",
             "nodeType": "EnumDefinition",
-            "src": "534:88:5"
+            "src": "558:88:5"
           },
           {
             "canonicalName": "FarmSeason.TokenSeason",
-            "id": 963,
+            "id": 974,
             "members": [
               {
                 "constant": false,
-                "id": 962,
+                "id": 973,
                 "mutability": "mutable",
                 "name": "season",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 963,
-                "src": "679:13:5",
+                "scope": 974,
+                "src": "703:13:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_Season_$960",
+                  "typeIdentifier": "t_enum$_Season_$971",
                   "typeString": "enum FarmSeason.Season"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 961,
+                  "id": 972,
                   "name": "Season",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 960,
-                  "src": "679:6:5",
+                  "referencedDeclaration": 971,
+                  "src": "703:6:5",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Season_$960",
+                    "typeIdentifier": "t_enum$_Season_$971",
                     "typeString": "enum FarmSeason.Season"
                   }
                 },
@@ -773,53 +808,53 @@
             ],
             "name": "TokenSeason",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "654:43:5",
+            "scope": 1067,
+            "src": "678:43:5",
             "visibility": "public"
           },
           {
             "constant": false,
             "functionSelector": "1ccd03ac",
-            "id": 967,
+            "id": 978,
             "mutability": "mutable",
             "name": "tokenSeason",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1054,
-            "src": "739:50:5",
+            "scope": 1067,
+            "src": "763:50:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
               "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason)"
             },
             "typeName": {
-              "id": 966,
+              "id": 977,
               "keyType": {
-                "id": 964,
+                "id": 975,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "747:7:5",
+                "src": "771:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "739:31:5",
+              "src": "763:31:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                 "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 965,
+                "id": 976,
                 "name": "TokenSeason",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 963,
-                "src": "758:11:5",
+                "referencedDeclaration": 974,
+                "src": "782:11:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_TokenSeason_$963_storage_ptr",
+                  "typeIdentifier": "t_struct$_TokenSeason_$974_storage_ptr",
                   "typeString": "struct FarmSeason.TokenSeason"
                 }
               }
@@ -830,13 +865,13 @@
           {
             "constant": false,
             "functionSelector": "c07e7167",
-            "id": 971,
+            "id": 982,
             "mutability": "mutable",
             "name": "completedSeasons",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1054,
-            "src": "836:51:5",
+            "scope": 1067,
+            "src": "860:51:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -844,28 +879,28 @@
               "typeString": "mapping(uint256 => uint256)"
             },
             "typeName": {
-              "id": 970,
+              "id": 981,
               "keyType": {
-                "id": 968,
+                "id": 979,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "844:7:5",
+                "src": "868:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "836:27:5",
+              "src": "860:27:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
                 "typeString": "mapping(uint256 => uint256)"
               },
               "valueType": {
-                "id": 969,
+                "id": 980,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "855:7:5",
+                "src": "879:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -878,13 +913,13 @@
           {
             "constant": false,
             "functionSelector": "a54d0809",
-            "id": 975,
+            "id": 986,
             "mutability": "mutable",
             "name": "currentSeason",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1054,
-            "src": "912:48:5",
+            "scope": 1067,
+            "src": "936:48:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -892,28 +927,28 @@
               "typeString": "mapping(uint256 => uint256)"
             },
             "typeName": {
-              "id": 974,
+              "id": 985,
               "keyType": {
-                "id": 972,
+                "id": 983,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "920:7:5",
+                "src": "944:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "912:27:5",
+              "src": "936:27:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
                 "typeString": "mapping(uint256 => uint256)"
               },
               "valueType": {
-                "id": 973,
+                "id": 984,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "931:7:5",
+                "src": "955:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -925,17 +960,17 @@
           },
           {
             "canonicalName": "FarmSeason.LandPreparations",
-            "id": 980,
+            "id": 991,
             "members": [
               {
                 "constant": false,
-                "id": 977,
+                "id": 988,
                 "mutability": "mutable",
                 "name": "crop",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 980,
-                "src": "1023:11:5",
+                "scope": 991,
+                "src": "1047:11:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -943,10 +978,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 976,
+                  "id": 987,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1023:6:5",
+                  "src": "1047:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -957,13 +992,13 @@
               },
               {
                 "constant": false,
-                "id": 979,
+                "id": 990,
                 "mutability": "mutable",
                 "name": "fertilizer",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 980,
-                "src": "1040:17:5",
+                "scope": 991,
+                "src": "1064:17:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -971,10 +1006,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 978,
+                  "id": 989,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1040:6:5",
+                  "src": "1064:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -986,23 +1021,23 @@
             ],
             "name": "LandPreparations",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "993:69:5",
+            "scope": 1067,
+            "src": "1017:69:5",
             "visibility": "public"
           },
           {
             "canonicalName": "FarmSeason.PlantingType",
-            "id": 987,
+            "id": 998,
             "members": [
               {
                 "constant": false,
-                "id": 982,
+                "id": 993,
                 "mutability": "mutable",
                 "name": "seedUsed",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 987,
-                "src": "1111:15:5",
+                "scope": 998,
+                "src": "1135:15:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1010,10 +1045,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 981,
+                  "id": 992,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1111:6:5",
+                  "src": "1135:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1024,13 +1059,13 @@
               },
               {
                 "constant": false,
-                "id": 984,
+                "id": 995,
                 "mutability": "mutable",
                 "name": "expectedYield",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 987,
-                "src": "1132:20:5",
+                "scope": 998,
+                "src": "1156:20:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1038,10 +1073,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 983,
+                  "id": 994,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1132:6:5",
+                  "src": "1156:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1052,13 +1087,13 @@
               },
               {
                 "constant": false,
-                "id": 986,
+                "id": 997,
                 "mutability": "mutable",
                 "name": "seedSupplier",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 987,
-                "src": "1158:19:5",
+                "scope": 998,
+                "src": "1182:19:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1066,10 +1101,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 985,
+                  "id": 996,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1158:6:5",
+                  "src": "1182:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -1081,23 +1116,23 @@
             ],
             "name": "PlantingType",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "1085:97:5",
+            "scope": 1067,
+            "src": "1109:97:5",
             "visibility": "public"
           },
           {
             "canonicalName": "FarmSeason.HarvestType",
-            "id": 992,
+            "id": 1005,
             "members": [
               {
                 "constant": false,
-                "id": 989,
+                "id": 1000,
                 "mutability": "mutable",
                 "name": "supply",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 992,
-                "src": "1228:14:5",
+                "scope": 1005,
+                "src": "1252:14:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1105,10 +1140,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 988,
+                  "id": 999,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1228:7:5",
+                  "src": "1252:7:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -1119,13 +1154,13 @@
               },
               {
                 "constant": false,
-                "id": 991,
+                "id": 1002,
                 "mutability": "mutable",
                 "name": "price",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 992,
-                "src": "1246:13:5",
+                "scope": 1005,
+                "src": "1270:13:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1133,13 +1168,41 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 990,
+                  "id": 1001,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1246:7:5",
+                  "src": "1270:7:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1004,
+                "mutability": "mutable",
+                "name": "supplyUnit",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 1005,
+                "src": "1289:17:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 1003,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1289:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
                   }
                 },
                 "value": null,
@@ -1148,15 +1211,15 @@
             ],
             "name": "HarvestType",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "1205:58:5",
+            "scope": 1067,
+            "src": "1229:81:5",
             "visibility": "public"
           },
           {
             "body": {
-              "id": 1009,
+              "id": 1022,
               "nodeType": "Block",
-              "src": "1319:95:5",
+              "src": "1366:95:5",
               "statements": [
                 {
                   "expression": {
@@ -1165,24 +1228,24 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_enum$_Season_$960",
+                          "typeIdentifier": "t_enum$_Season_$971",
                           "typeString": "enum FarmSeason.Season"
                         },
-                        "id": 1004,
+                        "id": 1017,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 999,
+                          "id": 1012,
                           "name": "_season",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 996,
-                          "src": "1333:7:5",
+                          "referencedDeclaration": 1009,
+                          "src": "1380:7:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Season_$960",
+                            "typeIdentifier": "t_enum$_Season_$971",
                             "typeString": "enum FarmSeason.Season"
                           }
                         },
@@ -1194,26 +1257,26 @@
                             "argumentTypes": null,
                             "baseExpression": {
                               "argumentTypes": null,
-                              "id": 1000,
+                              "id": 1013,
                               "name": "tokenSeason",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 967,
-                              "src": "1344:11:5",
+                              "referencedDeclaration": 978,
+                              "src": "1391:11:5",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                                 "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason storage ref)"
                               }
                             },
-                            "id": 1002,
+                            "id": 1015,
                             "indexExpression": {
                               "argumentTypes": null,
-                              "id": 1001,
+                              "id": 1014,
                               "name": "_tokenId",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 994,
-                              "src": "1356:8:5",
+                              "referencedDeclaration": 1007,
+                              "src": "1403:8:5",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -1224,27 +1287,27 @@
                             "isPure": false,
                             "lValueRequested": false,
                             "nodeType": "IndexAccess",
-                            "src": "1344:21:5",
+                            "src": "1391:21:5",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_TokenSeason_$963_storage",
+                              "typeIdentifier": "t_struct$_TokenSeason_$974_storage",
                               "typeString": "struct FarmSeason.TokenSeason storage ref"
                             }
                           },
-                          "id": 1003,
+                          "id": 1016,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "season",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 962,
-                          "src": "1344:28:5",
+                          "referencedDeclaration": 973,
+                          "src": "1391:28:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Season_$960",
+                            "typeIdentifier": "t_enum$_Season_$971",
                             "typeString": "enum FarmSeason.Season"
                           }
                         },
-                        "src": "1333:39:5",
+                        "src": "1380:39:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -1253,14 +1316,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "494e56414c49443a736561736f6e20746f20646f2074686973",
-                        "id": 1005,
+                        "id": 1018,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1374:27:5",
+                        "src": "1421:27:5",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_68b078972570f2309ef5156c720ec465f5827dcf196cf9678600d296c940530b",
@@ -1280,7 +1343,7 @@
                           "typeString": "literal_string \"INVALID:season to do this\""
                         }
                       ],
-                      "id": 998,
+                      "id": 1011,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -1288,13 +1351,13 @@
                         -18
                       ],
                       "referencedDeclaration": -18,
-                      "src": "1325:7:5",
+                      "src": "1372:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1006,
+                    "id": 1019,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1302,42 +1365,42 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1325:77:5",
+                    "src": "1372:77:5",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1007,
+                  "id": 1020,
                   "nodeType": "ExpressionStatement",
-                  "src": "1325:77:5"
+                  "src": "1372:77:5"
                 },
                 {
-                  "id": 1008,
+                  "id": 1021,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1408:1:5"
+                  "src": "1455:1:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 1010,
+            "id": 1023,
             "name": "inSeason",
             "nodeType": "ModifierDefinition",
             "overrides": null,
             "parameters": {
-              "id": 997,
+              "id": 1010,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 994,
+                  "id": 1007,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1010,
-                  "src": "1285:16:5",
+                  "scope": 1023,
+                  "src": "1332:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1345,10 +1408,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 993,
+                    "id": 1006,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1285:7:5",
+                    "src": "1332:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1359,28 +1422,28 @@
                 },
                 {
                   "constant": false,
-                  "id": 996,
+                  "id": 1009,
                   "mutability": "mutable",
                   "name": "_season",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1010,
-                  "src": "1303:14:5",
+                  "scope": 1023,
+                  "src": "1350:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Season_$960",
+                    "typeIdentifier": "t_enum$_Season_$971",
                     "typeString": "enum FarmSeason.Season"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 995,
+                    "id": 1008,
                     "name": "Season",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 960,
-                    "src": "1303:6:5",
+                    "referencedDeclaration": 971,
+                    "src": "1350:6:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_Season_$960",
+                      "typeIdentifier": "t_enum$_Season_$971",
                       "typeString": "enum FarmSeason.Season"
                     }
                   },
@@ -1388,22 +1451,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1284:34:5"
+              "src": "1331:34:5"
             },
-            "src": "1267:147:5",
+            "src": "1314:147:5",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1032,
+              "id": 1045,
               "nodeType": "Block",
-              "src": "1497:91:5",
+              "src": "1544:91:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 1030,
+                    "id": 1043,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1414,26 +1477,26 @@
                         "argumentTypes": null,
                         "baseExpression": {
                           "argumentTypes": null,
-                          "id": 1015,
+                          "id": 1028,
                           "name": "tokenSeason",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 967,
-                          "src": "1503:11:5",
+                          "referencedDeclaration": 978,
+                          "src": "1550:11:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                             "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason storage ref)"
                           }
                         },
-                        "id": 1017,
+                        "id": 1030,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 1016,
+                          "id": 1029,
                           "name": "_tokenId",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1012,
-                          "src": "1515:8:5",
+                          "referencedDeclaration": 1025,
+                          "src": "1562:8:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -1444,23 +1507,23 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "1503:21:5",
+                        "src": "1550:21:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TokenSeason_$963_storage",
+                          "typeIdentifier": "t_struct$_TokenSeason_$974_storage",
                           "typeString": "struct FarmSeason.TokenSeason storage ref"
                         }
                       },
-                      "id": 1018,
+                      "id": 1031,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "season",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 962,
-                      "src": "1503:28:5",
+                      "referencedDeclaration": 973,
+                      "src": "1550:28:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_Season_$960",
+                        "typeIdentifier": "t_enum$_Season_$971",
                         "typeString": "enum FarmSeason.Season"
                       }
                     },
@@ -1475,7 +1538,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1028,
+                          "id": 1041,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1489,26 +1552,26 @@
                                   "argumentTypes": null,
                                   "baseExpression": {
                                     "argumentTypes": null,
-                                    "id": 1022,
+                                    "id": 1035,
                                     "name": "tokenSeason",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 967,
-                                    "src": "1549:11:5",
+                                    "referencedDeclaration": 978,
+                                    "src": "1596:11:5",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                                       "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason storage ref)"
                                     }
                                   },
-                                  "id": 1024,
+                                  "id": 1037,
                                   "indexExpression": {
                                     "argumentTypes": null,
-                                    "id": 1023,
+                                    "id": 1036,
                                     "name": "_tokenId",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1012,
-                                    "src": "1561:8:5",
+                                    "referencedDeclaration": 1025,
+                                    "src": "1608:8:5",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
                                       "typeString": "uint256"
@@ -1519,23 +1582,23 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "nodeType": "IndexAccess",
-                                  "src": "1549:21:5",
+                                  "src": "1596:21:5",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_TokenSeason_$963_storage",
+                                    "typeIdentifier": "t_struct$_TokenSeason_$974_storage",
                                     "typeString": "struct FarmSeason.TokenSeason storage ref"
                                   }
                                 },
-                                "id": 1025,
+                                "id": 1038,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "season",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 962,
-                                "src": "1549:28:5",
+                                "referencedDeclaration": 973,
+                                "src": "1596:28:5",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_enum$_Season_$960",
+                                  "typeIdentifier": "t_enum$_Season_$971",
                                   "typeString": "enum FarmSeason.Season"
                                 }
                               }
@@ -1543,33 +1606,33 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_enum$_Season_$960",
+                                  "typeIdentifier": "t_enum$_Season_$971",
                                   "typeString": "enum FarmSeason.Season"
                                 }
                               ],
-                              "id": 1021,
+                              "id": 1034,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "lValueRequested": false,
                               "nodeType": "ElementaryTypeNameExpression",
-                              "src": "1541:7:5",
+                              "src": "1588:7:5",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_type$_t_uint256_$",
                                 "typeString": "type(uint256)"
                               },
                               "typeName": {
-                                "id": 1020,
+                                "id": 1033,
                                 "name": "uint256",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "1541:7:5",
+                                "src": "1588:7:5",
                                 "typeDescriptions": {
                                   "typeIdentifier": null,
                                   "typeString": null
                                 }
                               }
                             },
-                            "id": 1026,
+                            "id": 1039,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1577,7 +1640,7 @@
                             "lValueRequested": false,
                             "names": [],
                             "nodeType": "FunctionCall",
-                            "src": "1541:37:5",
+                            "src": "1588:37:5",
                             "tryCall": false,
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1589,14 +1652,14 @@
                           "rightExpression": {
                             "argumentTypes": null,
                             "hexValue": "31",
-                            "id": 1027,
+                            "id": 1040,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "1581:1:5",
+                            "src": "1628:1:5",
                             "subdenomination": null,
                             "typeDescriptions": {
                               "typeIdentifier": "t_rational_1_by_1",
@@ -1604,7 +1667,7 @@
                             },
                             "value": "1"
                           },
-                          "src": "1541:41:5",
+                          "src": "1588:41:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -1618,18 +1681,18 @@
                             "typeString": "uint256"
                           }
                         ],
-                        "id": 1019,
+                        "id": 1032,
                         "name": "Season",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 960,
-                        "src": "1534:6:5",
+                        "referencedDeclaration": 971,
+                        "src": "1581:6:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_Season_$960_$",
+                          "typeIdentifier": "t_type$_t_enum$_Season_$971_$",
                           "typeString": "type(enum FarmSeason.Season)"
                         }
                       },
-                      "id": 1029,
+                      "id": 1042,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1637,27 +1700,27 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "1534:49:5",
+                      "src": "1581:49:5",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_Season_$960",
+                        "typeIdentifier": "t_enum$_Season_$971",
                         "typeString": "enum FarmSeason.Season"
                       }
                     },
-                    "src": "1503:80:5",
+                    "src": "1550:80:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_Season_$960",
+                      "typeIdentifier": "t_enum$_Season_$971",
                       "typeString": "enum FarmSeason.Season"
                     }
                   },
-                  "id": 1031,
+                  "id": 1044,
                   "nodeType": "ExpressionStatement",
-                  "src": "1503:80:5"
+                  "src": "1550:80:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 1033,
+            "id": 1046,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -1665,18 +1728,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1013,
+              "id": 1026,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1012,
+                  "id": 1025,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1033,
-                  "src": "1470:16:5",
+                  "scope": 1046,
+                  "src": "1517:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1684,10 +1747,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1011,
+                    "id": 1024,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1470:7:5",
+                    "src": "1517:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1697,30 +1760,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1469:18:5"
+              "src": "1516:18:5"
             },
             "returnParameters": {
-              "id": 1014,
+              "id": 1027,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1497:0:5"
+              "src": "1544:0:5"
             },
-            "scope": 1054,
-            "src": "1450:138:5",
+            "scope": 1067,
+            "src": "1497:138:5",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1042,
+              "id": 1055,
               "nodeType": "Block",
-              "src": "1636:38:5",
+              "src": "1683:38:5",
               "statements": [
                 {
-                  "id": 1037,
+                  "id": 1050,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1642:1:5"
+                  "src": "1689:1:5"
                 },
                 {
                   "expression": {
@@ -1728,12 +1791,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 1039,
+                        "id": 1052,
                         "name": "_tokenId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1035,
-                        "src": "1660:8:5",
+                        "referencedDeclaration": 1048,
+                        "src": "1707:8:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1747,18 +1810,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 1038,
+                      "id": 1051,
                       "name": "nextSeason",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1033,
-                      "src": "1649:10:5",
+                      "referencedDeclaration": 1046,
+                      "src": "1696:10:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 1040,
+                    "id": 1053,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1766,37 +1829,37 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1649:20:5",
+                    "src": "1696:20:5",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1041,
+                  "id": 1054,
                   "nodeType": "ExpressionStatement",
-                  "src": "1649:20:5"
+                  "src": "1696:20:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 1043,
+            "id": 1056,
             "name": "transitionSeason",
             "nodeType": "ModifierDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1036,
+              "id": 1049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1035,
+                  "id": 1048,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1043,
-                  "src": "1618:16:5",
+                  "scope": 1056,
+                  "src": "1665:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1804,10 +1867,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1034,
+                    "id": 1047,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1618:7:5",
+                    "src": "1665:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1817,9 +1880,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1617:18:5"
+              "src": "1664:18:5"
             },
-            "src": "1592:82:5",
+            "src": "1639:82:5",
             "virtual": false,
             "visibility": "internal"
           },
@@ -1827,7 +1890,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "7de95cba",
-            "id": 1048,
+            "id": 1061,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1835,18 +1898,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1046,
+              "id": 1059,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1045,
+                  "id": 1058,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1048,
-                  "src": "1793:16:5",
+                  "scope": 1061,
+                  "src": "1840:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1854,10 +1917,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1044,
+                    "id": 1057,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1793:7:5",
+                    "src": "1840:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1867,16 +1930,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1792:18:5"
+              "src": "1839:18:5"
             },
             "returnParameters": {
-              "id": 1047,
+              "id": 1060,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1825:0:5"
+              "src": "1872:0:5"
             },
-            "scope": 1054,
-            "src": "1773:53:5",
+            "scope": 1067,
+            "src": "1820:53:5",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
@@ -1885,7 +1948,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "19d3da97",
-            "id": 1053,
+            "id": 1066,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1893,18 +1956,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1051,
+              "id": 1064,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1050,
+                  "id": 1063,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1053,
-                  "src": "1986:16:5",
+                  "scope": 1066,
+                  "src": "2033:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1912,10 +1975,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1049,
+                    "id": 1062,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1986:7:5",
+                    "src": "2033:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1925,40 +1988,40 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1985:18:5"
+              "src": "2032:18:5"
             },
             "returnParameters": {
-              "id": 1052,
+              "id": 1065,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2018:0:5"
+              "src": "2065:0:5"
             },
-            "scope": 1054,
-            "src": "1965:54:5",
+            "scope": 1067,
+            "src": "2012:54:5",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 1055,
-        "src": "67:1954:5"
+        "scope": 1068,
+        "src": "67:2001:5"
       }
     ],
-    "src": "33:1990:5"
+    "src": "33:2037:5"
   },
   "legacyAST": {
     "absolutePath": "/home/lomolo/Projects/taxa/contracts/Season/FarmSeason.sol",
     "exportedSymbols": {
       "FarmSeason": [
-        1054
+        1067
       ]
     },
-    "id": 1055,
+    "id": 1068,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 918,
+        "id": 927,
         "literals": [
           "solidity",
           ">=",
@@ -1978,9 +2041,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 1054,
+        "id": 1067,
         "linearizedBaseContracts": [
-          1054
+          1067
         ],
         "name": "FarmSeason",
         "nodeType": "ContractDefinition",
@@ -1988,22 +2051,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 922,
+            "id": 931,
             "name": "SeasonOpening",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 921,
+              "id": 930,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 920,
+                  "id": 929,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_seasonNumber",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 922,
+                  "scope": 931,
                   "src": "138:21:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2012,7 +2075,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 919,
+                    "id": 928,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "138:7:5",
@@ -2032,22 +2095,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 930,
+            "id": 939,
             "name": "Preparations",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 929,
+              "id": 938,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 924,
+                  "id": 933,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 930,
+                  "scope": 939,
                   "src": "186:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2056,7 +2119,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 923,
+                    "id": 932,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "186:7:5",
@@ -2070,13 +2133,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 926,
+                  "id": 935,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_crop",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 930,
+                  "scope": 939,
                   "src": "204:12:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2085,7 +2148,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 925,
+                    "id": 934,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "204:6:5",
@@ -2099,13 +2162,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 928,
+                  "id": 937,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_fertilizer",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 930,
+                  "scope": 939,
                   "src": "218:18:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2114,7 +2177,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 927,
+                    "id": 936,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "218:6:5",
@@ -2134,22 +2197,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 940,
+            "id": 949,
             "name": "Planting",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 939,
+              "id": 948,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 932,
+                  "id": 941,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "261:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2158,7 +2221,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 931,
+                    "id": 940,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "261:7:5",
@@ -2172,13 +2235,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 934,
+                  "id": 943,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_seedUsed",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "283:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2187,7 +2250,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 933,
+                    "id": 942,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "283:6:5",
@@ -2201,13 +2264,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 936,
+                  "id": 945,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_expectedYield",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "305:21:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2216,7 +2279,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 935,
+                    "id": 944,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "305:6:5",
@@ -2230,13 +2293,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 938,
+                  "id": 947,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_seedSupplier",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 940,
+                  "scope": 949,
                   "src": "332:20:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2245,7 +2308,7 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 937,
+                    "id": 946,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "332:6:5",
@@ -2265,22 +2328,22 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 948,
+            "id": 959,
             "name": "Harvesting",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 947,
+              "id": 958,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 942,
+                  "id": 951,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_supply",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 948,
+                  "scope": 959,
                   "src": "380:15:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2289,7 +2352,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 941,
+                    "id": 950,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "380:7:5",
@@ -2303,13 +2366,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 944,
+                  "id": 953,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_price",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 948,
+                  "scope": 959,
                   "src": "399:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2318,7 +2381,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 943,
+                    "id": 952,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "399:7:5",
@@ -2332,58 +2395,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 946,
+                  "id": 955,
                   "indexed": false,
                   "mutability": "mutable",
-                  "name": "_tokenId",
+                  "name": "_supplyUnit",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 948,
-                  "src": "417:16:5",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 945,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "417:7:5",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                }
-              ],
-              "src": "376:60:5"
-            },
-            "src": "360:77:5"
-          },
-          {
-            "anonymous": false,
-            "documentation": null,
-            "id": 954,
-            "name": "SeasonClosing",
-            "nodeType": "EventDefinition",
-            "parameters": {
-              "id": 953,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 950,
-                  "indexed": false,
-                  "mutability": "mutable",
-                  "name": "_tokenState",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 954,
-                  "src": "465:18:5",
+                  "scope": 959,
+                  "src": "419:18:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2391,10 +2410,10 @@
                     "typeString": "string"
                   },
                   "typeName": {
-                    "id": 949,
+                    "id": 954,
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
-                    "src": "465:6:5",
+                    "src": "419:6:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_storage_ptr",
                       "typeString": "string"
@@ -2405,14 +2424,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 952,
+                  "id": 957,
                   "indexed": false,
                   "mutability": "mutable",
-                  "name": "_completeSeason",
+                  "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 954,
-                  "src": "489:23:5",
+                  "scope": 959,
+                  "src": "441:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2420,10 +2439,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 951,
+                    "id": 956,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "489:7:5",
+                    "src": "441:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2433,77 +2452,150 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "459:57:5"
+              "src": "376:84:5"
             },
-            "src": "440:77:5"
+            "src": "360:101:5"
+          },
+          {
+            "anonymous": false,
+            "documentation": null,
+            "id": 965,
+            "name": "SeasonClosing",
+            "nodeType": "EventDefinition",
+            "parameters": {
+              "id": 964,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 961,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "_tokenState",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 965,
+                  "src": "489:18:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_memory_ptr",
+                    "typeString": "string"
+                  },
+                  "typeName": {
+                    "id": 960,
+                    "name": "string",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "489:6:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_string_storage_ptr",
+                      "typeString": "string"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 963,
+                  "indexed": false,
+                  "mutability": "mutable",
+                  "name": "_completeSeason",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 965,
+                  "src": "513:23:5",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 962,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "513:7:5",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "483:57:5"
+            },
+            "src": "464:77:5"
           },
           {
             "canonicalName": "FarmSeason.Season",
-            "id": 960,
+            "id": 971,
             "members": [
               {
-                "id": 955,
+                "id": 966,
                 "name": "Dormant",
                 "nodeType": "EnumValue",
-                "src": "552:7:5"
+                "src": "576:7:5"
               },
               {
-                "id": 956,
+                "id": 967,
                 "name": "Preparation",
                 "nodeType": "EnumValue",
-                "src": "565:11:5"
+                "src": "589:11:5"
               },
               {
-                "id": 957,
+                "id": 968,
                 "name": "Planting",
                 "nodeType": "EnumValue",
-                "src": "582:8:5"
+                "src": "606:8:5"
               },
               {
-                "id": 958,
+                "id": 969,
                 "name": "Growth",
                 "nodeType": "EnumValue",
-                "src": "596:6:5"
+                "src": "620:6:5"
               },
               {
-                "id": 959,
+                "id": 970,
                 "name": "Harvesting",
                 "nodeType": "EnumValue",
-                "src": "608:10:5"
+                "src": "632:10:5"
               }
             ],
             "name": "Season",
             "nodeType": "EnumDefinition",
-            "src": "534:88:5"
+            "src": "558:88:5"
           },
           {
             "canonicalName": "FarmSeason.TokenSeason",
-            "id": 963,
+            "id": 974,
             "members": [
               {
                 "constant": false,
-                "id": 962,
+                "id": 973,
                 "mutability": "mutable",
                 "name": "season",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 963,
-                "src": "679:13:5",
+                "scope": 974,
+                "src": "703:13:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_enum$_Season_$960",
+                  "typeIdentifier": "t_enum$_Season_$971",
                   "typeString": "enum FarmSeason.Season"
                 },
                 "typeName": {
                   "contractScope": null,
-                  "id": 961,
+                  "id": 972,
                   "name": "Season",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 960,
-                  "src": "679:6:5",
+                  "referencedDeclaration": 971,
+                  "src": "703:6:5",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Season_$960",
+                    "typeIdentifier": "t_enum$_Season_$971",
                     "typeString": "enum FarmSeason.Season"
                   }
                 },
@@ -2513,53 +2605,53 @@
             ],
             "name": "TokenSeason",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "654:43:5",
+            "scope": 1067,
+            "src": "678:43:5",
             "visibility": "public"
           },
           {
             "constant": false,
             "functionSelector": "1ccd03ac",
-            "id": 967,
+            "id": 978,
             "mutability": "mutable",
             "name": "tokenSeason",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1054,
-            "src": "739:50:5",
+            "scope": 1067,
+            "src": "763:50:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
               "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason)"
             },
             "typeName": {
-              "id": 966,
+              "id": 977,
               "keyType": {
-                "id": 964,
+                "id": 975,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "747:7:5",
+                "src": "771:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "739:31:5",
+              "src": "763:31:5",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                 "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 965,
+                "id": 976,
                 "name": "TokenSeason",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 963,
-                "src": "758:11:5",
+                "referencedDeclaration": 974,
+                "src": "782:11:5",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_TokenSeason_$963_storage_ptr",
+                  "typeIdentifier": "t_struct$_TokenSeason_$974_storage_ptr",
                   "typeString": "struct FarmSeason.TokenSeason"
                 }
               }
@@ -2570,13 +2662,13 @@
           {
             "constant": false,
             "functionSelector": "c07e7167",
-            "id": 971,
+            "id": 982,
             "mutability": "mutable",
             "name": "completedSeasons",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1054,
-            "src": "836:51:5",
+            "scope": 1067,
+            "src": "860:51:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2584,28 +2676,28 @@
               "typeString": "mapping(uint256 => uint256)"
             },
             "typeName": {
-              "id": 970,
+              "id": 981,
               "keyType": {
-                "id": 968,
+                "id": 979,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "844:7:5",
+                "src": "868:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "836:27:5",
+              "src": "860:27:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
                 "typeString": "mapping(uint256 => uint256)"
               },
               "valueType": {
-                "id": 969,
+                "id": 980,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "855:7:5",
+                "src": "879:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -2618,13 +2710,13 @@
           {
             "constant": false,
             "functionSelector": "a54d0809",
-            "id": 975,
+            "id": 986,
             "mutability": "mutable",
             "name": "currentSeason",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 1054,
-            "src": "912:48:5",
+            "scope": 1067,
+            "src": "936:48:5",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -2632,28 +2724,28 @@
               "typeString": "mapping(uint256 => uint256)"
             },
             "typeName": {
-              "id": 974,
+              "id": 985,
               "keyType": {
-                "id": 972,
+                "id": 983,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "920:7:5",
+                "src": "944:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
                 }
               },
               "nodeType": "Mapping",
-              "src": "912:27:5",
+              "src": "936:27:5",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
                 "typeString": "mapping(uint256 => uint256)"
               },
               "valueType": {
-                "id": 973,
+                "id": 984,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "931:7:5",
+                "src": "955:7:5",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -2665,17 +2757,17 @@
           },
           {
             "canonicalName": "FarmSeason.LandPreparations",
-            "id": 980,
+            "id": 991,
             "members": [
               {
                 "constant": false,
-                "id": 977,
+                "id": 988,
                 "mutability": "mutable",
                 "name": "crop",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 980,
-                "src": "1023:11:5",
+                "scope": 991,
+                "src": "1047:11:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2683,10 +2775,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 976,
+                  "id": 987,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1023:6:5",
+                  "src": "1047:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2697,13 +2789,13 @@
               },
               {
                 "constant": false,
-                "id": 979,
+                "id": 990,
                 "mutability": "mutable",
                 "name": "fertilizer",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 980,
-                "src": "1040:17:5",
+                "scope": 991,
+                "src": "1064:17:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2711,10 +2803,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 978,
+                  "id": 989,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1040:6:5",
+                  "src": "1064:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2726,23 +2818,23 @@
             ],
             "name": "LandPreparations",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "993:69:5",
+            "scope": 1067,
+            "src": "1017:69:5",
             "visibility": "public"
           },
           {
             "canonicalName": "FarmSeason.PlantingType",
-            "id": 987,
+            "id": 998,
             "members": [
               {
                 "constant": false,
-                "id": 982,
+                "id": 993,
                 "mutability": "mutable",
                 "name": "seedUsed",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 987,
-                "src": "1111:15:5",
+                "scope": 998,
+                "src": "1135:15:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2750,10 +2842,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 981,
+                  "id": 992,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1111:6:5",
+                  "src": "1135:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2764,13 +2856,13 @@
               },
               {
                 "constant": false,
-                "id": 984,
+                "id": 995,
                 "mutability": "mutable",
                 "name": "expectedYield",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 987,
-                "src": "1132:20:5",
+                "scope": 998,
+                "src": "1156:20:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2778,10 +2870,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 983,
+                  "id": 994,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1132:6:5",
+                  "src": "1156:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2792,13 +2884,13 @@
               },
               {
                 "constant": false,
-                "id": 986,
+                "id": 997,
                 "mutability": "mutable",
                 "name": "seedSupplier",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 987,
-                "src": "1158:19:5",
+                "scope": 998,
+                "src": "1182:19:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2806,10 +2898,10 @@
                   "typeString": "string"
                 },
                 "typeName": {
-                  "id": 985,
+                  "id": 996,
                   "name": "string",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1158:6:5",
+                  "src": "1182:6:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_string_storage_ptr",
                     "typeString": "string"
@@ -2821,23 +2913,23 @@
             ],
             "name": "PlantingType",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "1085:97:5",
+            "scope": 1067,
+            "src": "1109:97:5",
             "visibility": "public"
           },
           {
             "canonicalName": "FarmSeason.HarvestType",
-            "id": 992,
+            "id": 1005,
             "members": [
               {
                 "constant": false,
-                "id": 989,
+                "id": 1000,
                 "mutability": "mutable",
                 "name": "supply",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 992,
-                "src": "1228:14:5",
+                "scope": 1005,
+                "src": "1252:14:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2845,10 +2937,10 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 988,
+                  "id": 999,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1228:7:5",
+                  "src": "1252:7:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
@@ -2859,13 +2951,13 @@
               },
               {
                 "constant": false,
-                "id": 991,
+                "id": 1002,
                 "mutability": "mutable",
                 "name": "price",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 992,
-                "src": "1246:13:5",
+                "scope": 1005,
+                "src": "1270:13:5",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -2873,13 +2965,41 @@
                   "typeString": "uint256"
                 },
                 "typeName": {
-                  "id": 990,
+                  "id": 1001,
                   "name": "uint256",
                   "nodeType": "ElementaryTypeName",
-                  "src": "1246:7:5",
+                  "src": "1270:7:5",
                   "typeDescriptions": {
                     "typeIdentifier": "t_uint256",
                     "typeString": "uint256"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              },
+              {
+                "constant": false,
+                "id": 1004,
+                "mutability": "mutable",
+                "name": "supplyUnit",
+                "nodeType": "VariableDeclaration",
+                "overrides": null,
+                "scope": 1005,
+                "src": "1289:17:5",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_string_storage_ptr",
+                  "typeString": "string"
+                },
+                "typeName": {
+                  "id": 1003,
+                  "name": "string",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "1289:6:5",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_string_storage_ptr",
+                    "typeString": "string"
                   }
                 },
                 "value": null,
@@ -2888,15 +3008,15 @@
             ],
             "name": "HarvestType",
             "nodeType": "StructDefinition",
-            "scope": 1054,
-            "src": "1205:58:5",
+            "scope": 1067,
+            "src": "1229:81:5",
             "visibility": "public"
           },
           {
             "body": {
-              "id": 1009,
+              "id": 1022,
               "nodeType": "Block",
-              "src": "1319:95:5",
+              "src": "1366:95:5",
               "statements": [
                 {
                   "expression": {
@@ -2905,24 +3025,24 @@
                       {
                         "argumentTypes": null,
                         "commonType": {
-                          "typeIdentifier": "t_enum$_Season_$960",
+                          "typeIdentifier": "t_enum$_Season_$971",
                           "typeString": "enum FarmSeason.Season"
                         },
-                        "id": 1004,
+                        "id": 1017,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "argumentTypes": null,
-                          "id": 999,
+                          "id": 1012,
                           "name": "_season",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 996,
-                          "src": "1333:7:5",
+                          "referencedDeclaration": 1009,
+                          "src": "1380:7:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Season_$960",
+                            "typeIdentifier": "t_enum$_Season_$971",
                             "typeString": "enum FarmSeason.Season"
                           }
                         },
@@ -2934,26 +3054,26 @@
                             "argumentTypes": null,
                             "baseExpression": {
                               "argumentTypes": null,
-                              "id": 1000,
+                              "id": 1013,
                               "name": "tokenSeason",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 967,
-                              "src": "1344:11:5",
+                              "referencedDeclaration": 978,
+                              "src": "1391:11:5",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                                 "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason storage ref)"
                               }
                             },
-                            "id": 1002,
+                            "id": 1015,
                             "indexExpression": {
                               "argumentTypes": null,
-                              "id": 1001,
+                              "id": 1014,
                               "name": "_tokenId",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 994,
-                              "src": "1356:8:5",
+                              "referencedDeclaration": 1007,
+                              "src": "1403:8:5",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -2964,27 +3084,27 @@
                             "isPure": false,
                             "lValueRequested": false,
                             "nodeType": "IndexAccess",
-                            "src": "1344:21:5",
+                            "src": "1391:21:5",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_TokenSeason_$963_storage",
+                              "typeIdentifier": "t_struct$_TokenSeason_$974_storage",
                               "typeString": "struct FarmSeason.TokenSeason storage ref"
                             }
                           },
-                          "id": 1003,
+                          "id": 1016,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
                           "lValueRequested": false,
                           "memberName": "season",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 962,
-                          "src": "1344:28:5",
+                          "referencedDeclaration": 973,
+                          "src": "1391:28:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Season_$960",
+                            "typeIdentifier": "t_enum$_Season_$971",
                             "typeString": "enum FarmSeason.Season"
                           }
                         },
-                        "src": "1333:39:5",
+                        "src": "1380:39:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bool",
                           "typeString": "bool"
@@ -2993,14 +3113,14 @@
                       {
                         "argumentTypes": null,
                         "hexValue": "494e56414c49443a736561736f6e20746f20646f2074686973",
-                        "id": 1005,
+                        "id": 1018,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "string",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "1374:27:5",
+                        "src": "1421:27:5",
                         "subdenomination": null,
                         "typeDescriptions": {
                           "typeIdentifier": "t_stringliteral_68b078972570f2309ef5156c720ec465f5827dcf196cf9678600d296c940530b",
@@ -3020,7 +3140,7 @@
                           "typeString": "literal_string \"INVALID:season to do this\""
                         }
                       ],
-                      "id": 998,
+                      "id": 1011,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3028,13 +3148,13 @@
                         -18
                       ],
                       "referencedDeclaration": -18,
-                      "src": "1325:7:5",
+                      "src": "1372:7:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_require_pure$_t_bool_$_t_string_memory_ptr_$returns$__$",
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 1006,
+                    "id": 1019,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3042,42 +3162,42 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1325:77:5",
+                    "src": "1372:77:5",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1007,
+                  "id": 1020,
                   "nodeType": "ExpressionStatement",
-                  "src": "1325:77:5"
+                  "src": "1372:77:5"
                 },
                 {
-                  "id": 1008,
+                  "id": 1021,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1408:1:5"
+                  "src": "1455:1:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 1010,
+            "id": 1023,
             "name": "inSeason",
             "nodeType": "ModifierDefinition",
             "overrides": null,
             "parameters": {
-              "id": 997,
+              "id": 1010,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 994,
+                  "id": 1007,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1010,
-                  "src": "1285:16:5",
+                  "scope": 1023,
+                  "src": "1332:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3085,10 +3205,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 993,
+                    "id": 1006,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1285:7:5",
+                    "src": "1332:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3099,28 +3219,28 @@
                 },
                 {
                   "constant": false,
-                  "id": 996,
+                  "id": 1009,
                   "mutability": "mutable",
                   "name": "_season",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1010,
-                  "src": "1303:14:5",
+                  "scope": 1023,
+                  "src": "1350:14:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Season_$960",
+                    "typeIdentifier": "t_enum$_Season_$971",
                     "typeString": "enum FarmSeason.Season"
                   },
                   "typeName": {
                     "contractScope": null,
-                    "id": 995,
+                    "id": 1008,
                     "name": "Season",
                     "nodeType": "UserDefinedTypeName",
-                    "referencedDeclaration": 960,
-                    "src": "1303:6:5",
+                    "referencedDeclaration": 971,
+                    "src": "1350:6:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_Season_$960",
+                      "typeIdentifier": "t_enum$_Season_$971",
                       "typeString": "enum FarmSeason.Season"
                     }
                   },
@@ -3128,22 +3248,22 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1284:34:5"
+              "src": "1331:34:5"
             },
-            "src": "1267:147:5",
+            "src": "1314:147:5",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1032,
+              "id": 1045,
               "nodeType": "Block",
-              "src": "1497:91:5",
+              "src": "1544:91:5",
               "statements": [
                 {
                   "expression": {
                     "argumentTypes": null,
-                    "id": 1030,
+                    "id": 1043,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3154,26 +3274,26 @@
                         "argumentTypes": null,
                         "baseExpression": {
                           "argumentTypes": null,
-                          "id": 1015,
+                          "id": 1028,
                           "name": "tokenSeason",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 967,
-                          "src": "1503:11:5",
+                          "referencedDeclaration": 978,
+                          "src": "1550:11:5",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                            "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                             "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason storage ref)"
                           }
                         },
-                        "id": 1017,
+                        "id": 1030,
                         "indexExpression": {
                           "argumentTypes": null,
-                          "id": 1016,
+                          "id": 1029,
                           "name": "_tokenId",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 1012,
-                          "src": "1515:8:5",
+                          "referencedDeclaration": 1025,
+                          "src": "1562:8:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -3184,23 +3304,23 @@
                         "isPure": false,
                         "lValueRequested": false,
                         "nodeType": "IndexAccess",
-                        "src": "1503:21:5",
+                        "src": "1550:21:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_TokenSeason_$963_storage",
+                          "typeIdentifier": "t_struct$_TokenSeason_$974_storage",
                           "typeString": "struct FarmSeason.TokenSeason storage ref"
                         }
                       },
-                      "id": 1018,
+                      "id": 1031,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
                       "memberName": "season",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 962,
-                      "src": "1503:28:5",
+                      "referencedDeclaration": 973,
+                      "src": "1550:28:5",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_Season_$960",
+                        "typeIdentifier": "t_enum$_Season_$971",
                         "typeString": "enum FarmSeason.Season"
                       }
                     },
@@ -3215,7 +3335,7 @@
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
                           },
-                          "id": 1028,
+                          "id": 1041,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3229,26 +3349,26 @@
                                   "argumentTypes": null,
                                   "baseExpression": {
                                     "argumentTypes": null,
-                                    "id": 1022,
+                                    "id": 1035,
                                     "name": "tokenSeason",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 967,
-                                    "src": "1549:11:5",
+                                    "referencedDeclaration": 978,
+                                    "src": "1596:11:5",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$963_storage_$",
+                                      "typeIdentifier": "t_mapping$_t_uint256_$_t_struct$_TokenSeason_$974_storage_$",
                                       "typeString": "mapping(uint256 => struct FarmSeason.TokenSeason storage ref)"
                                     }
                                   },
-                                  "id": 1024,
+                                  "id": 1037,
                                   "indexExpression": {
                                     "argumentTypes": null,
-                                    "id": 1023,
+                                    "id": 1036,
                                     "name": "_tokenId",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 1012,
-                                    "src": "1561:8:5",
+                                    "referencedDeclaration": 1025,
+                                    "src": "1608:8:5",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_uint256",
                                       "typeString": "uint256"
@@ -3259,23 +3379,23 @@
                                   "isPure": false,
                                   "lValueRequested": false,
                                   "nodeType": "IndexAccess",
-                                  "src": "1549:21:5",
+                                  "src": "1596:21:5",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_TokenSeason_$963_storage",
+                                    "typeIdentifier": "t_struct$_TokenSeason_$974_storage",
                                     "typeString": "struct FarmSeason.TokenSeason storage ref"
                                   }
                                 },
-                                "id": 1025,
+                                "id": 1038,
                                 "isConstant": false,
                                 "isLValue": true,
                                 "isPure": false,
                                 "lValueRequested": false,
                                 "memberName": "season",
                                 "nodeType": "MemberAccess",
-                                "referencedDeclaration": 962,
-                                "src": "1549:28:5",
+                                "referencedDeclaration": 973,
+                                "src": "1596:28:5",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_enum$_Season_$960",
+                                  "typeIdentifier": "t_enum$_Season_$971",
                                   "typeString": "enum FarmSeason.Season"
                                 }
                               }
@@ -3283,33 +3403,33 @@
                             "expression": {
                               "argumentTypes": [
                                 {
-                                  "typeIdentifier": "t_enum$_Season_$960",
+                                  "typeIdentifier": "t_enum$_Season_$971",
                                   "typeString": "enum FarmSeason.Season"
                                 }
                               ],
-                              "id": 1021,
+                              "id": 1034,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
                               "lValueRequested": false,
                               "nodeType": "ElementaryTypeNameExpression",
-                              "src": "1541:7:5",
+                              "src": "1588:7:5",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_type$_t_uint256_$",
                                 "typeString": "type(uint256)"
                               },
                               "typeName": {
-                                "id": 1020,
+                                "id": 1033,
                                 "name": "uint256",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "1541:7:5",
+                                "src": "1588:7:5",
                                 "typeDescriptions": {
                                   "typeIdentifier": null,
                                   "typeString": null
                                 }
                               }
                             },
-                            "id": 1026,
+                            "id": 1039,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -3317,7 +3437,7 @@
                             "lValueRequested": false,
                             "names": [],
                             "nodeType": "FunctionCall",
-                            "src": "1541:37:5",
+                            "src": "1588:37:5",
                             "tryCall": false,
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -3329,14 +3449,14 @@
                           "rightExpression": {
                             "argumentTypes": null,
                             "hexValue": "31",
-                            "id": 1027,
+                            "id": 1040,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
                             "kind": "number",
                             "lValueRequested": false,
                             "nodeType": "Literal",
-                            "src": "1581:1:5",
+                            "src": "1628:1:5",
                             "subdenomination": null,
                             "typeDescriptions": {
                               "typeIdentifier": "t_rational_1_by_1",
@@ -3344,7 +3464,7 @@
                             },
                             "value": "1"
                           },
-                          "src": "1541:41:5",
+                          "src": "1588:41:5",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint256",
                             "typeString": "uint256"
@@ -3358,18 +3478,18 @@
                             "typeString": "uint256"
                           }
                         ],
-                        "id": 1019,
+                        "id": 1032,
                         "name": "Season",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 960,
-                        "src": "1534:6:5",
+                        "referencedDeclaration": 971,
+                        "src": "1581:6:5",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_enum$_Season_$960_$",
+                          "typeIdentifier": "t_type$_t_enum$_Season_$971_$",
                           "typeString": "type(enum FarmSeason.Season)"
                         }
                       },
-                      "id": 1029,
+                      "id": 1042,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -3377,27 +3497,27 @@
                       "lValueRequested": false,
                       "names": [],
                       "nodeType": "FunctionCall",
-                      "src": "1534:49:5",
+                      "src": "1581:49:5",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_enum$_Season_$960",
+                        "typeIdentifier": "t_enum$_Season_$971",
                         "typeString": "enum FarmSeason.Season"
                       }
                     },
-                    "src": "1503:80:5",
+                    "src": "1550:80:5",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_Season_$960",
+                      "typeIdentifier": "t_enum$_Season_$971",
                       "typeString": "enum FarmSeason.Season"
                     }
                   },
-                  "id": 1031,
+                  "id": 1044,
                   "nodeType": "ExpressionStatement",
-                  "src": "1503:80:5"
+                  "src": "1550:80:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 1033,
+            "id": 1046,
             "implemented": true,
             "kind": "function",
             "modifiers": [],
@@ -3405,18 +3525,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1013,
+              "id": 1026,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1012,
+                  "id": 1025,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1033,
-                  "src": "1470:16:5",
+                  "scope": 1046,
+                  "src": "1517:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3424,10 +3544,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1011,
+                    "id": 1024,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1470:7:5",
+                    "src": "1517:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3437,30 +3557,30 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1469:18:5"
+              "src": "1516:18:5"
             },
             "returnParameters": {
-              "id": 1014,
+              "id": 1027,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1497:0:5"
+              "src": "1544:0:5"
             },
-            "scope": 1054,
-            "src": "1450:138:5",
+            "scope": 1067,
+            "src": "1497:138:5",
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
             "body": {
-              "id": 1042,
+              "id": 1055,
               "nodeType": "Block",
-              "src": "1636:38:5",
+              "src": "1683:38:5",
               "statements": [
                 {
-                  "id": 1037,
+                  "id": 1050,
                   "nodeType": "PlaceholderStatement",
-                  "src": "1642:1:5"
+                  "src": "1689:1:5"
                 },
                 {
                   "expression": {
@@ -3468,12 +3588,12 @@
                     "arguments": [
                       {
                         "argumentTypes": null,
-                        "id": 1039,
+                        "id": 1052,
                         "name": "_tokenId",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 1035,
-                        "src": "1660:8:5",
+                        "referencedDeclaration": 1048,
+                        "src": "1707:8:5",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -3487,18 +3607,18 @@
                           "typeString": "uint256"
                         }
                       ],
-                      "id": 1038,
+                      "id": 1051,
                       "name": "nextSeason",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 1033,
-                      "src": "1649:10:5",
+                      "referencedDeclaration": 1046,
+                      "src": "1696:10:5",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint256_$returns$__$",
                         "typeString": "function (uint256)"
                       }
                     },
-                    "id": 1040,
+                    "id": 1053,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3506,37 +3626,37 @@
                     "lValueRequested": false,
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1649:20:5",
+                    "src": "1696:20:5",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 1041,
+                  "id": 1054,
                   "nodeType": "ExpressionStatement",
-                  "src": "1649:20:5"
+                  "src": "1696:20:5"
                 }
               ]
             },
             "documentation": null,
-            "id": 1043,
+            "id": 1056,
             "name": "transitionSeason",
             "nodeType": "ModifierDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1036,
+              "id": 1049,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1035,
+                  "id": 1048,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1043,
-                  "src": "1618:16:5",
+                  "scope": 1056,
+                  "src": "1665:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3544,10 +3664,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1034,
+                    "id": 1047,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1618:7:5",
+                    "src": "1665:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3557,9 +3677,9 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1617:18:5"
+              "src": "1664:18:5"
             },
-            "src": "1592:82:5",
+            "src": "1639:82:5",
             "virtual": false,
             "visibility": "internal"
           },
@@ -3567,7 +3687,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "7de95cba",
-            "id": 1048,
+            "id": 1061,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3575,18 +3695,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1046,
+              "id": 1059,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1045,
+                  "id": 1058,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1048,
-                  "src": "1793:16:5",
+                  "scope": 1061,
+                  "src": "1840:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3594,10 +3714,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1044,
+                    "id": 1057,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1793:7:5",
+                    "src": "1840:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3607,16 +3727,16 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1792:18:5"
+              "src": "1839:18:5"
             },
             "returnParameters": {
-              "id": 1047,
+              "id": 1060,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1825:0:5"
+              "src": "1872:0:5"
             },
-            "scope": 1054,
-            "src": "1773:53:5",
+            "scope": 1067,
+            "src": "1820:53:5",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
@@ -3625,7 +3745,7 @@
             "body": null,
             "documentation": null,
             "functionSelector": "19d3da97",
-            "id": 1053,
+            "id": 1066,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -3633,18 +3753,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 1051,
+              "id": 1064,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 1050,
+                  "id": 1063,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 1053,
-                  "src": "1986:16:5",
+                  "scope": 1066,
+                  "src": "2033:16:5",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -3652,10 +3772,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 1049,
+                    "id": 1062,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1986:7:5",
+                    "src": "2033:7:5",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -3665,26 +3785,26 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1985:18:5"
+              "src": "2032:18:5"
             },
             "returnParameters": {
-              "id": 1052,
+              "id": 1065,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "2018:0:5"
+              "src": "2065:0:5"
             },
-            "scope": 1054,
-            "src": "1965:54:5",
+            "scope": 1067,
+            "src": "2012:54:5",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 1055,
-        "src": "67:1954:5"
+        "scope": 1068,
+        "src": "67:2001:5"
       }
     ],
-    "src": "33:1990:5"
+    "src": "33:2037:5"
   },
   "compiler": {
     "name": "solc",
@@ -3692,7 +3812,7 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-12T16:03:55.028Z",
+  "updatedAt": "2020-08-15T08:06:24.649Z",
   "devdoc": {
     "methods": {}
   },

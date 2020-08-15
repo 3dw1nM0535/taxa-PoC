@@ -23,6 +23,7 @@ abstract contract Harvest is FarmSeason, Book {
   function createHarvest(
     uint256 _supply,
     uint256 _price,
+    string memory _supplyUnit,
     uint256 _tokenId
   )
     public

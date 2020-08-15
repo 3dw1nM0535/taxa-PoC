@@ -18,6 +18,7 @@ abstract contract FarmSeason {
   event Harvesting(
 		uint256 _supply,
 		uint256 _price,
+    string _supplyUnit,
 		uint256 _tokenId
 	);
   event SeasonClosing(
@@ -64,6 +65,7 @@ abstract contract FarmSeason {
 	struct HarvestType {
 		uint256 supply;
 		uint256 price;
+    string supplyUnit;
 	}
 
   modifier inSeason(uint256 _tokenId, Season _season) {

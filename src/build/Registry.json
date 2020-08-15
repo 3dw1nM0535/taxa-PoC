@@ -4198,12 +4198,12 @@
         }
       },
       "links": {},
-      "address": "0xC31ba57F99894Cc849e0897a926a47AaA32266De",
-      "transactionHash": "0x435221d830c1223a06a6528d814e029967bc63705ae276b979d7aff97d5ab5e5"
+      "address": "0x642D265d3eC74FC6E97e4E75F141eE80A23F8023",
+      "transactionHash": "0x922646deb056a06b8ed49cf1d165eaf115019a20921a43588eef90fdf4f1e8ed"
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-12T16:14:14.157Z",
+  "updatedAt": "2020-08-15T08:39:17.889Z",
   "networkType": "ethereum",
   "devdoc": {
     "methods": {
