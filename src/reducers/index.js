@@ -6,6 +6,7 @@ import { loading } from './loading'
 import { wallet } from './wallet'
 import { location } from './location'
 import { network } from './network'
+import { prices } from './prices'
 
 export default combineReducers({
   farm,
@@ -13,5 +14,6 @@ export default combineReducers({
   wallet,
 	location,
   network,
+  prices,
 })
 

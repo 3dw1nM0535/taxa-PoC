@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Web3 from 'web3'
 import { connect } from 'react-redux'
-import { walletChange, networkChange, disconnectMetaMask } from './actions'
+import { walletChange, networkChange, disconnectMetaMask, setPrices } from './actions'
 import { store } from './store'
 import { Switch, Route } from 'react-router-dom'
 
@@ -14,6 +14,31 @@ import {
 } from './components/pages'
 
 function App({ loaded }) {
+
+  useEffect(() => {
+    async function calculateEthPrice() {
+      const etherConversionRate = {}
+      let currencyResp
+      const etherFetchResult = await fetch(`https://api.etherscan.io/api?module=stats&action=ethprice&apikey=${process.env.REACT_APP_ETHERSCAN_API_KEY}`)
+      const { result } = await etherFetchResult.json()
+      const currencyFetchResult = await fetch(`https://currency-exchange.p.rapidapi.com/exchange?q=1.0&from=USD&to=KES`, {
+        "method": "GET",
+        "headers": {
+          "x-rapidapi-host": "currency-exchange.p.rapidapi.com",
+          "x-rapidapi-key": `${process.env.REACT_APP_RAPID_X_API_KEY}`
+        }
+      })
+      currencyResp = await currencyFetchResult.json()
+      const latestPrice = Number(result.ethusd) * Number(currencyResp)
+      etherConversionRate.ethkes = latestPrice.toFixed(2)
+      store.dispatch(setPrices({ ...etherConversionRate }))
+    }
+    const interval = setInterval(() => {
+      calculateEthPrice()
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [])
 
   let walletAddress = {}
 

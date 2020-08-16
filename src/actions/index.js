@@ -8,16 +8,22 @@ import { connectWallet, walletFound, disconnectMetaMask, walletChange } from './
 import {
   LOCATION_ACCESS,
   NETWORK_CHANGE,
+  SET_MARKET_PRICE,
 } from '../types'
 
-export const locationAccess = location => ({
+const locationAccess = location => ({
 	type: LOCATION_ACCESS,
 	location,
 })
 
-export const networkChange = netId => ({
+const networkChange = netId => ({
   type: NETWORK_CHANGE,
   netId,
+})
+
+const setPrices = price => ({
+  type: SET_MARKET_PRICE,
+  price,
 })
 
 export {
@@ -29,4 +35,7 @@ export {
   queryFarm,
   openSeason,
   submitting,
+  networkChange,
+  locationAccess,
+  setPrices,
 }
