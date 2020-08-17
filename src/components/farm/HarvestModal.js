@@ -9,6 +9,7 @@ import {
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 import Validator from 'validator'
+import { ConfirmingTx } from '../notifications'
 
 const options = [
   { key: 'kg', text: 'kilogram', value: 'kg' },
@@ -23,6 +24,7 @@ function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenH
   const [unit, setUnit] = useState("")
   const [error, setError] = useState({})
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [confirmingTransaction, setConfirmingTransaction] = useState(false)
 
   function validate(supply, price, unit) {
     const errors = {}
@@ -47,7 +49,10 @@ function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenH
       size='tiny'
       open={farm.season === 'Crop Growth' && openHarvestModal}
     >
-      <Modal.Header>Harvesting</Modal.Header>
+      <Modal.Header>
+        Harvesting
+        {confirmingTransaction && <ConfirmingTx />}
+      </Modal.Header>
       <Modal.Content>
         <Form
           onSubmit={loaded ? handleSubmit : null}

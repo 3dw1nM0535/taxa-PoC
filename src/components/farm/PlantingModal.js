@@ -14,7 +14,9 @@ import { initContract } from '../../utils'
 import { useParams } from 'react-router-dom'
 import { store } from '../../store'
 import api from '../../api'
-import { openSeason, submitting } from '../../actions'
+import { openSeason, submitting, confirmedTx } from '../../actions'
+
+import { ConfirmingTx } from '../notifications'
 
 const options = [
   { key: 'kg', text: 'kilogram', value: 'kg' },
@@ -22,7 +24,7 @@ const options = [
   { key: 't', text: 'tonne', value: 'tonne' }
 ]
 
-function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal, setOpenPlantingModal}) {
+function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal, setOpenPlantingModal }) {
 
   const { tokenId } = useParams()
 
@@ -32,6 +34,7 @@ function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal,
   const [unit, setUnit] = useState("")
   const [error, setError] = useState({})
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [confirmingTransaction, setConfirmingTransaction] = useState(false)
 
   function validate(seed, supplier, expectedYield, unit) {
     const errors = {}
@@ -50,6 +53,7 @@ function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal,
       const outputYield = `${expectedYield}${unit}`
       try {
         const appLoading = {}
+        const txStatus = {}
         appLoading.status = true
         setButtonDisabled(true)
         store.dispatch(submitting({ ...appLoading }))
@@ -58,6 +62,7 @@ function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal,
           .on('transactionHash', () => {
             appLoading.status = false
             store.dispatch(submitting({ ...appLoading }))
+            setConfirmingTransaction(true)
           })
           .on('confirmation', async(confirmationNumber, receipt) => {
             if (confirmationNumber === 1) {
@@ -68,6 +73,9 @@ function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal,
               await api.farm.updateSeason(_tokenId, resp.season)
               await api.farm.updatePlantings(_seedUsed, _expectedYield, _currentSeason, _tokenId, _seedSupplier)
               store.dispatch(openSeason({ ...resp }))
+              setConfirmingTransaction(false)
+              txStatus.confirmed = true
+              store.dispatch(confirmedTx({ ...txStatus }))
               setButtonDisabled(false)
             }
           })
@@ -84,7 +92,10 @@ function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal,
       size='tiny'
       open={farm.season === 'Planting' && openPlantingModal}
     >
-      <Modal.Header>Plantings</Modal.Header>
+      <Modal.Header>
+        Plantings
+        {confirmingTransaction && <ConfirmingTx />}
+      </Modal.Header>
       <Modal.Content>
         <Form
           onSubmit={loaded ? handleSubmit : null}

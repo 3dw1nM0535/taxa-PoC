@@ -9,6 +9,8 @@ import {
   LOCATION_ACCESS,
   NETWORK_CHANGE,
   SET_MARKET_PRICE,
+  CONFIRMING_TX,
+  CONFIRMED_TX,
 } from '../types'
 
 const locationAccess = location => ({
@@ -26,6 +28,16 @@ const setPrices = price => ({
   price,
 })
 
+const confirmingTx = txConfirming => ({
+  type: CONFIRMING_TX,
+  txConfirming,
+})
+
+const confirmedTx = txConfirmed => ({
+  type: CONFIRMED_TX,
+  txConfirmed,
+})
+
 export {
   addFarm,
   connectWallet,
@@ -38,4 +50,6 @@ export {
   networkChange,
   locationAccess,
   setPrices,
+  confirmingTx,
+  confirmedTx,
 }

@@ -14,15 +14,16 @@ import Farm from '../../build/Farm.json'
 import { initContract } from '../../utils'
 import api from '../../api'
 import { store } from '../../store'
-import { submitting, openSeason } from '../../actions'
+import { submitting, openSeason, confirmedTx } from '../../actions'
 import { useParams } from 'react-router-dom'
 
+import { ConfirmingTx } from '../notifications'
 const options = [
   { key: 'a', text: 'Artificial Fertilizer', value: 'Artificial' },
   { key: 'o', text: 'Organic Fertilizer', value: 'Organic' }
 ]
 
-function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible, setIsModalVisible}) {
+function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible, setIsModalVisible }) {
 
   const { tokenId } = useParams()
 
@@ -32,6 +33,7 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
   const [crop, setCrop] = useState("")
   const [error, setError] = useState({})
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [confirmingTransaction, setConfirmingTransaction] = useState(false)
 
   function handleChange(e, { value }) {
     setFertilizer(value)
@@ -68,10 +70,12 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
       const formattedName = fertilizer === 'Artificial' ? `${fertilizer}(${fertilizerName})` : fertilizer
       const farmContract = initContract(Farm, netId)
       try {
+        const txStatus = {}
         await farmContract.methods.finishPreparations(tokenId, crop, formattedName).send({from: wallet.address[0]})
           .on('transactionHash', () => {
             appLoading.status = false
             store.dispatch(submitting({ ...appLoading }))
+            setConfirmingTransaction(true)
           })
           .on('confirmation', async(confirmationNumber, receipt) => {
             if (confirmationNumber === 1) {
@@ -84,6 +88,9 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
               await api.farm.updatePreparations(_tokenId, _currentSeason, _crop, _fertilizer)
               store.dispatch(openSeason({ ...updatedFarm }))
               setButtonDisabled(false)
+              setConfirmingTransaction(false)
+              txStatus.confirmed = true
+              store.dispatch(confirmedTx({ ...txStatus }))
             }
           })
           .on('error', error => console.log(error))
@@ -99,7 +106,10 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
       open={farm.season === 'Preparation' && isModalVisible}
       onClose={() => setIsModalVisible(false)}
     >
-      <Modal.Header>Land preparations</Modal.Header>
+      <Modal.Header>
+        Land preparations
+        {confirmingTransaction && <ConfirmingTx />}
+      </Modal.Header>
       <Modal.Content>
         <Form
           onSubmit={loaded ? handleSubmit : null}

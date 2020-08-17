@@ -21,7 +21,8 @@ import {
   ImagePlaceholder,
 } from './HeaderPlaceholder'
 import { store } from '../../store'
-import { openSeason } from '../../actions'
+import { openSeason, confirmedTx } from '../../actions'
+import { ConfirmingTx, ConfirmedTx } from '../notifications'
 import PreparationModal from './PreparationModal'
 import PlantingModal from './PlantingModal'
 import HarvestModal from './HarvestModal'
@@ -29,7 +30,7 @@ import { initContract } from '../../utils'
 import api from '../../api'
 
 
-function FarmHeader({ farm, loaded, netId, tokenId, account }) {
+function FarmHeader({ farm, loaded, netId, tokenId, account, txConfirmed }) {
 
   const [copying, setCopying] = useState(true)
   const [copied, setCopied] = useState(false)
@@ -38,15 +39,18 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
   const [openHarvestModal, setOpenHarvestModal] = useState(false)
   const [buttonLoading, setButtonLoading] = useState(false)
   const [buttonDisabled, setButtonDisabled] = useState(false)
+  const [confirmingTransaction, setConfirmingTransaction] = useState(false)
   
   async function handleOpenSeason() {
     try {
       setButtonLoading(true)
       setButtonDisabled(true)
+      const txStatus = {}
       const farmContract = initContract(Farm, netId)
       await farmContract.methods.openSeason(tokenId).send({from: account.address[0]})
         .on('transactionHash', () => {
           setButtonLoading(false)
+          setConfirmingTransaction(true)
         })
         .on('confirmation', async(confirmationNumber, receipt) => {
           if (confirmationNumber === 1) {
@@ -56,6 +60,9 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
             await api.farm.updateSeason(tokenId, resp.season)
             store.dispatch(openSeason({ ...resp }))
             setButtonDisabled(false)
+            setConfirmingTransaction(false)
+            txStatus.confirmed = true
+            store.dispatch(confirmedTx({ ...txStatus }))
           }
         })
         .on('error', error => {
@@ -83,6 +90,12 @@ function FarmHeader({ farm, loaded, netId, tokenId, account }) {
 
   return (
     <Grid stackable columns={2}>
+      <Grid.Row>
+        <Grid.Column floated='right'>
+          {confirmingTransaction && <ConfirmingTx />}
+          {txConfirmed && <ConfirmedTx />}
+        </Grid.Column>
+      </Grid.Row>
       <Grid.Row>
         <Grid.Column>
           <Segment placeholder>
@@ -319,6 +332,7 @@ FarmHeader.propTypes = {
   netId: PropTypes.number.isRequired,
   tokenId: PropTypes.number.isRequired,
   account: PropTypes.object.isRequired,
+  txConfirmed: PropTypes.bool.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -328,6 +342,7 @@ function mapStateToProps(state) {
     tokenId: Number(state.farm.token),
     account: state.wallet,
     farm: state.farm,
+    txConfirmed: state.loading.confirmed,
   }
 }
 

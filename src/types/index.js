@@ -8,3 +8,6 @@ export const QUERY_FARM = 'QUERY_FARM'
 export const LOAD_NETWORK = 'LOAD_NETWORK'
 export const SEASON_OPEN = 'SEASON_OPEN'
 export const SET_MARKET_PRICE = 'SET_MARKET_PRICE'
+export const CONFIRMING_TX = 'CONFIRMING_TX'
+export const CONFIRMED_TX = 'CONFIRMED_TX'
+
