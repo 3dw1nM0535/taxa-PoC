@@ -259,7 +259,9 @@ contract("Farm", async accounts => {
   it('Farmer should be able to close season', async() => {
     const result = await instance.closeSeason(tokenId);
     const log = result.logs[0].args;
-    const completeSeason = await instance.completedSeasons(tokenId)
+    const completeSeason = await instance.completedSeasons(tokenId);
+    const _currentSeason = await instance.currentSeason(tokenId);
+    assert.equal(_currentSeason, 2, "Current season should transition to next");
     assert.equal(log._tokenState, "Dormant", "Should reset to Dormant");
     assert.equal(completeSeason, 1, "Completed seasons should be 1");
   });
