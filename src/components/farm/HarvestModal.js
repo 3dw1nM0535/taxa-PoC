@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import Web3 from 'web3'
 import React, { useState } from 'react'
 import {
   Modal,
@@ -17,10 +18,10 @@ const options = [
   { key: 't', text: 'tonne', value: 'tonne' }
 ]
 
-function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenHarvestModal}) {
+function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenHarvestModal, conversionRate }) {
 
   const [supply, setSupply] = useState(0)
-  const [price, setPrice] = useState("")
+  const [price, setPrice] = useState(0)
   const [unit, setUnit] = useState("")
   const [error, setError] = useState({})
   const [buttonDisabled, setButtonDisabled] = useState(false)
@@ -39,8 +40,8 @@ function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenH
     const error = validate(supply, price, unit)
     setError(error)
     if (Object.keys(error).length === 0) {
-      const formattedSupply = `${supply}${unit}`
-      console.log({formattedSupply, price})
+      const priceToWei = Web3.utils.toWei(price, 'ether')
+      console.log({supply, unit, priceToWei})
     }
   }
 
@@ -76,15 +77,22 @@ function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenH
             onChange={(e, { value }) => setUnit(value)}
             error={error.unit ? { content: `${error.unit}`, pointing: 'above' } : false}
           />
+          <Form.Group inline>
           <Form.Field
             id='form-control-input-price'
             control={Input}
-            label='What is your price per supply?'
+            label='What is your price per supply(Ether)?'
+            placeholder="0.0053"
             type='number'
             value={price}
             onChange={(e, { value }) => setPrice(value)}
             error={error.price ? { content: `${error.price}`, pointing: 'above' } : false}
           />
+            <Form.Field>
+              <label>KES</label>
+              <span>{price * parseFloat(conversionRate.ethkes)}</span>
+            </Form.Field>
+          </Form.Group>
           <Form.Button disabled={buttonDisabled} loading={loading} control={Button} type='submit' color='violet' content='Confirm Harvest' />
         </Form>
       </Modal.Content>
@@ -107,6 +115,7 @@ HarvestModal.propTypes = {
   wallet: PropTypes.object.isRequired,
   openHarvestModal: PropTypes.bool.isRequired,
   setOpenHarvestModal: PropTypes.func.isRequired,
+  conversionRate: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -115,6 +124,7 @@ function mapStateToProps(state) {
     loaded: state.wallet.loaded,
     loading: state.loading.status,
     wallet: state.wallet,
+    conversionRate: state.prices,
   }
 }
 

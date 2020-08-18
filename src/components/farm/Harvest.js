@@ -76,8 +76,7 @@ function Harvest({ farm }) {
               <Table.HeaderCell>Fertilizer Used</Table.HeaderCell>
               <Table.HeaderCell>Harvest Supply</Table.HeaderCell>
               <Table.HeaderCell>Harvest Price</Table.HeaderCell>
-              <Table.HeaderCell>Booking</Table.HeaderCell>
-              <Table.HeaderCell>Cancel Booking</Table.HeaderCell>
+              <Table.HeaderCell>Action</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
@@ -92,10 +91,13 @@ function Harvest({ farm }) {
                 <Table.Cell>{season.harvestYield}</Table.Cell>
                 <Table.Cell>{season.harvestPrice}</Table.Cell>
                 <Table.Cell>
-                  <Button size='mini' color='violet'>Book</Button>
-                </Table.Cell>
-                <Table.Cell>
-                  <Button size='mini' color='red'>Cancel Book</Button>
+                  <Button
+                    size='mini'
+                    color='violet'
+                    disabled={season.harvestYield === 0}
+                  >
+                    Book
+                  </Button>
                 </Table.Cell>
               </Table.Row>
             ))}
