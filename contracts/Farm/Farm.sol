@@ -237,6 +237,7 @@ contract Farm is FarmSeason, Book {
     inSeason(_tokenId, Season.Harvesting)
     {
       tokenSeason[_tokenId].season = Season(uint256(0));
+      currentSeason[_tokenId]++;
       completedSeasons[_tokenId]++;
       string memory _newTokenSeason = getTokenSeason(_tokenId);
       emit SeasonClosing(
