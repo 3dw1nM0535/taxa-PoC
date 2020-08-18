@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types'
 import Web3 from 'web3'
+import Farm from '../../build/Farm.json'
 import React, { useState } from 'react'
 import {
   Modal,
@@ -9,8 +10,13 @@ import {
   Select,
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import { store } from '../../store'
+import { confirmedTx, openSeason } from '../../actions'
 import Validator from 'validator'
 import { ConfirmingTx } from '../notifications'
+import { initContract } from '../../utils'
+import api from '../../api'
+import { useParams } from 'react-router-dom'
 
 const options = [
   { key: 'kg', text: 'kilogram', value: 'kg' },
@@ -18,7 +24,9 @@ const options = [
   { key: 't', text: 'tonne', value: 'tonne' }
 ]
 
-function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenHarvestModal, conversionRate }) {
+function HarvestModal({loaded, wallet, netId, farm, openHarvestModal, setOpenHarvestModal, conversionRate }) {
+
+  const { tokenId } = useParams()
 
   const [supply, setSupply] = useState(0)
   const [price, setPrice] = useState(0)
@@ -35,13 +43,40 @@ function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenH
     return errors
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const error = validate(supply, price, unit)
     setError(error)
     if (Object.keys(error).length === 0) {
       const priceToWei = Web3.utils.toWei(price, 'ether')
-      console.log({supply, unit, priceToWei})
+      try {
+        setButtonDisabled(true)
+        const txStatus = {}
+        const farmContract = initContract(Farm, netId)
+        await farmContract.methods.createHarvest(supply, priceToWei, unit, tokenId).send({from: wallet.address[0]})
+          .on('transactionHash', () => {
+            setConfirmingTransaction(true)
+          })
+          .on('confirmation', async(confirmationNumber, receipt) => {
+            if (confirmationNumber === 1) {
+              setConfirmingTransaction(false)
+              const { _supply, _price, _supplyUnit, _tokenId } = receipt.events.Harvesting.returnValues
+              const updatedFarm = {}
+              updatedFarm.season = await farmContract.methods.getTokenSeason(_tokenId).call()
+              const _currentSeason = await farmContract.methods.currentSeason(_tokenId).call()
+              setButtonDisabled(false)
+              setConfirmingTransaction(false)
+              txStatus.confirmed = true
+              store.dispatch(confirmedTx({ ...txStatus }))
+              store.dispatch(openSeason({ ...updatedFarm }))
+              await api.farm.updateSeason(_tokenId, updatedFarm.season)
+              await api.farm.updateHarvests(_currentSeason, _tokenId, _supply, _supplyUnit, _price)
+            }
+          })
+          .on('error', error => console.log(error))
+      } catch(error) {
+        console.log(error)
+      }
     }
   }
 
@@ -90,10 +125,10 @@ function HarvestModal({loaded, wallet, loading, farm, openHarvestModal, setOpenH
           />
             <Form.Field>
               <label>KES</label>
-              <span>{price * parseFloat(conversionRate.ethkes)}</span>
+              <span>{parseInt(price * parseFloat(conversionRate.ethkes), 10)}</span>
             </Form.Field>
           </Form.Group>
-          <Form.Button disabled={buttonDisabled} loading={loading} control={Button} type='submit' color='violet' content='Confirm Harvest' />
+          <Form.Button disabled={buttonDisabled} loading={buttonDisabled} control={Button} type='submit' color='violet' content='Confirm Harvest' />
         </Form>
       </Modal.Content>
       <Modal.Actions>
@@ -116,6 +151,7 @@ HarvestModal.propTypes = {
   openHarvestModal: PropTypes.bool.isRequired,
   setOpenHarvestModal: PropTypes.func.isRequired,
   conversionRate: PropTypes.object.isRequired,
+  netId: PropTypes.number.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -125,6 +161,7 @@ function mapStateToProps(state) {
     loading: state.loading.status,
     wallet: state.wallet,
     conversionRate: state.prices,
+    netId: state.network.netId,
   }
 }
 

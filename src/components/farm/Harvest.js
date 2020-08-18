@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import Web3 from 'web3'
 import React from 'react'
 import {
   Button,
@@ -13,16 +14,14 @@ import { LoaderComponent } from '../loading'
 import { ErrorComponent } from '../error'
 import { connect } from 'react-redux'
 
-function Harvest({ farm }) {
+function Harvest({ farm, conversionRate }) {
 
   const GET_SEASONS = gql`
     query GetSeasons(
       $token: Int!
-      $seasonNumber: Int!
     ) {
       getSeasons(input: {
         token: $token
-        seasonNumber: $seasonNumber
       }) {
         id
         token
@@ -32,6 +31,7 @@ function Harvest({ farm }) {
         seedSupplier
         expectedYield
         harvestYield
+        harvestUnit
         harvestPrice
       }
     }
@@ -88,8 +88,10 @@ function Harvest({ farm }) {
                 <Table.Cell>{season.seedSupplier}</Table.Cell>
                 <Table.Cell>{season.expectedYield}</Table.Cell>
                 <Table.Cell>{season.fertilizer}</Table.Cell>
-                <Table.Cell>{season.harvestYield}</Table.Cell>
-                <Table.Cell>{season.harvestPrice}</Table.Cell>
+                <Table.Cell>{`${season.harvestYield}${season.harvestUnit}`}</Table.Cell>
+                <Table.Cell>
+                  {`${Web3.utils.fromWei(season.harvestPrice)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(season.harvestPrice)) * parseFloat(conversionRate.ethkes)), 10)}`}
+                </Table.Cell>
                 <Table.Cell>
                   <Button
                     size='mini'
@@ -110,11 +112,13 @@ function Harvest({ farm }) {
 
 Harvest.propTypes = {
   farm: PropTypes.object.isRequired,
+  conversionRate: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
     farm: state.farm,
+    conversionRate: state.prices,
   }
 }
 

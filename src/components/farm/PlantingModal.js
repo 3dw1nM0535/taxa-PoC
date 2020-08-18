@@ -70,13 +70,13 @@ function PlantingModal({farm, wallet, loading, netId, loaded, openPlantingModal,
               const resp = {}
               resp.season = await farmContract.methods.getTokenSeason(_tokenId).call()
               const _currentSeason = await farmContract.methods.currentSeason(_tokenId).call()
-              await api.farm.updateSeason(_tokenId, resp.season)
-              await api.farm.updatePlantings(_seedUsed, _expectedYield, _currentSeason, _tokenId, _seedSupplier)
               store.dispatch(openSeason({ ...resp }))
               setConfirmingTransaction(false)
               txStatus.confirmed = true
               store.dispatch(confirmedTx({ ...txStatus }))
               setButtonDisabled(false)
+              await api.farm.updateSeason(_tokenId, resp.season)
+              await api.farm.updatePlantings(_seedUsed, _expectedYield, _currentSeason, _tokenId, _seedSupplier)
             }
           })
           .on('error', error => console.log(error))

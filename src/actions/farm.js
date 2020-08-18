@@ -8,6 +8,7 @@ import {
   QUERY_FARM,
   SEASON_OPEN,
 } from '../types'
+import { confirmingTx, confirmedTx } from './index'
 
 export const submitting  = status => ({
   type: SUBMITTING,
@@ -29,6 +30,7 @@ async function networkAddress(contract) {
 
 export const addFarm = (name, size, lon, lat, file, soil) => async dispatch => {
   const loading = {}
+  const txStatus = {}
   const registryContractAddress = await networkAddress(Registry)
   const farmContractAddress = await networkAddress(Farm)
   const registryContract = new window.web3.eth.Contract(Registry.abi, registryContractAddress)
@@ -40,15 +42,21 @@ export const addFarm = (name, size, lon, lat, file, soil) => async dispatch => {
   const fileHash = cid.string
   registryContract.methods.addFarm(name, size, lon, lat, fileHash, soil, tokenId).send({ from: accounts[0] })
     .on('transactionHash', () => {
-      loading.status = false
-      dispatch(submitting({ ...loading }))
+      txStatus.confirming = true
+      dispatch(confirmingTx({ ...txStatus }))
     })
     .on('confirmation', async(confirmationNumber, receipt) => {
       if (confirmationNumber === 1) {
         const { _tokenId, _size, _soilType, _owner, _fileHash } = receipt.events.RegisterFarm.returnValues
         const farmContract = new window.web3.eth.Contract(Farm.abi, farmContractAddress)
         const _season = await farmContract.methods.getTokenSeason(Number(_tokenId)).call()
+        txStatus.confirming = false
+        txStatus.confirmed = true
+        dispatch(confirmedTx({ ...txStatus }))
+        loading.status = false
+        dispatch(submitting({ ...loading }))
         api.wallet.addFarm(_tokenId, _size, _soilType, _owner, _fileHash, _season).then(res => console.log('Success'))
+        
       }
     })
     .on('error', error => {

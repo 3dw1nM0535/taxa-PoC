@@ -57,12 +57,12 @@ function FarmHeader({ farm, loaded, netId, tokenId, account, txConfirmed }) {
             const resp = {}
             resp.season = await farmContract.methods.getTokenSeason(tokenId).call()
             resp.presentSeason = await farmContract.methods.currentSeason(tokenId).call()
-            await api.farm.updateSeason(tokenId, resp.season)
             store.dispatch(openSeason({ ...resp }))
             setButtonDisabled(false)
             setConfirmingTransaction(false)
             txStatus.confirmed = true
             store.dispatch(confirmedTx({ ...txStatus }))
+            await api.farm.updateSeason(tokenId, resp.season)
           }
         })
         .on('error', error => {
@@ -86,7 +86,33 @@ function FarmHeader({ farm, loaded, netId, tokenId, account, txConfirmed }) {
     setOpenHarvestModal(true)
   }
 
-  
+  async function handleCloseSeason() {
+    try {
+      setButtonDisabled(true)
+      const txStatus = {}
+      const farmContract = initContract(Farm, netId)
+      await farmContract.methods.closeSeason(tokenId).send({from: account.address[0]})
+        .on('transactionHash', () => {
+          setConfirmingTransaction(true)
+        })
+        .on('confirmation', async(confirmationNumber, receipt) => {
+          if (confirmationNumber === 1) {
+            const { _tokenState, _completeSeason } = receipt.events.SeasonClosing.returnValues
+            const updatedFarm = {}
+            updatedFarm.completeSeasons = _completeSeason
+            updatedFarm.season = _tokenState
+            txStatus.confirmed = true
+            store.dispatch(confirmedTx({ ...txStatus }))
+            store.dispatch(openSeason({ ...updatedFarm }))
+            setButtonDisabled(false)
+            setConfirmingTransaction(true)
+            await api.farm.updateSeason(tokenId, _tokenState)
+          }
+        })
+    } catch(error) {
+      console.log(error)
+    }
+  }
 
   return (
     <Grid stackable columns={2}>
@@ -178,9 +204,10 @@ function FarmHeader({ farm, loaded, netId, tokenId, account, txConfirmed }) {
                     <Button
                       color='red'
                       floated='left'
-                      loading={buttonLoading}
+                      disabled={buttonDisabled}
+                      loading={buttonDisabled}
                       style={{ marginTop: '1em' }}
-                      onClick={loaded ? () => console.log('Closing...') : null}
+                      onClick={loaded ? () => handleCloseSeason() : null}
                     >
                       Close Season
                     </Button>

@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import {
   Grid,
@@ -7,8 +8,9 @@ import { connect } from 'react-redux'
 
 import { RegisterFarm } from '../forms'
 import { addFarm } from '../../actions'
+import { ConfirmedTx, ConfirmingTx } from '../notifications'
 
-function RegisterFarmPage({ addFarm }) {
+function RegisterFarmPage({ txConfirmed, txConfirming, addFarm }) {
   return (
     <Grid
       style={{ margin: '1em 1em 1em 1em' }}
@@ -28,6 +30,8 @@ function RegisterFarmPage({ addFarm }) {
           />
         </Grid.Column>
         <Grid.Column>
+          {txConfirmed && <ConfirmedTx />}
+          {txConfirming && <ConfirmingTx />}
           <RegisterFarm addFarm={addFarm} />
         </Grid.Column>
       </Grid.Row>
@@ -35,5 +39,17 @@ function RegisterFarmPage({ addFarm }) {
   )
 }
 
-export default connect(null, { addFarm })(RegisterFarmPage)
+RegisterFarmPage.propTypes = {
+  txConfirmed: PropTypes.bool.isRequired,
+  txConfirming: PropTypes.bool.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    txConfirmed: state.loading.confirmed,
+    txConfirming: state.loading.confirming,
+  }
+}
+
+export default connect(mapStateToProps, { addFarm })(RegisterFarmPage)
 

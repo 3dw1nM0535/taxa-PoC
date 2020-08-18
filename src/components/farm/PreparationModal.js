@@ -84,13 +84,13 @@ function PreparationModal({wallet, loading, loaded, netId, farm, isModalVisible,
               updatedFarm.season = await farmContract.methods.getTokenSeason(_tokenId).call()
               updatedFarm.presentSeason = await farmContract.methods.currentSeason(_tokenId).call()
               const _currentSeason = updatedFarm.presentSeason
-              await api.farm.updateSeason(_tokenId, updatedFarm.season)
-              await api.farm.updatePreparations(_tokenId, _currentSeason, _crop, _fertilizer)
               store.dispatch(openSeason({ ...updatedFarm }))
               setButtonDisabled(false)
               setConfirmingTransaction(false)
               txStatus.confirmed = true
               store.dispatch(confirmedTx({ ...txStatus }))
+              await api.farm.updateSeason(_tokenId, updatedFarm.season)
+              await api.farm.updatePreparations(_tokenId, _currentSeason, _crop, _fertilizer)
             }
           })
           .on('error', error => console.log(error))
