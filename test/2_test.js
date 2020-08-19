@@ -193,6 +193,7 @@ contract("Farm", async accounts => {
     const newDeposit = web3.utils.toBN(web3.utils.toWei("5", "ether"));
     assert.equal(log._volume, 5, "new booker volume should be 5");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "new booker deposit should be 5 ether");
+    assert.equal(log._delivered, true, 'Expect delivery status to be true');
   });
   it("Booker should not cancel booking of 0 amount", async() => {
     try {

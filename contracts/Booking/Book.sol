@@ -10,11 +10,13 @@ abstract contract Book {
     uint256 _supply,
     uint256 _tokenId,
     address _booker,
-    uint256 _deposit
+    uint256 _deposit,
+    bool _delivered
   );
   event Received(
     uint256 _volume,
-    uint256 _deposit
+    uint256 _deposit,
+    bool _delivered
   );
   event CancelBook(
     uint256 _supply,
@@ -22,8 +24,15 @@ abstract contract Book {
     uint256 _deposit
   );
 
+  struct BookStatus {
+    bool delivered;
+  }
+
   // Map book type to booker
   mapping(address => uint256) public _bookers;
+
+  // Map book status to booker;
+  mapping(address => BookStatus) public _bookStatus;
 
   // Map booker fee to deposits
   mapping(address => uint256) public _deposits;

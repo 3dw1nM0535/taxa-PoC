@@ -148,7 +148,7 @@ contract Farm is FarmSeason, Book {
     _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
     _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
     _deposits[msg.sender] = msg.value;
-    emit Booking(_bookers[msg.sender], _harvests[_tokenId].supply, _tokenId, msg.sender, _deposits[msg.sender]);
+    emit Booking(_bookers[msg.sender], _harvests[_tokenId].supply, _tokenId, msg.sender, _deposits[msg.sender], _bookStatus[msg.sender].delivered);
 
   }
 
@@ -175,10 +175,13 @@ contract Farm is FarmSeason, Book {
     uint256 farmOwes = _harvests[_tokenId].price.mul(_volume);
     // Burn booker deposit
     _deposits[msg.sender] = _deposits[msg.sender].sub(farmOwes);
+
+    _bookStatus[msg.sender].delivered = true;
+
     // Transfer owes to farmer
     _payee.transfer(farmOwes);
 
-    emit Received(_bookers[msg.sender], _deposits[msg.sender]);
+    emit Received(_bookers[msg.sender], _deposits[msg.sender], _bookStatus[msg.sender].delivered);
   }
 
   function updateSupply(uint256 _tokenId, uint256 _volume) internal {
