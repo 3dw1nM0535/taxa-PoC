@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import Web3 from 'web3'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   Button,
   Segment,
@@ -13,8 +13,11 @@ import { gql, useQuery } from '@apollo/client'
 import { LoaderComponent } from '../loading'
 import { ErrorComponent } from '../error'
 import { connect } from 'react-redux'
+import BookingModal from './BookingModal'
 
 function Harvest({ farm, conversionRate }) {
+
+  const [bookingModalVisibility, setBookingModalVisibility] = useState(false)
 
   const GET_SEASONS = gql`
     query GetSeasons(
@@ -56,6 +59,10 @@ function Harvest({ farm, conversionRate }) {
     </>
   )
 
+  function handleBooking() {
+    setBookingModalVisibility(true)
+  }
+
   return (
     <>
       {data.getSeasons.length === 0 ? (
@@ -93,9 +100,11 @@ function Harvest({ farm, conversionRate }) {
                   {`${Web3.utils.fromWei(season.harvestPrice)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(season.harvestPrice)) * parseFloat(conversionRate.ethkes)), 10)}`}
                 </Table.Cell>
                 <Table.Cell>
+                  <BookingModal bookingModalVisibility={bookingModalVisibility} setBookingModalVisibility={setBookingModalVisibility} harvestPrice={season.harvestPrice} />
                   <Button
                     size='mini'
                     color='violet'
+                    onClick={() => handleBooking()}
                     disabled={season.harvestYield === 0}
                   >
                     Book

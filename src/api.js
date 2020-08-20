@@ -96,6 +96,42 @@ const UPDATE_HARVESTS = gql`
   }
 `
 
+const ADD_BOOKINGS = gql`
+  mutation AddBooking(
+    $token: Int!
+    $volume: Int!
+    $booker: String!
+    $deposit: String!
+    $delivered: Boolean!
+  ) {
+    addBooking(input: {
+      token: $token
+      volume: $volume
+      booker: $booker
+      deposit: $deposit
+      delivered: $delivered
+    }) {
+      updatedAt
+    }
+  }
+`
+
+const UPDATE_HARVEST_SUPPLY = gql`
+  mutation UpdateFarmHarvestSupply(
+    $token: Int!
+    $seasonNumber: Int!
+    $newSupply: Int!
+  ) {
+    updateFarmHarvestSupply(input: {
+      token: $token
+      seasonNumber: $seasonNumber
+      newSupply: $newSupply
+    }) {
+      updatedAt
+    }
+  }
+`
+
 export default {
   wallet: {
     addFarm: (_tokenId, _size, _soilType, _owner, _fileHash, _season) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
@@ -152,6 +188,24 @@ export default {
       }
     })
     .then(res => console.log('Success')),
+    addBooking: (_token, _volume, _booker, _deposit, _delivered) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(ADD_BOOKINGS),
+      variables: {
+        token: Number(_token),
+        volume: Number(_volume),
+        booker: String(_booker).toLowerCase(),
+        deposit: String(_deposit),
+        delivered: Boolean(_delivered),
+      }
+    }).then(res => console.log('Success')),
+    updateFarmHarvestSupply: (_seasonNumber, _token, _newSupply) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_HARVEST_SUPPLY),
+      variables: {
+        seasonNumber: Number(_seasonNumber),
+        token: Number(_token),
+        newSupply: Number(_newSupply),
+      }
+    }).then(res => console.log('Success')),
   }
 }
 
