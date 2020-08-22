@@ -93,6 +93,7 @@ function Booking({ farm, conversionRate, wallet }) {
                   <Button
                     size='mini'
                     color='violet'
+                    onClick={() => console.log('cancelling...')}
                     disabled={booking.volume === 0}
                   >
                    Cancel 
