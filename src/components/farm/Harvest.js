@@ -15,7 +15,7 @@ import { ErrorComponent } from '../error'
 import { connect } from 'react-redux'
 import BookingModal from './BookingModal'
 
-function Harvest({ farm, conversionRate }) {
+function Harvest({ farm, conversionRate, wallet }) {
 
   const [bookingModalVisibility, setBookingModalVisibility] = useState(false)
 
@@ -104,7 +104,7 @@ function Harvest({ farm, conversionRate }) {
                   <Button
                     size='mini'
                     color='violet'
-                    onClick={() => handleBooking()}
+                    onClick={wallet.address !== undefined ? () => handleBooking() : null}
                     disabled={season.harvestYield === 0}
                   >
                     Book
@@ -122,12 +122,14 @@ function Harvest({ farm, conversionRate }) {
 Harvest.propTypes = {
   farm: PropTypes.object.isRequired,
   conversionRate: PropTypes.object.isRequired,
+  wallet: PropTypes.object.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
     farm: state.farm,
     conversionRate: state.prices,
+    wallet: state.wallet,
   }
 }
 

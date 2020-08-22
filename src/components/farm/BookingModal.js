@@ -46,7 +46,8 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
             setButtonDisabled(false)
             setConfirmingTransaction(false)
             const {_volume, _supply, _tokenId, _booker, _deposit, _delivered} = receipt.events.Booking.returnValues
-            await api.farm.addBooking(_tokenId, _volume, _booker, _deposit, _delivered)
+            const _bookerLowerCased = String(_booker).toLowerCase()
+            await api.farm.addBooking(_tokenId, _volume, _bookerLowerCased, _deposit, _delivered)
             await api.farm.updateFarmHarvestSupply(currentSeason, _tokenId, _supply)
           })
           .on('error', error => {
