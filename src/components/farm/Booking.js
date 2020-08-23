@@ -1,12 +1,14 @@
 import PropTypes from 'prop-types'
 import Web3 from 'web3'
 import React from 'react'
+import makeBlockie from 'ethereum-blockies-base64'
 import {
   Button,
   Segment,
   Icon,
   Table,
   Header,
+  Image,
 } from 'semantic-ui-react'
 import { gql, useQuery } from '@apollo/client'
 
@@ -70,14 +72,25 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
               <Table.HeaderCell>Booker</Table.HeaderCell>
               <Table.HeaderCell>Volume</Table.HeaderCell>
               <Table.HeaderCell>Deposit</Table.HeaderCell>
-              <Table.HeaderCell>Delivered</Table.HeaderCell>
+              <Table.HeaderCell>Delivery Status</Table.HeaderCell>
+              <Table.HeaderCell>Cancel Booking</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
           <Table.Body>
             {data.getBookings.map(booking => (
               <Table.Row key={booking.id}>
-                <Table.Cell>{booking.booker}</Table.Cell>
+                <Table.Cell>
+                  <Image
+                    style={{
+                      width: 25,
+                      height: 25,
+                    }}
+                    src={makeBlockie(String(booking.booker))}
+                    size='tiny'
+                    circular
+                  />
+                </Table.Cell>
                 <Table.Cell>{booking.volume}</Table.Cell>
                 <Table.Cell>
                   {`${Web3.utils.fromWei(booking.deposit)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(booking.deposit)) * parseFloat(conversionRate.ethkes)), 10)}`}
@@ -90,6 +103,8 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
                   >
                     Confirm Received
                   </Button>
+                </Table.Cell>
+                <Table.Cell>
                   <Button
                     size='mini'
                     color='violet'

@@ -7,7 +7,6 @@ import {
   Form,
   Button,
 } from 'semantic-ui-react'
-import { ConfirmingTx } from '../notifications'
 import { connect } from 'react-redux'
 import Farm from '../../build/Farm.json'
 import api from '../../api'
@@ -18,7 +17,8 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
   const [bookingVolume, setBookingVolume] = useState(0)
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [error, setError] = useState({})
-  const [confirmingTransaction, setConfirmingTransaction] = useState(false)
+  const [transactionHash, setTransactionHash] = useState("")
+  const [confirmingTx, setConfirmingTx] = useState(false)
 
   function validate(volume) {
     const errors = {}
@@ -29,26 +29,29 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
 
   async function handleSubmit(e) {
     e.preventDefault()
+    setButtonDisabled(true)
     const error = validate(bookingVolume)
     setError(error)
     if (Object.keys(error).length === 0) {
       try {
-        setButtonDisabled(true)
         const farmContract = initContract(Farm, netId)
         await farmContract.methods.bookHarvest(tokenId, bookingVolume).send({
           from: wallet.address[0],
           value: new Web3.utils.BN(harvestPrice).mul(new Web3.utils.BN(bookingVolume)).toString()
         })
-          .on('transactionHash', () => {
-            setConfirmingTransaction(true)
+          .on('transactionHash', hash => {
+            setTransactionHash(hash)
+            setConfirmingTx(true)
           })
           .on('confirmation', async(confirmationNumber, receipt) => {
-            setButtonDisabled(false)
-            setConfirmingTransaction(false)
-            const {_volume, _supply, _tokenId, _booker, _deposit, _delivered} = receipt.events.Booking.returnValues
-            const _bookerLowerCased = String(_booker).toLowerCase()
-            await api.farm.addBooking(_tokenId, _volume, _bookerLowerCased, _deposit, _delivered)
-            await api.farm.updateFarmHarvestSupply(currentSeason, _tokenId, _supply)
+            if (confirmationNumber === 1) {
+              setButtonDisabled(false)
+              setConfirmingTx(false)
+              const {_volume, _supply, _tokenId, _booker, _deposit, _delivered} = receipt.events.Booking.returnValues
+              const _bookerLowerCased = String(_booker).toLowerCase()
+              await api.farm.addBooking(_tokenId, _volume, _bookerLowerCased, _deposit, _delivered)
+              await api.farm.updateFarmHarvestSupply(currentSeason, _tokenId, _supply)
+            }
           })
           .on('error', error => {
             setButtonDisabled(false)
@@ -68,7 +71,6 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
     >
       <Modal.Header>
         Booking Harvest
-        {confirmingTransaction && <ConfirmingTx />}
       </Modal.Header>
       <Modal.Content>
         <Form
@@ -84,6 +86,17 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
             error={error.bookingVolume ? { content: `${error.bookingVolume}`, pointing: 'above' } : false}
           />
           <Form.Button disabled={buttonDisabled} loading={buttonDisabled} control={Button} type='submit' color='violet' content='Book Harvest' />
+          {confirmingTx && <a
+            style={{
+              marginLeft: '0.5em',
+              color: '#7f00ff',
+              textDecoration: 'underline'
+            }}
+            href={`https://ropsten.etherscan.io/tx/${transactionHash}`}
+            target='blank'
+          >
+            view tx status
+          </a>}
         </Form>
       </Modal.Content>
       <Modal.Actions>

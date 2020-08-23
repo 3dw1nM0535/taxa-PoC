@@ -238,7 +238,7 @@ function FarmHeader({ farm, loaded, netId, tokenId, account, txConfirmed }) {
                         <LabelPlaceholder />
                       ) : (
                         <>
-                          <Image style={{ width: 30, height: 30 }} src={makeBlockie(String(farm.owner))} size="tiny" circular avatar />
+                          <Image style={{ width: 30, height: 30 }} src={makeBlockie(String(farm.owner))} size="tiny" rounded avatar />
                           <Popup
                             trigger={
                               <Label
