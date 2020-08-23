@@ -21,7 +21,7 @@ const panes = [
   }
 ]
 
-export function FarmComponent({ farmData, account }) {
+function FarmComponent({ farmData, account }) {
   
   return (
     <Grid stackable columns={2} style={{ margin: '1em 1em 1em 1em' }}>

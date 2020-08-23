@@ -14,7 +14,7 @@ import { LoaderComponent } from '../loading'
 import { ErrorComponent } from '../error'
 import { connect } from 'react-redux'
 
-function Booking({ farm, conversionRate, wallet }) {
+function Booking({ farm, conversionRate, wallet, loaded }) {
 
   const GET_BOOKINGS = gql`
     query GetBookings(
@@ -38,7 +38,7 @@ function Booking({ farm, conversionRate, wallet }) {
   const { loading, data, error } = useQuery(GET_BOOKINGS, {
     variables: {
       token: `${farm.token !== undefined ? +farm.token : 0}`,
-      bookerAddress: `${String(wallet.address[0]).toLowerCase()}`,
+      bookerAddress: loaded ? `${String(wallet.address[0]).toLowerCase()}` : `${String(0x00000000000000000000000E0000000000000000)}`,
     }
   })
   
@@ -112,6 +112,7 @@ Booking.propTypes = {
   farm: PropTypes.object.isRequired,
   conversionRate: PropTypes.object.isRequired,
   wallet: PropTypes.object.isRequired,
+  loaded: PropTypes.bool.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -119,6 +120,7 @@ function mapStateToProps(state) {
     farm: state.farm,
     conversionRate: state.prices,
     wallet: state.wallet,
+    loaded: state.wallet.loaded,
   }
 }
 
