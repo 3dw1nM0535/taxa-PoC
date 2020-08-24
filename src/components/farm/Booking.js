@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types'
 import Web3 from 'web3'
-import React from 'react'
+import React, { useState } from 'react'
 import makeBlockie from 'ethereum-blockies-base64'
 import {
   Button,
@@ -15,8 +15,21 @@ import { gql, useQuery } from '@apollo/client'
 import { LoaderComponent } from '../loading'
 import { ErrorComponent } from '../error'
 import { connect } from 'react-redux'
+import ConfirmationModal from './ConfirmationModal'
+import CancellationModal from './CancellationModal'
 
 function Booking({ farm, conversionRate, wallet, loaded }) {
+
+  const [confirmationModalVisibility, setConfirmationModalVisibility] = useState(false)
+  const [cancellationModalVisibility, setCancellationModalVisibility] = useState(false)
+
+  function handleConfirmation() {
+    setConfirmationModalVisibility(true)
+  }
+
+  function handleCancellation() {
+    setCancellationModalVisibility(true)
+  }
 
   const GET_BOOKINGS = gql`
     query GetBookings(
@@ -96,10 +109,13 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
                   {`${Web3.utils.fromWei(booking.deposit)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(booking.deposit)) * parseFloat(conversionRate.ethkes)), 10)}`}
                 </Table.Cell>
                 <Table.Cell>
+                  <ConfirmationModal confirmationModalVisibility={confirmationModalVisibility} setConfirmationModalVisibility={setConfirmationModalVisibility} />
+                  <CancellationModal cancellationModalVisibility={cancellationModalVisibility} setCancellationModalVisibility={setCancellationModalVisibility} />
                   <Button
                     size='mini'
                     color='violet'
                     disabled={booking.volume === 0}
+                    onClick={() => handleConfirmation()}
                   >
                     Confirm Received
                   </Button>
@@ -108,7 +124,7 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
                   <Button
                     size='mini'
                     color='violet'
-                    onClick={() => console.log('cancelling...')}
+                    onClick={() => handleCancellation()}
                     disabled={booking.volume === 0}
                   >
                    Cancel 

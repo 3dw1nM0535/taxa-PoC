@@ -29,11 +29,11 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
 
   async function handleSubmit(e) {
     e.preventDefault()
-    setButtonDisabled(true)
     const error = validate(bookingVolume)
     setError(error)
     if (Object.keys(error).length === 0) {
       try {
+        setButtonDisabled(true)
         const farmContract = initContract(Farm, netId)
         await farmContract.methods.bookHarvest(tokenId, bookingVolume).send({
           from: wallet.address[0],
