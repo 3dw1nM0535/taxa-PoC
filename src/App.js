@@ -41,8 +41,9 @@ function App({ loaded }) {
   }, [])
 
   let walletAddress = {}
+  const isWindowEthereum = window.ethereum !== undefined
 
-  if (loaded) {
+  if (isWindowEthereum) {
     window.ethereum.on('accountsChanged', async(accounts) => {
       const isUnlocked = await window.ethereum._metamask.isUnlocked()
       if (isUnlocked) {
