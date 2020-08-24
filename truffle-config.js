@@ -24,6 +24,12 @@ module.exports = {
       },
       network_id: 3,
     },
+    rinkeby: {
+      provider: function () {
+        return new HDWalletProvider(`${process.env.MNEMONICS}`, `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`)
+      },
+      network_id: 4,
+    },
   },
   contracts_build_directory: './src/build',
   compilers: {
