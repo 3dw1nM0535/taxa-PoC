@@ -132,6 +132,26 @@ const UPDATE_HARVEST_SUPPLY = gql`
   }
 `
 
+const UPDATE_AFTER_CANCELLATION = gql`
+  mutation UpdateAfterCancellation(
+    $bookingId: String!
+    $seasonNumber: Int!
+    $token: Int!
+    $newSupply: Int!
+    $newVolume: Int!
+    $newDeposit: Int!
+  ) {
+    updateAfterCancellation(input: {
+      bookingId: $bookingId
+      seasonNumber: $seasonNumber
+      token: $token
+      newSupply: $newSupply
+      newVolume: $newVolume
+      newDeposit: $newDeposit
+    })
+  }
+`
+
 export default {
   wallet: {
     addFarm: (_tokenId, _size, _soilType, _owner, _fileHash, _season) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
@@ -204,6 +224,17 @@ export default {
         seasonNumber: Number(_seasonNumber),
         token: Number(_token),
         newSupply: Number(_newSupply),
+      }
+    }).then(res => console.log('Success')),
+    updateAfterCancellation: (_bookingId, _seasonNumber, _token, _newSupply, _newVolume, _newDeposit) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_AFTER_CANCELLATION),
+      variables: {
+        bookingId: _bookingId,
+        seasonNumber: Number(_seasonNumber),
+        token: Number(_token),
+        newSupply: Number(_newSupply),
+        newVolume: Number(_newVolume),
+        newDeposit: String(_newDeposit),
       }
     }).then(res => console.log('Success')),
   }

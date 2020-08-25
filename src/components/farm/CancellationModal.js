@@ -7,8 +7,11 @@ import {
   Input,
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
+import Farm from '../../build/Farm.json'
+import { initContract } from '../../utils'
+import api from '../../api'
 
-function CancellationModal({loaded, cancellationModalVisibility, setCancellationModalVisibility}) {
+function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibility, setCancellationModalVisibility, bookingId}) {
 
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [cancellationVolume, setCancellationVolume] = useState(0)
@@ -21,12 +24,36 @@ function CancellationModal({loaded, cancellationModalVisibility, setCancellation
     return errors
   }
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     const error = validate(cancellationVolume)
     setError(error)
     if (Object.keys(error).length === 0) {
-      console.log(cancellationVolume)
+      try {
+        setButtonDisabled(true)
+        const farmContract = initContract(Farm, netId)
+        const tokenId = Number(farm.token)
+        const booker = wallet.address[0]
+        const farmOwner = farm.owner
+        await farmContract.methods.cancelBook(tokenId, booker, farmOwner, cancellationVolume).send({from: wallet.address[0]})
+          .on('transactionHash', () => {})
+          .on('confirmation', async(confirmationNumber, receipt) => {
+            if (confirmationNumber === 1) {
+              setButtonDisabled(false)
+              window.alert('Cancellation was a success!')
+              const { _supply, _booker, _deposit } = receipt.events.CancelBook.returnValues
+              const _bookerVolume = await farmContract.methods._bookers(_booker).call()
+              const _currentSeason = Number(farm.presentSeason)
+              await api.farm.updateAfterCancellation(bookingId, _currentSeason, tokenId, _supply, _bookerVolume, _deposit)
+            }
+          })
+          .on('error', error => {
+            setButtonDisabled(false)
+            console.log(error)
+          })
+      } catch(error) {
+        console.log(error)
+      }
     }
   }
 
@@ -69,11 +96,18 @@ CancellationModal.propTypes = {
   loaded: PropTypes.bool.isRequired,
   cancellationModalVisibility: PropTypes.bool.isRequired,
   setCancellationModalVisibility: PropTypes.func.isRequired,
+  wallet: PropTypes.object.isRequired,
+  netId: PropTypes.number.isRequired,
+  farm: PropTypes.object.isRequired,
+  bookingId: PropTypes.string.isRequired,
 }
 
 function mapStateToProps(state) {
   return {
     loaded: state.wallet.loaded,
+    wallet: state.wallet,
+    netId: state.network.netId,
+    farm: state.farm,
   }
 }
 

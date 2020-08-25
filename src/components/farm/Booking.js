@@ -110,7 +110,7 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
                 </Table.Cell>
                 <Table.Cell>
                   <ConfirmationModal confirmationModalVisibility={confirmationModalVisibility} setConfirmationModalVisibility={setConfirmationModalVisibility} />
-                  <CancellationModal cancellationModalVisibility={cancellationModalVisibility} setCancellationModalVisibility={setCancellationModalVisibility} />
+                  <CancellationModal bookingId={booking.id} cancellationModalVisibility={cancellationModalVisibility} setCancellationModalVisibility={setCancellationModalVisibility} />
                   <Button
                     size='mini'
                     color='violet'
