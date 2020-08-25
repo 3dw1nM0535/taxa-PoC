@@ -16,6 +16,8 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
   const [buttonDisabled, setButtonDisabled] = useState(false)
   const [cancellationVolume, setCancellationVolume] = useState(0)
   const [error, setError] = useState({})
+  const [txConfirming, setTxConfirming] = useState(false)
+  const [txHash, setTxHash] = useState("")
 
   function validate(vol) {
     const errors = {}
@@ -36,15 +38,18 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
         const booker = wallet.address[0]
         const farmOwner = farm.owner
         await farmContract.methods.cancelBook(tokenId, booker, farmOwner, cancellationVolume).send({from: wallet.address[0]})
-          .on('transactionHash', () => {})
+          .on('transactionHash', hash => {
+            setTxConfirming(true)
+            setTxHash(hash)
+          })
           .on('confirmation', async(confirmationNumber, receipt) => {
             if (confirmationNumber === 1) {
               setButtonDisabled(false)
+              setTxConfirming(false)
               window.alert('Cancellation was a success!')
               const { _supply, _booker, _deposit } = receipt.events.CancelBook.returnValues
               const _bookerVolume = await farmContract.methods._bookers(_booker).call()
-              const _currentSeason = Number(farm.presentSeason)
-              await api.farm.updateAfterCancellation(bookingId, _currentSeason, tokenId, _supply, _bookerVolume, _deposit)
+              await api.farm.updateAfterCancellation(bookingId, farm.presentSeason, tokenId, _supply, _bookerVolume, _deposit)
             }
           })
           .on('error', error => {
@@ -78,6 +83,17 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
             error={error.cancellationVolume ? { content: `${error.cancellationVolume}`, pointing: 'above' } : false}
           />
           <Form.Button content='Confirm Cancellation' color='violet' type='submit' loading={buttonDisabled} disabled={buttonDisabled} />
+          {txConfirming && <a
+            style={{
+              marginLeft: '0.5em',
+              color: '#7f00ff',
+              textDecoration: 'underline'
+            }}
+            href={`${process.env.REACT_APP_ROPSTEN_TESTNET_URL}/${txHash}`}
+            target='blank'
+          >
+            view transaction status
+          </a>}
         </Form>
       </Modal.Content>
       <Modal.Actions>

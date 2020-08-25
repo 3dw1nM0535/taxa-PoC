@@ -134,12 +134,12 @@ const UPDATE_HARVEST_SUPPLY = gql`
 
 const UPDATE_AFTER_CANCELLATION = gql`
   mutation UpdateAfterCancellation(
-    $bookingId: String!
+    $bookingId: ID!
     $seasonNumber: Int!
     $token: Int!
     $newSupply: Int!
     $newVolume: Int!
-    $newDeposit: Int!
+    $newDeposit: String!
   ) {
     updateAfterCancellation(input: {
       bookingId: $bookingId
@@ -148,6 +148,22 @@ const UPDATE_AFTER_CANCELLATION = gql`
       newSupply: $newSupply
       newVolume: $newVolume
       newDeposit: $newDeposit
+    })
+  }
+`
+
+const UPDATE_AFTER_RECEIVERSHIP = gql`
+  mutation UpdateAfterReceivership(
+    $bookingId: ID!
+    $newBookerVolume: Int!
+    $newBookerDeposit: String!
+    $delivered: Boolean!
+  ) {
+    updateAfterReceivership(input: {
+      bookingId: $bookingId
+      newBookerVolume: $newBookerVolume
+      newBookerDeposit: $newBookerDeposit
+      delivered: $delivered
     })
   }
 `
@@ -235,6 +251,15 @@ export default {
         newSupply: Number(_newSupply),
         newVolume: Number(_newVolume),
         newDeposit: String(_newDeposit),
+      }
+    }).then(res => console.log('Success')),
+    updateAfterReceivership: (_bookingId, _newVolume, _newDeposit, _delivered) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_AFTER_RECEIVERSHIP),
+      variables: {
+        bookingId: _bookingId,
+        newBookerVolume: Number(_newVolume),
+        newBookerDeposit: String(_newDeposit),
+        delivered: Boolean(_delivered),
       }
     }).then(res => console.log('Success')),
   }

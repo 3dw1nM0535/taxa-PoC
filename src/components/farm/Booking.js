@@ -109,7 +109,7 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
                   {`${Web3.utils.fromWei(booking.deposit)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(booking.deposit)) * parseFloat(conversionRate.ethkes)), 10)}`}
                 </Table.Cell>
                 <Table.Cell>
-                  <ConfirmationModal confirmationModalVisibility={confirmationModalVisibility} setConfirmationModalVisibility={setConfirmationModalVisibility} />
+                  <ConfirmationModal bookingId={booking.id} confirmationModalVisibility={confirmationModalVisibility} setConfirmationModalVisibility={setConfirmationModalVisibility} />
                   <CancellationModal bookingId={booking.id} cancellationModalVisibility={cancellationModalVisibility} setCancellationModalVisibility={setCancellationModalVisibility} />
                   <Button
                     size='mini'
