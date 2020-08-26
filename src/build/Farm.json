@@ -224,7 +224,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -243,7 +244,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -262,7 +264,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -291,7 +294,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -310,7 +314,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -329,7 +334,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -353,7 +359,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -372,7 +379,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -391,7 +399,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -506,7 +515,8 @@
       "name": "bookHarvest",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -20199,11 +20209,30 @@
           ],
           "name": "Received",
           "type": "event"
+        },
+        "0xc377afd9fb3d152f6f4e53b9ae2c0c32b377f18c17533d0ffd56c10be5808932": {
+          "anonymous": false,
+          "inputs": [
+            {
+              "indexed": false,
+              "internalType": "address",
+              "name": "_booker",
+              "type": "address"
+            },
+            {
+              "indexed": false,
+              "internalType": "uint256",
+              "name": "_deposit",
+              "type": "uint256"
+            }
+          ],
+          "name": "CancelBook",
+          "type": "event"
         }
       },
       "links": {},
-      "address": "0x195f53b4Fe5Da2ccB52F8b17D7e6C7A700aBEfb4",
-      "transactionHash": "0x8a6f66d8bb7a6d4924285c0184380d18013e56519bab2c39bb2a09a9e24acbb0"
+      "address": "0xD2406c0752d375f4861b92F1c5d7d2F63082D7bF",
+      "transactionHash": "0x16a2b4b9cf23d002340ea044b91766d1a987b84d6a5614373f3ad55a9a2151e6"
     },
     "4": {
       "events": {
@@ -20426,7 +20455,8 @@
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-26T11:39:50.184Z",
+  "updatedAt": "2020-08-26T12:33:26.654Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "bookHarvest(uint256,uint256,uint256)": {
