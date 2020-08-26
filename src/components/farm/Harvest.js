@@ -35,6 +35,7 @@ function Harvest({ farm, conversionRate, wallet }) {
         expectedYield
         harvestYield
         harvestUnit
+        noOfBookers
         harvestPrice
       }
     }
@@ -83,6 +84,7 @@ function Harvest({ farm, conversionRate, wallet }) {
               <Table.HeaderCell>Fertilizer Used</Table.HeaderCell>
               <Table.HeaderCell>Harvest Supply</Table.HeaderCell>
               <Table.HeaderCell>Harvest Price</Table.HeaderCell>
+              <Table.HeaderCell>Season Bookers</Table.HeaderCell>
               {wallet.address !== undefined && farm.owner !== undefined ? String(farm.owner).toUpperCase() !== String(wallet.address[0]).toUpperCase() && <Table.HeaderCell>Action</Table.HeaderCell> : null}
             </Table.Row>
           </Table.Header>
@@ -99,6 +101,7 @@ function Harvest({ farm, conversionRate, wallet }) {
                 <Table.Cell>
                   {`${Web3.utils.fromWei(season.harvestPrice)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(season.harvestPrice)) * parseFloat(conversionRate.ethkes)), 10)}`}
                 </Table.Cell>
+                <Table.Cell>{season.noOfBookers}</Table.Cell>
                 {wallet.address !== undefined && farm.owner !== undefined ? String(farm.owner).toUpperCase() !== String(wallet.address[0]).toUpperCase() && <Table.Cell>
                   <BookingModal bookingModalVisibility={bookingModalVisibility} setBookingModalVisibility={setBookingModalVisibility} harvestPrice={season.harvestPrice} />
                   <Button

@@ -49,12 +49,6 @@
       "inputs": [
         {
           "indexed": false,
-          "internalType": "uint256",
-          "name": "_supply",
-          "type": "uint256"
-        },
-        {
-          "indexed": false,
           "internalType": "address",
           "name": "_booker",
           "type": "address"
@@ -155,12 +149,41 @@
       "inputs": [
         {
           "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "name": "seasonBookers",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "uint256",
           "name": "_tokenId",
           "type": "uint256"
         },
         {
           "internalType": "uint256",
           "name": "_volume",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_seasonNumber",
           "type": "uint256"
         }
       ],
@@ -189,6 +212,11 @@
         {
           "internalType": "uint256",
           "name": "_volume",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "_seasonNumber",
           "type": "uint256"
         }
       ],
@@ -221,22 +249,22 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.8+commit.0bbfe453\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_booker\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_deposit\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"_delivered\",\"type\":\"bool\"}],\"name\":\"Booking\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_booker\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_deposit\",\"type\":\"uint256\"}],\"name\":\"CancelBook\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_deposit\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"_delivered\",\"type\":\"bool\"}],\"name\":\"Received\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_bookStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"delivered\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_bookers\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_deposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"}],\"name\":\"bookHarvest\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"_booker\",\"type\":\"address\"},{\"internalType\":\"address payable\",\"name\":\"_payee\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"}],\"name\":\"cancelBook\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"_payee\",\"type\":\"address\"}],\"name\":\"confirmReceived\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"bookHarvest(uint256,uint256)\":{\"details\":\"bookHarvest This allows buyer to book farm harvest\",\"params\":{\"_tokenId\":\", _volume Amount to book\"}},\"cancelBook(uint256,address,address,uint256)\":{\"details\":\"cancelBook This allows booker to cancel bookings\",\"params\":{\"_tokenId\":\", _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)\"}},\"confirmReceived(uint256,uint256,address)\":{\"details\":\"confirmReceived This confirms the booker received his/her bookings\",\"params\":{\"_tokenId\":\", _volume, _payee This is the tokenized farm harvest and the booking volume to confirm received\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/lomolo/Projects/taxa/contracts/Booking/Book.sol\":\"Book\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/lomolo/Projects/taxa/contracts/Booking/Book.sol\":{\"keccak256\":\"0x81aa7255c39101b6173a74140299821a019b51b96b07e368d5fb4d39cffae347\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ab41968c8beb15f1b431247ed0465adf7228175dcd8592e396601e82ba957adc\",\"dweb:/ipfs/QmV8RuHMqJEQo7D9rLFM784yAbEzExVVYgZqrDPMikKgeN\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.8+commit.0bbfe453\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_supply\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_booker\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_deposit\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"_delivered\",\"type\":\"bool\"}],\"name\":\"Booking\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"address\",\"name\":\"_booker\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_deposit\",\"type\":\"uint256\"}],\"name\":\"CancelBook\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"uint256\",\"name\":\"_deposit\",\"type\":\"uint256\"},{\"indexed\":false,\"internalType\":\"bool\",\"name\":\"_delivered\",\"type\":\"bool\"}],\"name\":\"Received\",\"type\":\"event\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_bookStatus\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"delivered\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_bookers\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"name\":\"_deposits\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_seasonNumber\",\"type\":\"uint256\"}],\"name\":\"bookHarvest\",\"outputs\":[],\"stateMutability\":\"payable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"_booker\",\"type\":\"address\"},{\"internalType\":\"address payable\",\"name\":\"_payee\",\"type\":\"address\"},{\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_seasonNumber\",\"type\":\"uint256\"}],\"name\":\"cancelBook\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"_tokenId\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"_volume\",\"type\":\"uint256\"},{\"internalType\":\"address payable\",\"name\":\"_payee\",\"type\":\"address\"}],\"name\":\"confirmReceived\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"},{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"seasonBookers\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"methods\":{\"bookHarvest(uint256,uint256,uint256)\":{\"details\":\"bookHarvest This allows buyer to book farm harvest\",\"params\":{\"_tokenId\":\", _volume Amount to book\"}},\"cancelBook(uint256,address,address,uint256,uint256)\":{\"details\":\"cancelBook This allows booker to cancel bookings\",\"params\":{\"_tokenId\":\", _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)\"}},\"confirmReceived(uint256,uint256,address)\":{\"details\":\"confirmReceived This confirms the booker received his/her bookings\",\"params\":{\"_tokenId\":\", _volume, _payee This is the tokenized farm harvest and the booking volume to confirm received\"}}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/home/lomolo/Projects/taxa/contracts/Booking/Book.sol\":\"Book\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/home/lomolo/Projects/taxa/contracts/Booking/Book.sol\":{\"keccak256\":\"0xbcbf50bd82870d8811243f5d9ad2a41bf17afa6587fb3e351132738669c81a32\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://72faab79553f5fab91127c9d32ed700b4160b207cd6aad36fd86e290479b97e6\",\"dweb:/ipfs/QmWyWyrjM2xoAUDJoSycMaenEvSCioox5yPX1iYqfDgvBb\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
   "sourceMap": "",
   "deployedSourceMap": "",
-  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.4.22 <0.7.0;\n\nabstract contract Book {\n  \n  // Events\n  event Booking(\n\t  uint256 _volume,\n    uint256 _supply,\n    uint256 _tokenId,\n    address _booker,\n    uint256 _deposit,\n    bool _delivered\n  );\n  event Received(\n    uint256 _volume,\n    uint256 _deposit,\n    bool _delivered\n  );\n  event CancelBook(\n    uint256 _supply,\n    address _booker,\n    uint256 _deposit\n  );\n\n  struct BookStatus {\n    bool delivered;\n  }\n\n  // Map book type to booker\n  mapping(address => uint256) public _bookers;\n\n  // Map book status to booker;\n  mapping(address => BookStatus) public _bookStatus;\n\n  // Map booker fee to deposits\n  mapping(address => uint256) public _deposits;\n\n  /**\n   * @dev bookHarvest This allows buyer to book farm harvest\n   * @param _tokenId, _volume Amount to book\n   */\n  function bookHarvest(uint256 _tokenId, uint256 _volume) public payable virtual;\n\n  /**\n   * @dev cancelBook This allows booker to cancel bookings\n   * @param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)\n   */\n  function cancelBook(uint256 _tokenId, address payable _booker, address payable _payee, uint256 _volume) public virtual;\n\n  /**\n   * @dev confirmReceived This confirms the booker received his/her bookings\n   * @param _tokenId, _volume, _payee This is the tokenized farm harvest and the\n   * booking volume to confirm received\n   */\n  function confirmReceived(uint256 _tokenId, uint256 _volume, address payable _payee) public virtual;\n}\n\n",
+  "source": "// SPDX-License-Identifier: MIT\n\npragma solidity >=0.4.22 <0.7.0;\n\nabstract contract Book {\n  \n  // Events\n  event Booking(\n\t  uint256 _volume,\n    uint256 _supply,\n    uint256 _tokenId,\n    address _booker,\n    uint256 _deposit,\n    bool _delivered\n  );\n  event Received(\n    uint256 _volume,\n    uint256 _deposit,\n    bool _delivered\n  );\n  event CancelBook(\n    address _booker,\n    uint256 _deposit\n  );\n\n  struct BookStatus {\n    bool delivered;\n  }\n\n  // Map book type to booker\n  mapping(address => uint256) public _bookers;\n\n  // Map book status to booker;\n  mapping(address => BookStatus) public _bookStatus;\n\n  // Map booker fee to deposits\n  mapping(address => uint256) public _deposits;\n\n  // Map farm season to total bookers\n  mapping(uint256 => mapping(uint256 => uint256)) public seasonBookers;\n\n  /**\n   * @dev bookHarvest This allows buyer to book farm harvest\n   * @param _tokenId, _volume Amount to book\n   */\n  function bookHarvest(uint256 _tokenId, uint256 _volume, uint256 _seasonNumber) public payable virtual;\n\n  /**\n   * @dev cancelBook This allows booker to cancel bookings\n   * @param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)\n   */\n  function cancelBook(uint256 _tokenId, address payable _booker, address payable _payee, uint256 _volume, uint256 _seasonNumber) public virtual;\n\n  /**\n   * @dev confirmReceived This confirms the booker received his/her bookings\n   * @param _tokenId, _volume, _payee This is the tokenized farm harvest and the\n   * booking volume to confirm received\n   */\n  function confirmReceived(uint256 _tokenId, uint256 _volume, address payable _payee) public virtual;\n}\n\n",
   "sourcePath": "/home/lomolo/Projects/taxa/contracts/Booking/Book.sol",
   "ast": {
     "absolutePath": "/home/lomolo/Projects/taxa/contracts/Booking/Book.sol",
     "exportedSymbols": {
       "Book": [
-        77
+        85
       ]
     },
-    "id": 78,
+    "id": 86,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
@@ -261,9 +289,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 77,
+        "id": 85,
         "linearizedBaseContracts": [
-          77
+          85
         ],
         "name": "Book",
         "nodeType": "ContractDefinition",
@@ -563,11 +591,11 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 31,
+            "id": 29,
             "name": "CancelBook",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 30,
+              "id": 28,
               "nodeType": "ParameterList",
               "parameters": [
                 {
@@ -575,40 +603,11 @@
                   "id": 25,
                   "indexed": false,
                   "mutability": "mutable",
-                  "name": "_supply",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 31,
-                  "src": "365:15:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 24,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "365:7:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 27,
-                  "indexed": false,
-                  "mutability": "mutable",
                   "name": "_booker",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 31,
-                  "src": "386:15:0",
+                  "scope": 29,
+                  "src": "365:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -616,10 +615,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 26,
+                    "id": 24,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "386:7:0",
+                    "src": "365:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -631,14 +630,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 29,
+                  "id": 27,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_deposit",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 31,
-                  "src": "407:16:0",
+                  "scope": 29,
+                  "src": "386:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -646,10 +645,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28,
+                    "id": 26,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "407:7:0",
+                    "src": "386:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -659,23 +658,23 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "359:68:0"
+              "src": "359:47:0"
             },
-            "src": "343:85:0"
+            "src": "343:64:0"
           },
           {
             "canonicalName": "Book.BookStatus",
-            "id": 34,
+            "id": 32,
             "members": [
               {
                 "constant": false,
-                "id": 33,
+                "id": 31,
                 "mutability": "mutable",
                 "name": "delivered",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 34,
-                "src": "456:14:0",
+                "scope": 32,
+                "src": "435:14:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -683,10 +682,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 32,
+                  "id": 30,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "456:4:0",
+                  "src": "435:4:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -698,20 +697,20 @@
             ],
             "name": "BookStatus",
             "nodeType": "StructDefinition",
-            "scope": 77,
-            "src": "432:43:0",
+            "scope": 85,
+            "src": "411:43:0",
             "visibility": "public"
           },
           {
             "constant": false,
             "functionSelector": "51894121",
-            "id": 38,
+            "id": 36,
             "mutability": "mutable",
             "name": "_bookers",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 77,
-            "src": "508:43:0",
+            "scope": 85,
+            "src": "487:43:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -719,28 +718,28 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 37,
+              "id": 35,
               "keyType": {
-                "id": 35,
+                "id": 33,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "516:7:0",
+                "src": "495:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "508:27:0",
+              "src": "487:27:0",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 36,
+                "id": 34,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "527:7:0",
+                "src": "506:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -753,46 +752,46 @@
           {
             "constant": false,
             "functionSelector": "34c3d1ab",
-            "id": 42,
+            "id": 40,
             "mutability": "mutable",
             "name": "_bookStatus",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 77,
-            "src": "588:49:0",
+            "scope": 85,
+            "src": "567:49:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$34_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$32_storage_$",
               "typeString": "mapping(address => struct Book.BookStatus)"
             },
             "typeName": {
-              "id": 41,
+              "id": 39,
               "keyType": {
-                "id": 39,
+                "id": 37,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "596:7:0",
+                "src": "575:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "588:30:0",
+              "src": "567:30:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$34_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$32_storage_$",
                 "typeString": "mapping(address => struct Book.BookStatus)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 40,
+                "id": 38,
                 "name": "BookStatus",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 34,
-                "src": "607:10:0",
+                "referencedDeclaration": 32,
+                "src": "586:10:0",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_BookStatus_$34_storage_ptr",
+                  "typeIdentifier": "t_struct$_BookStatus_$32_storage_ptr",
                   "typeString": "struct Book.BookStatus"
                 }
               }
@@ -803,13 +802,13 @@
           {
             "constant": false,
             "functionSelector": "9d2d6658",
-            "id": 46,
+            "id": 44,
             "mutability": "mutable",
             "name": "_deposits",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 77,
-            "src": "674:44:0",
+            "scope": 85,
+            "src": "653:44:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -817,28 +816,28 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 45,
+              "id": 43,
               "keyType": {
-                "id": 43,
+                "id": 41,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "682:7:0",
+                "src": "661:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "674:27:0",
+              "src": "653:27:0",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 44,
+                "id": 42,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "693:7:0",
+                "src": "672:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -849,15 +848,82 @@
             "visibility": "public"
           },
           {
+            "constant": false,
+            "functionSelector": "d2ceff76",
+            "id": 50,
+            "mutability": "mutable",
+            "name": "seasonBookers",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 85,
+            "src": "740:68:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_uint256_$_t_uint256_$_$",
+              "typeString": "mapping(uint256 => mapping(uint256 => uint256))"
+            },
+            "typeName": {
+              "id": 49,
+              "keyType": {
+                "id": 45,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "748:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "740:47:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_uint256_$_t_uint256_$_$",
+                "typeString": "mapping(uint256 => mapping(uint256 => uint256))"
+              },
+              "valueType": {
+                "id": 48,
+                "keyType": {
+                  "id": 46,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "767:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "759:27:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+                  "typeString": "mapping(uint256 => uint256)"
+                },
+                "valueType": {
+                  "id": 47,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "778:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
             "body": null,
             "documentation": {
-              "id": 47,
+              "id": 51,
               "nodeType": "StructuredDocumentation",
-              "src": "723:115:0",
+              "src": "813:115:0",
               "text": "@dev bookHarvest This allows buyer to book farm harvest\n@param _tokenId, _volume Amount to book"
             },
-            "functionSelector": "9dbfab50",
-            "id": 54,
+            "functionSelector": "890c915c",
+            "id": 60,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -865,18 +931,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 52,
+              "id": 58,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 49,
+                  "id": 53,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 54,
-                  "src": "862:16:0",
+                  "scope": 60,
+                  "src": "952:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -884,10 +950,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 48,
+                    "id": 52,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "862:7:0",
+                    "src": "952:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -898,13 +964,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 51,
+                  "id": 55,
                   "mutability": "mutable",
                   "name": "_volume",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 54,
-                  "src": "880:15:0",
+                  "scope": 60,
+                  "src": "970:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -912,10 +978,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 50,
+                    "id": 54,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "880:7:0",
+                    "src": "970:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -923,51 +989,16 @@
                   },
                   "value": null,
                   "visibility": "internal"
-                }
-              ],
-              "src": "861:35:0"
-            },
-            "returnParameters": {
-              "id": 53,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "919:0:0"
-            },
-            "scope": 77,
-            "src": "841:79:0",
-            "stateMutability": "payable",
-            "virtual": true,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": {
-              "id": 55,
-              "nodeType": "StructuredDocumentation",
-              "src": "924:194:0",
-              "text": "@dev cancelBook This allows booker to cancel bookings\n@param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)"
-            },
-            "functionSelector": "7867d617",
-            "id": 66,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "cancelBook",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 64,
-              "nodeType": "ParameterList",
-              "parameters": [
+                },
                 {
                   "constant": false,
                   "id": 57,
                   "mutability": "mutable",
-                  "name": "_tokenId",
+                  "name": "_seasonNumber",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 66,
-                  "src": "1141:16:0",
+                  "scope": 60,
+                  "src": "987:21:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -978,7 +1009,7 @@
                     "id": 56,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1141:7:0",
+                    "src": "987:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -986,74 +1017,51 @@
                   },
                   "value": null,
                   "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 59,
-                  "mutability": "mutable",
-                  "name": "_booker",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 66,
-                  "src": "1159:23:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address_payable",
-                    "typeString": "address payable"
-                  },
-                  "typeName": {
-                    "id": 58,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1159:15:0",
-                    "stateMutability": "payable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address_payable",
-                      "typeString": "address payable"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 61,
-                  "mutability": "mutable",
-                  "name": "_payee",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 66,
-                  "src": "1184:22:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address_payable",
-                    "typeString": "address payable"
-                  },
-                  "typeName": {
-                    "id": 60,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1184:15:0",
-                    "stateMutability": "payable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address_payable",
-                      "typeString": "address payable"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
+                }
+              ],
+              "src": "951:58:0"
+            },
+            "returnParameters": {
+              "id": 59,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1032:0:0"
+            },
+            "scope": 85,
+            "src": "931:102:0",
+            "stateMutability": "payable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": {
+              "id": 61,
+              "nodeType": "StructuredDocumentation",
+              "src": "1037:194:0",
+              "text": "@dev cancelBook This allows booker to cancel bookings\n@param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)"
+            },
+            "functionSelector": "cecb7517",
+            "id": 74,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "cancelBook",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 72,
+              "nodeType": "ParameterList",
+              "parameters": [
                 {
                   "constant": false,
                   "id": 63,
                   "mutability": "mutable",
-                  "name": "_volume",
+                  "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 66,
-                  "src": "1208:15:0",
+                  "scope": 74,
+                  "src": "1254:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1064,7 +1072,7 @@
                     "id": 62,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1208:7:0",
+                    "src": "1254:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1072,51 +1080,74 @@
                   },
                   "value": null,
                   "visibility": "internal"
-                }
-              ],
-              "src": "1140:84:0"
-            },
-            "returnParameters": {
-              "id": 65,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1239:0:0"
-            },
-            "scope": 77,
-            "src": "1121:119:0",
-            "stateMutability": "nonpayable",
-            "virtual": true,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": {
-              "id": 67,
-              "nodeType": "StructuredDocumentation",
-              "src": "1244:207:0",
-              "text": "@dev confirmReceived This confirms the booker received his/her bookings\n@param _tokenId, _volume, _payee This is the tokenized farm harvest and the\nbooking volume to confirm received"
-            },
-            "functionSelector": "e293c520",
-            "id": 76,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "confirmReceived",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 74,
-              "nodeType": "ParameterList",
-              "parameters": [
+                },
+                {
+                  "constant": false,
+                  "id": 65,
+                  "mutability": "mutable",
+                  "name": "_booker",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 74,
+                  "src": "1272:23:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  },
+                  "typeName": {
+                    "id": 64,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1272:15:0",
+                    "stateMutability": "payable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 67,
+                  "mutability": "mutable",
+                  "name": "_payee",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 74,
+                  "src": "1297:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  },
+                  "typeName": {
+                    "id": 66,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1297:15:0",
+                    "stateMutability": "payable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
                 {
                   "constant": false,
                   "id": 69,
                   "mutability": "mutable",
-                  "name": "_tokenId",
+                  "name": "_volume",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 76,
-                  "src": "1479:16:0",
+                  "scope": 74,
+                  "src": "1321:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1127,7 +1158,7 @@
                     "id": 68,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1479:7:0",
+                    "src": "1321:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1140,11 +1171,11 @@
                   "constant": false,
                   "id": 71,
                   "mutability": "mutable",
-                  "name": "_volume",
+                  "name": "_seasonNumber",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 76,
-                  "src": "1497:15:0",
+                  "scope": 74,
+                  "src": "1338:21:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1155,7 +1186,70 @@
                     "id": 70,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1497:7:0",
+                    "src": "1338:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1253:107:0"
+            },
+            "returnParameters": {
+              "id": 73,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1375:0:0"
+            },
+            "scope": 85,
+            "src": "1234:142:0",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": {
+              "id": 75,
+              "nodeType": "StructuredDocumentation",
+              "src": "1380:207:0",
+              "text": "@dev confirmReceived This confirms the booker received his/her bookings\n@param _tokenId, _volume, _payee This is the tokenized farm harvest and the\nbooking volume to confirm received"
+            },
+            "functionSelector": "e293c520",
+            "id": 84,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "confirmReceived",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 82,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 77,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 84,
+                  "src": "1615:16:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 76,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1615:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1166,13 +1260,41 @@
                 },
                 {
                   "constant": false,
-                  "id": 73,
+                  "id": 79,
+                  "mutability": "mutable",
+                  "name": "_volume",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 84,
+                  "src": "1633:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 78,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1633:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 81,
                   "mutability": "mutable",
                   "name": "_payee",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 76,
-                  "src": "1514:22:0",
+                  "scope": 84,
+                  "src": "1650:22:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1180,10 +1302,10 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 72,
+                    "id": 80,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1514:15:0",
+                    "src": "1650:15:0",
                     "stateMutability": "payable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address_payable",
@@ -1194,35 +1316,35 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1478:59:0"
+              "src": "1614:59:0"
             },
             "returnParameters": {
-              "id": 75,
+              "id": 83,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1552:0:0"
+              "src": "1688:0:0"
             },
-            "scope": 77,
-            "src": "1454:99:0",
+            "scope": 85,
+            "src": "1590:99:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 78,
-        "src": "67:1488:0"
+        "scope": 86,
+        "src": "67:1624:0"
       }
     ],
-    "src": "33:1524:0"
+    "src": "33:1660:0"
   },
   "legacyAST": {
     "absolutePath": "/home/lomolo/Projects/taxa/contracts/Booking/Book.sol",
     "exportedSymbols": {
       "Book": [
-        77
+        85
       ]
     },
-    "id": 78,
+    "id": 86,
     "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
@@ -1247,9 +1369,9 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": false,
-        "id": 77,
+        "id": 85,
         "linearizedBaseContracts": [
-          77
+          85
         ],
         "name": "Book",
         "nodeType": "ContractDefinition",
@@ -1549,11 +1671,11 @@
           {
             "anonymous": false,
             "documentation": null,
-            "id": 31,
+            "id": 29,
             "name": "CancelBook",
             "nodeType": "EventDefinition",
             "parameters": {
-              "id": 30,
+              "id": 28,
               "nodeType": "ParameterList",
               "parameters": [
                 {
@@ -1561,40 +1683,11 @@
                   "id": 25,
                   "indexed": false,
                   "mutability": "mutable",
-                  "name": "_supply",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 31,
-                  "src": "365:15:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_uint256",
-                    "typeString": "uint256"
-                  },
-                  "typeName": {
-                    "id": 24,
-                    "name": "uint256",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "365:7:0",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_uint256",
-                      "typeString": "uint256"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 27,
-                  "indexed": false,
-                  "mutability": "mutable",
                   "name": "_booker",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 31,
-                  "src": "386:15:0",
+                  "scope": 29,
+                  "src": "365:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1602,10 +1695,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 26,
+                    "id": 24,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "386:7:0",
+                    "src": "365:7:0",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1617,14 +1710,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 29,
+                  "id": 27,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "_deposit",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 31,
-                  "src": "407:16:0",
+                  "scope": 29,
+                  "src": "386:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1632,10 +1725,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 28,
+                    "id": 26,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "407:7:0",
+                    "src": "386:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1645,23 +1738,23 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "359:68:0"
+              "src": "359:47:0"
             },
-            "src": "343:85:0"
+            "src": "343:64:0"
           },
           {
             "canonicalName": "Book.BookStatus",
-            "id": 34,
+            "id": 32,
             "members": [
               {
                 "constant": false,
-                "id": 33,
+                "id": 31,
                 "mutability": "mutable",
                 "name": "delivered",
                 "nodeType": "VariableDeclaration",
                 "overrides": null,
-                "scope": 34,
-                "src": "456:14:0",
+                "scope": 32,
+                "src": "435:14:0",
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
@@ -1669,10 +1762,10 @@
                   "typeString": "bool"
                 },
                 "typeName": {
-                  "id": 32,
+                  "id": 30,
                   "name": "bool",
                   "nodeType": "ElementaryTypeName",
-                  "src": "456:4:0",
+                  "src": "435:4:0",
                   "typeDescriptions": {
                     "typeIdentifier": "t_bool",
                     "typeString": "bool"
@@ -1684,20 +1777,20 @@
             ],
             "name": "BookStatus",
             "nodeType": "StructDefinition",
-            "scope": 77,
-            "src": "432:43:0",
+            "scope": 85,
+            "src": "411:43:0",
             "visibility": "public"
           },
           {
             "constant": false,
             "functionSelector": "51894121",
-            "id": 38,
+            "id": 36,
             "mutability": "mutable",
             "name": "_bookers",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 77,
-            "src": "508:43:0",
+            "scope": 85,
+            "src": "487:43:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1705,28 +1798,28 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 37,
+              "id": 35,
               "keyType": {
-                "id": 35,
+                "id": 33,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "516:7:0",
+                "src": "495:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "508:27:0",
+              "src": "487:27:0",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 36,
+                "id": 34,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "527:7:0",
+                "src": "506:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -1739,46 +1832,46 @@
           {
             "constant": false,
             "functionSelector": "34c3d1ab",
-            "id": 42,
+            "id": 40,
             "mutability": "mutable",
             "name": "_bookStatus",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 77,
-            "src": "588:49:0",
+            "scope": 85,
+            "src": "567:49:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$34_storage_$",
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$32_storage_$",
               "typeString": "mapping(address => struct Book.BookStatus)"
             },
             "typeName": {
-              "id": 41,
+              "id": 39,
               "keyType": {
-                "id": 39,
+                "id": 37,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "596:7:0",
+                "src": "575:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "588:30:0",
+              "src": "567:30:0",
               "typeDescriptions": {
-                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$34_storage_$",
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_BookStatus_$32_storage_$",
                 "typeString": "mapping(address => struct Book.BookStatus)"
               },
               "valueType": {
                 "contractScope": null,
-                "id": 40,
+                "id": 38,
                 "name": "BookStatus",
                 "nodeType": "UserDefinedTypeName",
-                "referencedDeclaration": 34,
-                "src": "607:10:0",
+                "referencedDeclaration": 32,
+                "src": "586:10:0",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_BookStatus_$34_storage_ptr",
+                  "typeIdentifier": "t_struct$_BookStatus_$32_storage_ptr",
                   "typeString": "struct Book.BookStatus"
                 }
               }
@@ -1789,13 +1882,13 @@
           {
             "constant": false,
             "functionSelector": "9d2d6658",
-            "id": 46,
+            "id": 44,
             "mutability": "mutable",
             "name": "_deposits",
             "nodeType": "VariableDeclaration",
             "overrides": null,
-            "scope": 77,
-            "src": "674:44:0",
+            "scope": 85,
+            "src": "653:44:0",
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1803,28 +1896,28 @@
               "typeString": "mapping(address => uint256)"
             },
             "typeName": {
-              "id": 45,
+              "id": 43,
               "keyType": {
-                "id": 43,
+                "id": 41,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
-                "src": "682:7:0",
+                "src": "661:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_address",
                   "typeString": "address"
                 }
               },
               "nodeType": "Mapping",
-              "src": "674:27:0",
+              "src": "653:27:0",
               "typeDescriptions": {
                 "typeIdentifier": "t_mapping$_t_address_$_t_uint256_$",
                 "typeString": "mapping(address => uint256)"
               },
               "valueType": {
-                "id": 44,
+                "id": 42,
                 "name": "uint256",
                 "nodeType": "ElementaryTypeName",
-                "src": "693:7:0",
+                "src": "672:7:0",
                 "typeDescriptions": {
                   "typeIdentifier": "t_uint256",
                   "typeString": "uint256"
@@ -1835,15 +1928,82 @@
             "visibility": "public"
           },
           {
+            "constant": false,
+            "functionSelector": "d2ceff76",
+            "id": 50,
+            "mutability": "mutable",
+            "name": "seasonBookers",
+            "nodeType": "VariableDeclaration",
+            "overrides": null,
+            "scope": 85,
+            "src": "740:68:0",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_uint256_$_t_uint256_$_$",
+              "typeString": "mapping(uint256 => mapping(uint256 => uint256))"
+            },
+            "typeName": {
+              "id": 49,
+              "keyType": {
+                "id": 45,
+                "name": "uint256",
+                "nodeType": "ElementaryTypeName",
+                "src": "748:7:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint256",
+                  "typeString": "uint256"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "740:47:0",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint256_$_t_mapping$_t_uint256_$_t_uint256_$_$",
+                "typeString": "mapping(uint256 => mapping(uint256 => uint256))"
+              },
+              "valueType": {
+                "id": 48,
+                "keyType": {
+                  "id": 46,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "767:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                },
+                "nodeType": "Mapping",
+                "src": "759:27:0",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_mapping$_t_uint256_$_t_uint256_$",
+                  "typeString": "mapping(uint256 => uint256)"
+                },
+                "valueType": {
+                  "id": 47,
+                  "name": "uint256",
+                  "nodeType": "ElementaryTypeName",
+                  "src": "778:7:0",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  }
+                }
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
             "body": null,
             "documentation": {
-              "id": 47,
+              "id": 51,
               "nodeType": "StructuredDocumentation",
-              "src": "723:115:0",
+              "src": "813:115:0",
               "text": "@dev bookHarvest This allows buyer to book farm harvest\n@param _tokenId, _volume Amount to book"
             },
-            "functionSelector": "9dbfab50",
-            "id": 54,
+            "functionSelector": "890c915c",
+            "id": 60,
             "implemented": false,
             "kind": "function",
             "modifiers": [],
@@ -1851,18 +2011,18 @@
             "nodeType": "FunctionDefinition",
             "overrides": null,
             "parameters": {
-              "id": 52,
+              "id": 58,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 49,
+                  "id": 53,
                   "mutability": "mutable",
                   "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 54,
-                  "src": "862:16:0",
+                  "scope": 60,
+                  "src": "952:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1870,10 +2030,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 48,
+                    "id": 52,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "862:7:0",
+                    "src": "952:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1884,13 +2044,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 51,
+                  "id": 55,
                   "mutability": "mutable",
                   "name": "_volume",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 54,
-                  "src": "880:15:0",
+                  "scope": 60,
+                  "src": "970:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1898,10 +2058,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 50,
+                    "id": 54,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "880:7:0",
+                    "src": "970:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1909,51 +2069,16 @@
                   },
                   "value": null,
                   "visibility": "internal"
-                }
-              ],
-              "src": "861:35:0"
-            },
-            "returnParameters": {
-              "id": 53,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "919:0:0"
-            },
-            "scope": 77,
-            "src": "841:79:0",
-            "stateMutability": "payable",
-            "virtual": true,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": {
-              "id": 55,
-              "nodeType": "StructuredDocumentation",
-              "src": "924:194:0",
-              "text": "@dev cancelBook This allows booker to cancel bookings\n@param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)"
-            },
-            "functionSelector": "7867d617",
-            "id": 66,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "cancelBook",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 64,
-              "nodeType": "ParameterList",
-              "parameters": [
+                },
                 {
                   "constant": false,
                   "id": 57,
                   "mutability": "mutable",
-                  "name": "_tokenId",
+                  "name": "_seasonNumber",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 66,
-                  "src": "1141:16:0",
+                  "scope": 60,
+                  "src": "987:21:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1964,7 +2089,7 @@
                     "id": 56,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1141:7:0",
+                    "src": "987:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1972,74 +2097,51 @@
                   },
                   "value": null,
                   "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 59,
-                  "mutability": "mutable",
-                  "name": "_booker",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 66,
-                  "src": "1159:23:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address_payable",
-                    "typeString": "address payable"
-                  },
-                  "typeName": {
-                    "id": 58,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1159:15:0",
-                    "stateMutability": "payable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address_payable",
-                      "typeString": "address payable"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
-                {
-                  "constant": false,
-                  "id": 61,
-                  "mutability": "mutable",
-                  "name": "_payee",
-                  "nodeType": "VariableDeclaration",
-                  "overrides": null,
-                  "scope": 66,
-                  "src": "1184:22:0",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_address_payable",
-                    "typeString": "address payable"
-                  },
-                  "typeName": {
-                    "id": 60,
-                    "name": "address",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1184:15:0",
-                    "stateMutability": "payable",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_address_payable",
-                      "typeString": "address payable"
-                    }
-                  },
-                  "value": null,
-                  "visibility": "internal"
-                },
+                }
+              ],
+              "src": "951:58:0"
+            },
+            "returnParameters": {
+              "id": 59,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1032:0:0"
+            },
+            "scope": 85,
+            "src": "931:102:0",
+            "stateMutability": "payable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": {
+              "id": 61,
+              "nodeType": "StructuredDocumentation",
+              "src": "1037:194:0",
+              "text": "@dev cancelBook This allows booker to cancel bookings\n@param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)"
+            },
+            "functionSelector": "cecb7517",
+            "id": 74,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "cancelBook",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 72,
+              "nodeType": "ParameterList",
+              "parameters": [
                 {
                   "constant": false,
                   "id": 63,
                   "mutability": "mutable",
-                  "name": "_volume",
+                  "name": "_tokenId",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 66,
-                  "src": "1208:15:0",
+                  "scope": 74,
+                  "src": "1254:16:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2050,7 +2152,7 @@
                     "id": 62,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1208:7:0",
+                    "src": "1254:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2058,51 +2160,74 @@
                   },
                   "value": null,
                   "visibility": "internal"
-                }
-              ],
-              "src": "1140:84:0"
-            },
-            "returnParameters": {
-              "id": 65,
-              "nodeType": "ParameterList",
-              "parameters": [],
-              "src": "1239:0:0"
-            },
-            "scope": 77,
-            "src": "1121:119:0",
-            "stateMutability": "nonpayable",
-            "virtual": true,
-            "visibility": "public"
-          },
-          {
-            "body": null,
-            "documentation": {
-              "id": 67,
-              "nodeType": "StructuredDocumentation",
-              "src": "1244:207:0",
-              "text": "@dev confirmReceived This confirms the booker received his/her bookings\n@param _tokenId, _volume, _payee This is the tokenized farm harvest and the\nbooking volume to confirm received"
-            },
-            "functionSelector": "e293c520",
-            "id": 76,
-            "implemented": false,
-            "kind": "function",
-            "modifiers": [],
-            "name": "confirmReceived",
-            "nodeType": "FunctionDefinition",
-            "overrides": null,
-            "parameters": {
-              "id": 74,
-              "nodeType": "ParameterList",
-              "parameters": [
+                },
+                {
+                  "constant": false,
+                  "id": 65,
+                  "mutability": "mutable",
+                  "name": "_booker",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 74,
+                  "src": "1272:23:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  },
+                  "typeName": {
+                    "id": 64,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1272:15:0",
+                    "stateMutability": "payable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 67,
+                  "mutability": "mutable",
+                  "name": "_payee",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 74,
+                  "src": "1297:22:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_address_payable",
+                    "typeString": "address payable"
+                  },
+                  "typeName": {
+                    "id": 66,
+                    "name": "address",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1297:15:0",
+                    "stateMutability": "payable",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address_payable",
+                      "typeString": "address payable"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
                 {
                   "constant": false,
                   "id": 69,
                   "mutability": "mutable",
-                  "name": "_tokenId",
+                  "name": "_volume",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 76,
-                  "src": "1479:16:0",
+                  "scope": 74,
+                  "src": "1321:15:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2113,7 +2238,7 @@
                     "id": 68,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1479:7:0",
+                    "src": "1321:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2126,11 +2251,11 @@
                   "constant": false,
                   "id": 71,
                   "mutability": "mutable",
-                  "name": "_volume",
+                  "name": "_seasonNumber",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 76,
-                  "src": "1497:15:0",
+                  "scope": 74,
+                  "src": "1338:21:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2141,7 +2266,70 @@
                     "id": 70,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1497:7:0",
+                    "src": "1338:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                }
+              ],
+              "src": "1253:107:0"
+            },
+            "returnParameters": {
+              "id": 73,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "1375:0:0"
+            },
+            "scope": 85,
+            "src": "1234:142:0",
+            "stateMutability": "nonpayable",
+            "virtual": true,
+            "visibility": "public"
+          },
+          {
+            "body": null,
+            "documentation": {
+              "id": 75,
+              "nodeType": "StructuredDocumentation",
+              "src": "1380:207:0",
+              "text": "@dev confirmReceived This confirms the booker received his/her bookings\n@param _tokenId, _volume, _payee This is the tokenized farm harvest and the\nbooking volume to confirm received"
+            },
+            "functionSelector": "e293c520",
+            "id": 84,
+            "implemented": false,
+            "kind": "function",
+            "modifiers": [],
+            "name": "confirmReceived",
+            "nodeType": "FunctionDefinition",
+            "overrides": null,
+            "parameters": {
+              "id": 82,
+              "nodeType": "ParameterList",
+              "parameters": [
+                {
+                  "constant": false,
+                  "id": 77,
+                  "mutability": "mutable",
+                  "name": "_tokenId",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 84,
+                  "src": "1615:16:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 76,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1615:7:0",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -2152,13 +2340,41 @@
                 },
                 {
                   "constant": false,
-                  "id": 73,
+                  "id": 79,
+                  "mutability": "mutable",
+                  "name": "_volume",
+                  "nodeType": "VariableDeclaration",
+                  "overrides": null,
+                  "scope": 84,
+                  "src": "1633:15:0",
+                  "stateVariable": false,
+                  "storageLocation": "default",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_uint256",
+                    "typeString": "uint256"
+                  },
+                  "typeName": {
+                    "id": 78,
+                    "name": "uint256",
+                    "nodeType": "ElementaryTypeName",
+                    "src": "1633:7:0",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_uint256",
+                      "typeString": "uint256"
+                    }
+                  },
+                  "value": null,
+                  "visibility": "internal"
+                },
+                {
+                  "constant": false,
+                  "id": 81,
                   "mutability": "mutable",
                   "name": "_payee",
                   "nodeType": "VariableDeclaration",
                   "overrides": null,
-                  "scope": 76,
-                  "src": "1514:22:0",
+                  "scope": 84,
+                  "src": "1650:22:0",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2166,10 +2382,10 @@
                     "typeString": "address payable"
                   },
                   "typeName": {
-                    "id": 72,
+                    "id": 80,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1514:15:0",
+                    "src": "1650:15:0",
                     "stateMutability": "payable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address_payable",
@@ -2180,26 +2396,26 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1478:59:0"
+              "src": "1614:59:0"
             },
             "returnParameters": {
-              "id": 75,
+              "id": 83,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1552:0:0"
+              "src": "1688:0:0"
             },
-            "scope": 77,
-            "src": "1454:99:0",
+            "scope": 85,
+            "src": "1590:99:0",
             "stateMutability": "nonpayable",
             "virtual": true,
             "visibility": "public"
           }
         ],
-        "scope": 78,
-        "src": "67:1488:0"
+        "scope": 86,
+        "src": "67:1624:0"
       }
     ],
-    "src": "33:1524:0"
+    "src": "33:1660:0"
   },
   "compiler": {
     "name": "solc",
@@ -2207,16 +2423,16 @@
   },
   "networks": {},
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-19T13:47:58.997Z",
+  "updatedAt": "2020-08-26T11:15:34.478Z",
   "devdoc": {
     "methods": {
-      "bookHarvest(uint256,uint256)": {
+      "bookHarvest(uint256,uint256,uint256)": {
         "details": "bookHarvest This allows buyer to book farm harvest",
         "params": {
           "_tokenId": ", _volume Amount to book"
         }
       },
-      "cancelBook(uint256,address,address,uint256)": {
+      "cancelBook(uint256,address,address,uint256,uint256)": {
         "details": "cancelBook This allows booker to cancel bookings",
         "params": {
           "_tokenId": ", _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)"

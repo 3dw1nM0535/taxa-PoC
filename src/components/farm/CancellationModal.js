@@ -37,7 +37,8 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
         const tokenId = Number(farm.token)
         const booker = wallet.address[0]
         const farmOwner = farm.owner
-        await farmContract.methods.cancelBook(tokenId, booker, farmOwner, cancellationVolume).send({from: wallet.address[0]})
+        const currentSeasonNumber = +farm.presentSeason
+        await farmContract.methods.cancelBook(tokenId, booker, farmOwner, cancellationVolume, currentSeasonNumber).send({from: wallet.address[0]})
           .on('transactionHash', hash => {
             setTxConfirming(true)
             setTxHash(hash)
@@ -47,9 +48,10 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
               setButtonDisabled(false)
               setTxConfirming(false)
               window.alert('Cancellation was a success!')
-              const { _supply, _booker, _deposit } = receipt.events.CancelBook.returnValues
+              const {_booker, _deposit } = receipt.events.CancelBook.returnValues
+              const _supply = await farmContract.methods._harvests(tokenId).call()
               const _bookerVolume = await farmContract.methods._bookers(_booker).call()
-              await api.farm.updateAfterCancellation(bookingId, farm.presentSeason, tokenId, _supply, _bookerVolume, _deposit)
+              await api.farm.updateAfterCancellation(bookingId, farm.presentSeason, tokenId, _supply.supply, _bookerVolume, _deposit)
             }
           })
           .on('error', error => {

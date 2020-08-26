@@ -35,7 +35,7 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
       try {
         setButtonDisabled(true)
         const farmContract = initContract(Farm, netId)
-        await farmContract.methods.bookHarvest(tokenId, bookingVolume).send({
+        await farmContract.methods.bookHarvest(tokenId, bookingVolume, currentSeason).send({
           from: wallet.address[0],
           value: new Web3.utils.BN(harvestPrice).mul(new Web3.utils.BN(bookingVolume)).toString()
         })
@@ -51,6 +51,8 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
               const _bookerLowerCased = String(_booker).toLowerCase()
               await api.farm.addBooking(_tokenId, _volume, _bookerLowerCased, _deposit, _delivered)
               await api.farm.updateFarmHarvestSupply(currentSeason, _tokenId, _supply)
+              const _noOfBookers = await farmContract.methods.seasonBookers(_tokenId, currentSeason)
+              await api.farm.updateHarvestBookers(_tokenId, currentSeason, _noOfBookers)
             }
           })
           .on('error', error => {

@@ -168,6 +168,22 @@ const UPDATE_AFTER_RECEIVERSHIP = gql`
   }
 `
 
+const UPDATE_SEASON_BOOKERS = gql`
+  mutation UpdateSeasonBookers(
+    $token: Int!
+    $seasonNumber: Int!
+    $noOfBookers: Int!
+  ) {
+    updateHarvestBookers(input: {
+      token: $token
+      seasonNumber: $seasonNumber
+      noOfBookers: $noOfBookers
+    }) {
+      updatedAt
+    }
+  }
+`
+
 export default {
   wallet: {
     addFarm: (_tokenId, _size, _soilType, _owner, _fileHash, _season) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
@@ -260,6 +276,14 @@ export default {
         newBookerVolume: Number(_newVolume),
         newBookerDeposit: String(_newDeposit),
         delivered: Boolean(_delivered),
+      }
+    }).then(res => console.log('Success')),
+    updateHarvestBookers: (_token, _seasonNumber, _noOfBookers) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_SEASON_BOOKERS),
+      variables: {
+        token: _token,
+        seasonNumber: _seasonNumber,
+        noOfBookers: Number(_noOfBookers),
       }
     }).then(res => console.log('Success')),
   }

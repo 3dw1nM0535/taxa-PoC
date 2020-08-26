@@ -85,8 +85,8 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
               <Table.HeaderCell>Booker</Table.HeaderCell>
               <Table.HeaderCell>Volume</Table.HeaderCell>
               <Table.HeaderCell>Deposit</Table.HeaderCell>
-              <Table.HeaderCell>Delivery Status</Table.HeaderCell>
-              <Table.HeaderCell>Cancel Booking</Table.HeaderCell>
+              <Table.HeaderCell>Receivership</Table.HeaderCell>
+              <Table.HeaderCell>Cancellation</Table.HeaderCell>
             </Table.Row>
           </Table.Header>
 
