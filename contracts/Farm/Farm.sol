@@ -178,7 +178,9 @@ contract Farm is FarmSeason, Book {
     // Burn booker deposit
     _deposits[msg.sender] = _deposits[msg.sender].sub(farmOwes);
 
-    _bookStatus[msg.sender].delivered = true;
+    if (_bookers[msg.sender] == 0) {
+      _bookStatus[msg.sender].delivered = true;
+    }
 
     // Transfer owes to farmer
     _payee.transfer(farmOwes);
