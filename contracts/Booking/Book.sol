@@ -19,7 +19,6 @@ abstract contract Book {
     bool _delivered
   );
   event CancelBook(
-    uint256 _supply,
     address _booker,
     uint256 _deposit
   );
@@ -37,17 +36,20 @@ abstract contract Book {
   // Map booker fee to deposits
   mapping(address => uint256) public _deposits;
 
+  // Map farm season to total bookers
+  mapping(uint256 => mapping(uint256 => uint256)) public seasonBookers;
+
   /**
    * @dev bookHarvest This allows buyer to book farm harvest
    * @param _tokenId, _volume Amount to book
    */
-  function bookHarvest(uint256 _tokenId, uint256 _volume) public payable virtual;
+  function bookHarvest(uint256 _tokenId, uint256 _volume, uint256 _seasonNumber) public payable virtual;
 
   /**
    * @dev cancelBook This allows booker to cancel bookings
    * @param _tokenId, _payee, _booker, _payee(farme), _volume Charge _booker 3% and reward _payee(farm owner/harvest creator)
    */
-  function cancelBook(uint256 _tokenId, address payable _booker, address payable _payee, uint256 _volume) public virtual;
+  function cancelBook(uint256 _tokenId, address payable _booker, address payable _payee, uint256 _volume, uint256 _seasonNumber) public virtual;
 
   /**
    * @dev confirmReceived This confirms the booker received his/her bookings

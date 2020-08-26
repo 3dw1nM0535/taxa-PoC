@@ -135,7 +135,8 @@ contract Farm is FarmSeason, Book {
    */
   function bookHarvest(
     uint256 _tokenId,
-    uint256 _volume
+    uint256 _volume,
+    uint256 _seasonNumber
   )
     public
     condition(_volume != 0, "INVALID:0 amount")
@@ -148,6 +149,7 @@ contract Farm is FarmSeason, Book {
     _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
     _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
     _deposits[msg.sender] = msg.value;
+    seasonBookers[_tokenId][_seasonNumber] += 1;
     emit Booking(_bookers[msg.sender], _harvests[_tokenId].supply, _tokenId, msg.sender, _deposits[msg.sender], _bookStatus[msg.sender].delivered);
 
   }
@@ -188,10 +190,15 @@ contract Farm is FarmSeason, Book {
     _harvests[_tokenId].supply = _harvests[_tokenId].supply.add(_volume);
   }
 
-  function updateBookings(address payable _booker, uint256 _volume) internal {
+  function updateBookings(address _booker, uint256 _volume) internal {
     _bookers[_booker] = _bookers[_booker].sub(_volume);
   }
 
+  function updateSeasonBookers(uint256 _tokenId, address _booker, uint256 _seasonNumber) internal {
+    if (_bookers[_booker] == 0) {
+      seasonBookers[_tokenId][_seasonNumber] -= 1;
+    }
+  }
   /**
    * @dev cancelBook This allows booker to cancel bookings
    * @param _tokenId, _booker, _payee(farmer), _volume Amount to revert to supply
@@ -200,7 +207,8 @@ contract Farm is FarmSeason, Book {
     uint256 _tokenId,
     address payable _booker,
     address payable _payee,
-    uint256 _volume
+    uint256 _volume,
+    uint256 _seasonNumber
   )
     public
     condition(_volume != 0, "INVALID:volume")
@@ -219,9 +227,9 @@ contract Farm is FarmSeason, Book {
     updateBookings(_booker, _volume);
     // Update harvest
     updateSupply(_tokenId, _volume);
+    updateSeasonBookers(_tokenId, _booker, _seasonNumber);
     // Refund
     emit CancelBook(
-      _harvests[_tokenId].supply,
       _booker,
       _bookerDeposit
     );
