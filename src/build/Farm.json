@@ -224,7 +224,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -243,7 +244,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -262,7 +264,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -291,7 +294,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -310,7 +314,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -329,7 +334,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -353,7 +359,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -372,7 +379,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -391,7 +399,8 @@
         }
       ],
       "stateMutability": "view",
-      "type": "function"
+      "type": "function",
+      "constant": true
     },
     {
       "inputs": [
@@ -506,7 +515,8 @@
       "name": "bookHarvest",
       "outputs": [],
       "stateMutability": "payable",
-      "type": "function"
+      "type": "function",
+      "payable": true
     },
     {
       "inputs": [
@@ -20433,8 +20443,8 @@
         }
       },
       "links": {},
-      "address": "0xD2406c0752d375f4861b92F1c5d7d2F63082D7bF",
-      "transactionHash": "0x16a2b4b9cf23d002340ea044b91766d1a987b84d6a5614373f3ad55a9a2151e6"
+      "address": "0x6c59d979529b0Be8Bb2B6FfB13cc55d2AaAcCB9F",
+      "transactionHash": "0xd31af763bfc2dbfb986810cd65807d91032a48f7a67a33b99e8a59267a044a69"
     },
     "4": {
       "events": {
@@ -20657,7 +20667,8 @@
     }
   },
   "schemaVersion": "3.2.3",
-  "updatedAt": "2020-08-26T13:09:12.420Z",
+  "updatedAt": "2020-08-26T13:18:26.181Z",
+  "networkType": "ethereum",
   "devdoc": {
     "methods": {
       "bookHarvest(uint256,uint256,uint256)": {
