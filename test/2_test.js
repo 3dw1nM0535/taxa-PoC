@@ -1,10 +1,11 @@
 /* eslint-disable */
 
-const Farm = artifacts.require("Farm");
+const Farm = artifacts.require("Farm")
 
-let instance;
-let tokenId = 88473;
-let season;
+let instance
+let tokenId = 88473
+let season
+let currentSeasonNumber
 const price = web3.utils.toBN(web3.utils.toWei("1", "ether"));
 const bookingFee = web3.utils.toBN(web3.utils.toWei("10", "ether"));
 
@@ -17,7 +18,7 @@ contract("Farm", async accounts => {
   it("Farmer can open season", async() => {
     const result = await instance.openSeason(tokenId);
     const log = result.logs[0].args;
-    const currentSeasonNumber = await instance.currentSeason(tokenId);
+    currentSeasonNumber = await instance.currentSeason(tokenId);
     season = await instance.getTokenSeason(tokenId);
     assert.equal(log._seasonNumber.toString(), '1', 'Season number should be 1');
     assert.equal(season, "Preparation", "Season should be Preparation");
@@ -90,6 +91,7 @@ contract("Farm", async accounts => {
       await instance.bookHarvest(
         tokenId,
         0,
+        currentSeasonNumber,
         { from: accounts[1], value: bookingFee }
       );
       
@@ -102,6 +104,7 @@ contract("Farm", async accounts => {
       await instance.bookHarvest(
         tokenId,
         11,
+        currentSeasonNumber,
         { from: accounts[1], value: bookingFee }
       );
     } catch(err) {
@@ -114,6 +117,7 @@ contract("Farm", async accounts => {
       await instance.bookHarvest(
         tokenId,
         5,
+        currentSeasonNumber,
         { from: accounts[1], value: price }
       );
     } catch(err) {
@@ -126,6 +130,7 @@ contract("Farm", async accounts => {
       await instance.bookHarvest(
         tokenId,
         5,
+        currentSeasonNumber,
         { from: accounts[1], value: price }
       );
     } catch(err) {
@@ -136,10 +141,13 @@ contract("Farm", async accounts => {
     const result = await instance.bookHarvest(
       tokenId,
       10,
+      currentSeasonNumber,
       { from: accounts[1], value: bookingFee }
     );
     const log = result.logs[0].args;
     season = await instance.getTokenSeason(tokenId);
+    const _seasonBookers = await instance.seasonBookers(tokenId, currentSeasonNumber);
+    assert.equal(_seasonBookers, 1, "Total season bookers should be 1");
     assert.equal(log._volume, 10, "volume should be 10");
     assert.equal(log._supply, 0, "supply after book should be 0");
     assert.equal(log._tokenId, tokenId, "Token id should be 88473");
@@ -201,7 +209,8 @@ contract("Farm", async accounts => {
         tokenId,
         accounts[1],
         accounts[0],
-        0
+        0,
+        currentSeasonNumber
       );
     } catch(err) {
       assert.equal(err.reason, "INVALID:volume");
@@ -213,7 +222,8 @@ contract("Farm", async accounts => {
         tokenId,
         accounts[1],
         accounts[0],
-        6
+        6,
+        currentSeasonNumber
       );
     } catch(err) {
       assert.equal(err.reason, "RESTRICTED:unreasonable volume");
@@ -225,7 +235,8 @@ contract("Farm", async accounts => {
         tokenId,
         accounts[2],
         accounts[0],
-        5
+        5,
+        currentSeasonNumber
       );
     } catch(err) {
       assert.equal(err.reason, "RESTRICTED:unreasonable volume", "should fail with reason");
@@ -236,11 +247,15 @@ contract("Farm", async accounts => {
       tokenId,
       accounts[1],
       accounts[0],
-      3
+      3,
+      currentSeasonNumber
     );
     const log = result.logs[0].args;
     const newDeposit = web3.utils.toBN(web3.utils.toWei("2", "ether"));
-    assert.equal(log._supply, 3, "Reverted supply should amount to 3");
+    const _supply = await instance._harvests(tokenId)
+    const _seasonBookers = await instance.seasonBookers(tokenId, currentSeasonNumber);
+    assert.equal(_seasonBookers, 1, "Total booker should still be 1");
+    assert.equal(_supply.supply, 3, "Reverted supply should amount to 3");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 2 ether");
   });
@@ -249,11 +264,15 @@ contract("Farm", async accounts => {
       tokenId,
       accounts[1],
       accounts[0],
-      2
+      2,
+      currentSeasonNumber
     );
     const log = result.logs[0].args;
     const newDeposit = web3.utils.toBN(web3.utils.toWei("0", "ether"));
-    assert.equal(log._supply, 5, "Reverted supply should amount to 5");
+    const _supply = await instance._harvests(tokenId);
+    const _seasonBookers = await instance.seasonBookers(tokenId, currentSeasonNumber)
+    assert.equal(_seasonBookers, 0, "No. of bookers should be 0");
+    assert.equal(_supply.supply, 5, "Reverted supply should amount to 5");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 0 ether");
   });
