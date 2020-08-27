@@ -209,7 +209,7 @@ contract("Farm", async accounts => {
       assert.equal(err.reason, "INVALID:bookings", "should fail with reason");
     }
   });
-  it("Booker should confirm any amount of his/her bookings", async() => {
+  it("Booker1 should confirm any amount of his/her bookings", async() => {
     const result = await instance.confirmReceived(
       tokenId,
       5,
@@ -222,7 +222,7 @@ contract("Farm", async accounts => {
     assert.equal(log._deposit.toString(), newDeposit.toString(), "new booker deposit should be 5 ether");
     assert.equal(log._delivered, false, 'Expect delivery status to be false');
   });
-  it("Booker should confirm any amount of his/her bookings", async() => {
+  it("Booker2 should confirm any amount of his/her bookings", async() => {
     const result = await instance.confirmReceived(
       tokenId,
       1,
@@ -286,6 +286,8 @@ contract("Farm", async accounts => {
     const newDeposit = web3.utils.toBN(web3.utils.toWei("2", "ether"));
     const _supply = await instance._harvests(tokenId)
     const _seasonBookers = await instance.seasonBookers(currentSeasonNumber, tokenId);
+    const bookingStatus = await instance._bookStatus(accounts[1]);
+    assert.equal(bookingStatus, false, "Booking status should be false");
     assert.equal(_seasonBookers, 2, "Total booker should still be 2");
     assert.equal(_supply.supply, 3, "Reverted supply should amount to 3");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
@@ -303,6 +305,8 @@ contract("Farm", async accounts => {
     const newDeposit = web3.utils.toBN(web3.utils.toWei("0", "ether"));
     const _supply = await instance._harvests(tokenId);
     const _seasonBookers = await instance.seasonBookers(currentSeasonNumber, tokenId)
+    const bookingStatus = await instance._bookStatus(accounts[1]);
+    assert.equal(bookingStatus, false, "Booking status should be false");
     assert.equal(_seasonBookers, 1, "No. of bookers should be 1");
     assert.equal(_supply.supply, 5, "Reverted supply should amount to 5");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
