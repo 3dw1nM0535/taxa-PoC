@@ -49,6 +49,10 @@ function ConfirmationModal({loaded, bookingId, netId, wallet, farm, confirmation
               await api.farm.updateAfterReceivership(bookingId, _volume, _deposit, _delivered)
             }
           })
+          .on('error', error => {
+            setButtonDisabled(false)
+            window.alert(`Error: ${error.message}`)
+          })
       } catch(error) {
         console.log(error)
       }
