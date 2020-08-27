@@ -8,6 +8,8 @@ let season
 let currentSeasonNumber
 const price = web3.utils.toBN(web3.utils.toWei("1", "ether"));
 const bookingFee = web3.utils.toBN(web3.utils.toWei("10", "ether"));
+const bookingFee2 = web3.utils.toBN(web3.utils.toWei("1", "ether"));
+
 
 // Hook
 before(async() => {
@@ -73,14 +75,14 @@ contract("Farm", async accounts => {
   });
   it("Farmer can reap what he/she sow", async() => {
     const result = await instance.createHarvest(
-      10,
+      11,
       price,
       "kg",
       tokenId
     );
     const log = result.logs[0].args;
     season = await instance.getTokenSeason(tokenId);
-    assert.equal(log._supply, 10, "harvest supply should be 10");
+    assert.equal(log._supply, 11, "harvest supply should be 10");
     assert.equal(log._price.toString(), price.toString(), "harvest price should be 1 ether");
     assert.equal(log._tokenId, tokenId, "Token id should be 88473");
     assert.equal(log._supplyUnit, "kg", "Supply unit should be kilogram");
@@ -103,7 +105,7 @@ contract("Farm", async accounts => {
     try {
       await instance.bookHarvest(
         tokenId,
-        11,
+        12,
         currentSeasonNumber,
         { from: accounts[1], value: bookingFee }
       );
@@ -137,7 +139,7 @@ contract("Farm", async accounts => {
       assert.equal(err.reason, "INSUFFICIENT:booking fees", "should fail with reason");
     }
   });
-  it("Booker should book harvest", async() => {
+  it("Booker1 should book harvest", async() => {
     const result = await instance.bookHarvest(
       tokenId,
       10,
@@ -146,13 +148,30 @@ contract("Farm", async accounts => {
     );
     const log = result.logs[0].args;
     season = await instance.getTokenSeason(tokenId);
-    const _seasonBookers = await instance.seasonBookers(tokenId, currentSeasonNumber);
+    const _seasonBookers = await instance.seasonBookers(currentSeasonNumber, tokenId);
     assert.equal(_seasonBookers, 1, "Total season bookers should be 1");
     assert.equal(log._volume, 10, "volume should be 10");
-    assert.equal(log._supply, 0, "supply after book should be 0");
+    assert.equal(log._supply, 1, "supply after book should be 0");
     assert.equal(log._tokenId, tokenId, "Token id should be 88473");
     assert.equal(log._booker, accounts[1], "booker should be account 2");
     assert.equal(log._deposit.toString(), bookingFee.toString(), "booker deposit should be 5 ether");
+  });
+  it("Booker2 should book harvest", async() => {
+    const result = await instance.bookHarvest(
+      tokenId,
+      1,
+      currentSeasonNumber,
+      { from: accounts[2], value: bookingFee2 }
+    );
+    const log = result.logs[0].args;
+    season = await instance.getTokenSeason(tokenId);
+    const _seasonBookers = await instance.seasonBookers(currentSeasonNumber, tokenId);
+    assert.equal(_seasonBookers, 2, "Total season bookers should be 2");
+    assert.equal(log._volume, 1, "volume should be 10");
+    assert.equal(log._supply, 0, "supply after book should be 0");
+    assert.equal(log._tokenId, tokenId, "Token id should be 88473");
+    assert.equal(log._booker, accounts[2], "booker should be account 2");
+    assert.equal(log._deposit.toString(), bookingFee2.toString(), "booker deposit should be 5 ether");
   });
   it("Booker should not confirm booking with 0 volume", async() => {
     try {
@@ -202,6 +221,19 @@ contract("Farm", async accounts => {
     assert.equal(log._volume, 5, "new booker volume should be 5");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "new booker deposit should be 5 ether");
     assert.equal(log._delivered, false, 'Expect delivery status to be false');
+  });
+  it("Booker should confirm any amount of his/her bookings", async() => {
+    const result = await instance.confirmReceived(
+      tokenId,
+      1,
+      accounts[0],
+      { from: accounts[2] }
+    );
+    const log = result.logs[0].args;
+    const newDeposit = web3.utils.toBN(web3.utils.toWei("0", "ether"));
+    assert.equal(log._volume, 0, "new booker volume should be 0");
+    assert.equal(log._deposit.toString(), newDeposit.toString(), "new booker deposit should be 5 ether");
+    assert.equal(log._delivered, true, 'Expect delivery status to be false');
   });
   it("Booker should not cancel booking of 0 amount", async() => {
     try {
@@ -253,8 +285,8 @@ contract("Farm", async accounts => {
     const log = result.logs[0].args;
     const newDeposit = web3.utils.toBN(web3.utils.toWei("2", "ether"));
     const _supply = await instance._harvests(tokenId)
-    const _seasonBookers = await instance.seasonBookers(tokenId, currentSeasonNumber);
-    assert.equal(_seasonBookers, 1, "Total booker should still be 1");
+    const _seasonBookers = await instance.seasonBookers(currentSeasonNumber, tokenId);
+    assert.equal(_seasonBookers, 2, "Total booker should still be 2");
     assert.equal(_supply.supply, 3, "Reverted supply should amount to 3");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 2 ether");
@@ -270,8 +302,8 @@ contract("Farm", async accounts => {
     const log = result.logs[0].args;
     const newDeposit = web3.utils.toBN(web3.utils.toWei("0", "ether"));
     const _supply = await instance._harvests(tokenId);
-    const _seasonBookers = await instance.seasonBookers(tokenId, currentSeasonNumber)
-    assert.equal(_seasonBookers, 0, "No. of bookers should be 0");
+    const _seasonBookers = await instance.seasonBookers(currentSeasonNumber, tokenId)
+    assert.equal(_seasonBookers, 1, "No. of bookers should be 1");
     assert.equal(_supply.supply, 5, "Reverted supply should amount to 5");
     assert.equal(log._booker, accounts[1], "Requestor should be account 1");
     assert.equal(log._deposit.toString(), newDeposit.toString(), "New booker deposit should be 0 ether");
