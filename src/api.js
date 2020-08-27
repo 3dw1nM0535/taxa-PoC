@@ -168,8 +168,8 @@ const UPDATE_AFTER_RECEIVERSHIP = gql`
   }
 `
 
-const UPDATE_SEASON_BOOKERS = gql`
-  mutation UpdateSeasonBookers(
+const UPDATE_HARVEST_BOOKERS = gql`
+  mutation UpdateHarvestBookers(
     $token: Int!
     $seasonNumber: Int!
     $noOfBookers: Int!
@@ -279,10 +279,10 @@ export default {
       }
     }).then(res => console.log('Success')),
     updateHarvestBookers: (_token, _seasonNumber, _noOfBookers) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
-      query: print(UPDATE_SEASON_BOOKERS),
+      query: print(UPDATE_HARVEST_BOOKERS),
       variables: {
-        token: _token,
-        seasonNumber: _seasonNumber,
+        token: Number(_token),
+        seasonNumber: Number(_seasonNumber),
         noOfBookers: Number(_noOfBookers),
       }
     }).then(res => console.log('Success')),
