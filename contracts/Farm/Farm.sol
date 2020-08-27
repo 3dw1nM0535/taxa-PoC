@@ -149,7 +149,7 @@ contract Farm is FarmSeason, Book {
     _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
     _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
     _deposits[msg.sender] += msg.value;
-    seasonBookers[_tokenId][_seasonNumber] += 1;
+    seasonBookers[_seasonNumber][_tokenId] += 1;
     emit Booking(_bookers[msg.sender], _harvests[_tokenId].supply, _tokenId, msg.sender, _deposits[msg.sender], _bookStatus[msg.sender].delivered);
   }
 
@@ -199,7 +199,7 @@ contract Farm is FarmSeason, Book {
 
   function updateSeasonBookers(uint256 _tokenId, address _booker, uint256 _seasonNumber) internal {
     if (_bookers[_booker] == 0) {
-      seasonBookers[_tokenId][_seasonNumber] -= 1;
+      seasonBookers[_seasonNumber][_tokenId] -= 1;
     }
   }
   /**
