@@ -85,6 +85,7 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
               <Table.HeaderCell>Booker</Table.HeaderCell>
               <Table.HeaderCell>Volume</Table.HeaderCell>
               <Table.HeaderCell>Deposit</Table.HeaderCell>
+              <Table.HeaderCell>Delivered</Table.HeaderCell>
               <Table.HeaderCell>Receivership</Table.HeaderCell>
               <Table.HeaderCell>Cancellation</Table.HeaderCell>
             </Table.Row>
@@ -108,6 +109,7 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
                 <Table.Cell>
                   {`${Web3.utils.fromWei(booking.deposit)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(booking.deposit)) * parseFloat(conversionRate.ethkes)), 10)}`}
                 </Table.Cell>
+                <Table.Cell>{booking.delivered ? <Icon color='green' name='checkmark' size='large' /> : <Icon name='frown' size='large' />}</Table.Cell>
                 <Table.Cell>
                   <ConfirmationModal bookingId={booking.id} confirmationModalVisibility={confirmationModalVisibility} setConfirmationModalVisibility={setConfirmationModalVisibility} />
                   <CancellationModal bookingId={booking.id} cancellationModalVisibility={cancellationModalVisibility} setCancellationModalVisibility={setCancellationModalVisibility} />

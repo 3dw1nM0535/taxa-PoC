@@ -184,6 +184,20 @@ const UPDATE_HARVEST_BOOKERS = gql`
   }
 `
 
+const UPDATE_BOOKING_STATUS = gql`
+  mutation UpdateBookingStatus(
+    $id: ID!
+    $delivered: Boolean!
+  ) {
+    updateBookingStatus(input: {
+      id: $id
+      delivered: $delivered
+    }) {
+      updatedAt
+    }
+  }
+`
+
 export default {
   wallet: {
     addFarm: (_tokenId, _size, _soilType, _owner, _fileHash, _season) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
@@ -284,6 +298,13 @@ export default {
         token: Number(_token),
         seasonNumber: Number(_seasonNumber),
         noOfBookers: Number(_noOfBookers),
+      }
+    }).then(res => console.log('Success')),
+    updateBookingStatus: (_id, _delivered) => axios.post(`${process.env.REACT_APP_GRAPHQL_API}`, {
+      query: print(UPDATE_BOOKING_STATUS),
+      variables: {
+        id: _id,
+        delivered: Boolean(_delivered),
       }
     }).then(res => console.log('Success')),
   }

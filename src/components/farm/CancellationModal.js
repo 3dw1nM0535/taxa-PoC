@@ -52,8 +52,10 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
               const _supply = await farmContract.methods._harvests(tokenId).call()
               const _bookerVolume = await farmContract.methods._bookers(_booker).call()
               await api.farm.updateAfterCancellation(bookingId, farm.presentSeason, tokenId, _supply.supply, _bookerVolume, _deposit)
-              const _noOfBookers = await farmContracts.methods.seasonBookers(currentSeasonNumber, tokenId).call()
+              const _noOfBookers = await farmContract.methods.seasonBookers(currentSeasonNumber, tokenId).call()
               await api.farm.updateHarvestBookers(tokenId, currentSeasonNumber, _noOfBookers)
+              const _delivered = await farmContract.methods._bookStatus(wallet.address[0]).call()
+              await api.farm.updateBookingStatus(bookingId, _delivered)
             }
           })
           .on('error', error => {
