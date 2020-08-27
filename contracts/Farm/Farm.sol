@@ -147,6 +147,7 @@ contract Farm is FarmSeason, Book {
     override
   {
     _bookers[msg.sender] = _bookers[msg.sender].add(_volume);
+    _bookStatus[msg.sender].delivered = false;
     _harvests[_tokenId].supply = _harvests[_tokenId].supply.sub(_volume);
     _deposits[msg.sender] += msg.value;
     seasonBookers[_seasonNumber][_tokenId] += 1;
@@ -231,6 +232,9 @@ contract Farm is FarmSeason, Book {
     // Update harvest
     updateSupply(_tokenId, _volume);
     updateSeasonBookers(_tokenId, _booker, _seasonNumber);
+    if (_bookers[_booker] == 0) {
+      _bookStatus[_booker].delivered = false;
+    }
     // Refund
     emit CancelBook(
       _booker,
