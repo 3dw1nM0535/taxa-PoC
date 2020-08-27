@@ -180,6 +180,8 @@ contract Farm is FarmSeason, Book {
 
     if (_bookers[msg.sender] == 0) {
       _bookStatus[msg.sender].delivered = true;
+    } else {
+      _bookStatus[msg.sender].delivered = false;
     }
 
     // Transfer owes to farmer
