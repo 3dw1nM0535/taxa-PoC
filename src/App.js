@@ -76,7 +76,7 @@ function App({ history, loaded }) {
     <ResponsiveContainer>
       <Switch>
         <UserRoute location={location} path='/farm/:tokenId/' component={FarmPage} />
-        <Route location={location} exact path='/farms/' component={FarmsPage} />
+        <Route location={location} exact path='/' component={FarmsPage} />
         <Route location={location} exact path='/tokenize/' component={RegisterFarmPage} />
         <Route location={location} exact path='/dormant/' component={DormantFarms} />
         <Route location={location} exact path='/preparations/' component={PreparingFarms} />

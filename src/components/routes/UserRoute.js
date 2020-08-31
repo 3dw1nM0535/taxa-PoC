@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 
 function UserRoute({ loaded, netId, component: Component, ...rest }) {
   return (
-    <Route { ...rest } render={props => loaded ? <Component { ...props } /> : <Redirect to={{ pathname: "/farms/", state: { from: props.location } }} /> } />
+    <Route { ...rest } render={props => loaded ? <Component { ...props } /> : <Redirect to={{ pathname: "/", state: { from: props.location } }} /> } />
   )
 }
 

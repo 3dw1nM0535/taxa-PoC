@@ -50,7 +50,7 @@ class MobileContainer extends Component {
         >
           <Menu.Item
             as='a'
-            href='/farms/'
+            href='/'
             header>
             taxa
             <Label color='brown' horizontal>

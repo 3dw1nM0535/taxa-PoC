@@ -45,7 +45,7 @@ class DesktopContainer extends Component {
           <Container>
             <Menu.Item
               as='a'
-              href='/farms/'
+              href='/'
               header
             >
               taxa
