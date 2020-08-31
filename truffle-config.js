@@ -24,11 +24,23 @@ module.exports = {
       },
       network_id: 3,
     },
+    kovan: {
+      provider: function() {
+        return new HDWalletProvider(`${process.env.MNEMONICS}`, `https://kovan.infura.io/v3/${process.env.INFURA_ID}`)
+      },
+      network_id: 42,
+    },
     rinkeby: {
-      provider: function () {
+      provider: function() {
         return new HDWalletProvider(`${process.env.MNEMONICS}`, `https://rinkeby.infura.io/v3/${process.env.INFURA_ID}`)
       },
       network_id: 4,
+    },
+    goerli: {
+      provider: function () {
+        return new HDWalletProvider(`${process.env.MNEMONICS}`, `https://goerli.infura.io/v3/${process.env.INFURA_ID}`)
+      },
+      network_id: 5,
     },
   },
   contracts_build_directory: './src/build',

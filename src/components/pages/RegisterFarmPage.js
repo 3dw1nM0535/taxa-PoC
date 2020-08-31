@@ -3,12 +3,21 @@ import React from 'react'
 import {
   Grid,
   Header,
+  List,
 } from 'semantic-ui-react'
 import { connect } from 'react-redux'
 
 import { RegisterFarm } from '../forms'
 import { addFarm } from '../../actions'
 import { ConfirmedTx, ConfirmingTx } from '../notifications'
+
+const pros = [
+  'Get rewarded with a unique and traceable non-fungible token(NFT) that only belongs to you and only you',
+  'Be accountable to your farm by recording seasonal farming activities',
+  'Participate in an open, borderless, and uncensored digital marketplace',
+  'Receive bookings for your harvest without middlemen',
+  'Get paid in a cryptocurrency known as Ether'
+]
 
 function RegisterFarmPage({ txConfirmed, txConfirming, addFarm }) {
   return (
@@ -26,8 +35,15 @@ function RegisterFarmPage({ txConfirmed, txConfirming, addFarm }) {
             style={{
               fontSize: '3em',
             }}
-            content='Register your farm to the blockchain'
+            content='Why register your farm land to a public blockchain?'
           />
+          <List size='massive' as='ul'>
+            {pros.map((item, index) => (
+              <List.Item key={index} as='li'>
+                {item}
+              </List.Item>
+            ))}
+          </List>
         </Grid.Column>
         <Grid.Column>
           {txConfirmed && <ConfirmedTx />}

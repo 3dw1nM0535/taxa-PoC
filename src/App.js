@@ -11,6 +11,11 @@ import {
   RegisterFarmPage,
   FarmsPage,
   FarmPage,
+  DormantFarms,
+  PreparingFarms,
+  PlantingFarms,
+  GrowingFarms,
+  HarvestingFarms,
 } from './components/pages'
 
 function App({ loaded }) {
@@ -70,6 +75,11 @@ function App({ loaded }) {
         <Route path='/farm/:tokenId/' component={FarmPage} />
         <Route exact path='/farms/' component={FarmsPage} />
         <Route exact path='/tokenize/' component={RegisterFarmPage} />
+        <Route exact path='/dormant' component={DormantFarms} />
+        <Route exact path='/preparations/' component={PreparingFarms} />
+        <Route exact path='/planting/' component={PlantingFarms} />
+        <Route exact path='/growth/' component={GrowingFarms} />
+        <Route exact path='/harvesting' component={HarvestingFarms} />
       </Switch>
     </ResponsiveContainer>
   )

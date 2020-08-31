@@ -1,11 +1,16 @@
+import PropTypes from 'prop-types'
 import React from 'react'
 import { Card, Image, Label } from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
-export function FarmCard({ farm }) {
+function FarmCard({ farm, loaded, netId }) {
+
+  const isMetaMaskInstalled = window.ethereum !== undefined
+
   return (
     <Card
       as='a'
-      href={`/farm/${farm.id}/`}
+      href={loaded && netId === 4 ? `/farm/${farm.id}/` : null}
       fluid
     >
       <Image
@@ -31,3 +36,18 @@ export function FarmCard({ farm }) {
     </Card>
   )
 }
+
+FarmCard.propTypes = {
+  netId: PropTypes.number.isRequired,
+  loaded: PropTypes.bool.isRequired,
+}
+
+function mapStateToProps(state) {
+  return {
+    netId: state.network.netId,
+    loaded: state.wallet.loaded,
+  }
+}
+
+export default connect(mapStateToProps)(FarmCard)
+

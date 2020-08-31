@@ -50,6 +50,7 @@ class MobileContainer extends Component {
         >
           <Menu.Item
             as='a'
+            href='/farms/'
             header>
             taxa
             <Label color='brown' horizontal>
@@ -57,20 +58,58 @@ class MobileContainer extends Component {
             </Label>
           </Menu.Item>
           <Menu.Item
-            active={location.pathname === '/farms/'}
+              active={location.pathname === '/tokenize/'}
+              as='a'
+              href='/tokenize/'
+              color='violet'
+            >
+              <Icon name='add' />
+              Register
+            </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/dormant/'}
+            href='/dormant/'
             as='a'
-            href='/farms/'
+            color='violet'
           >
-            <Icon name='search' />
-            Farms
+            <Icon name='bullseye' />
+            Dormant
           </Menu.Item>
           <Menu.Item
-            active={location.pathname === '/tokenize/'}
-            href='/tokenize/'
+            active={location.pathname === '/preparations/'}
+            href='/preparations/'
             as='a'
+            color='violet'
           >
-            <Icon name='add' />
-            Add farm
+            <Icon name='hourglass half' />
+            Preparations
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/planting/'}
+            href='/planting/'
+            as='a'
+            color='violet'
+          >
+            <Icon name='tint' />
+            Planting
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/growth/'}
+            href='/growth/'
+            as='a'
+            color='violet'
+          >
+            <Icon name='dashboard' />
+            Crop Growth
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/harvesting/'}
+            href='/harvesting/'
+            as='a'
+            color='violet'
+          >
+            <Icon name='bullhorn' />
+            Harvesting
           </Menu.Item>
          </Sidebar>
         <Sidebar.Pusher dimmed={sidebarOpened}>

@@ -30,8 +30,9 @@ class DesktopContainer extends Component {
 	}))
 
   render() {
-    const { children, wallet, connectWallet, location } = this.props
+    const { children, wallet, netId, connectWallet, location } = this.props
     const { copying, copied } = this.state
+    const isMetaMaskInstalled = window.ethereum !== undefined
 
     return (
       <>
@@ -44,6 +45,7 @@ class DesktopContainer extends Component {
           <Container>
             <Menu.Item
               as='a'
+              href='/farms/'
               header
             >
               taxa
@@ -52,20 +54,52 @@ class DesktopContainer extends Component {
               </Label>
             </Menu.Item>
             <Menu.Item
-              active={location.pathname === '/farms/'}
+              active={location.pathname === '/tokenize/'}
               as='a'
-              href='/farms/'
+              href='/tokenize/'
               color='violet'
             >
-              Farms
+              Register
             </Menu.Item>
           <Menu.Item
-            active={location.pathname === '/tokenize/'}
-            href='/tokenize/'
+            active={location.pathname === '/dormant/'}
+            href='/dormant/'
             as='a'
             color='violet'
           >
-            Create Farm
+            Dormant
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/preparations/'}
+            href='/preparations/'
+            as='a'
+            color='violet'
+          >
+            Preparations
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/planting/'}
+            href='/planting/'
+            as='a'
+            color='violet'
+          >
+            Planting
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/growth/'}
+            href='/growth/'
+            as='a'
+            color='violet'
+          >
+            Crop Growth
+          </Menu.Item>
+          <Menu.Item
+            active={location.pathname === '/harvesting/'}
+            href='/harvesting/'
+            as='a'
+            color='violet'
+          >
+            Harvesting
           </Menu.Item>
           <Menu.Item position='right'>
             {wallet.loaded ? (
@@ -110,9 +144,25 @@ class DesktopContainer extends Component {
                   as='a'
                   color='violet'
                   onClick={connectWallet}
+                  negative={isMetaMaskInstalled && netId !== 4}
+                  disabled={isMetaMaskInstalled && netId !== 4}
 								>
-                  <Icon name='plug' />
-                  Connect Wallet
+                  {!isMetaMaskInstalled ? (
+                    <>
+                    <Icon name='plug' />
+                    Connect Wallet
+                    </>
+                  ) : isMetaMaskInstalled && netId !== 4 ? (
+                    <>
+                    <Icon name='ban' />
+                    Wrong network
+                    </>
+                  ): (
+                    <>
+                      <Icon name='plug' />
+                      Connect Wallet
+                    </>
+                  )}
                 </Button>
 							)}
             </Menu.Item>
@@ -129,11 +179,13 @@ DesktopContainer.propTypes = {
   children: PropTypes.node,
 	wallet: PropTypes.object.isRequired,
 	connectWallet: PropTypes.func.isRequired,
+  netId: PropTypes.number.isRequired,
 }
 
 function mapStateToProps(state) {
 	return {
 		wallet: state.wallet,
+    netId: state.network.netId,
 	}
 }
 

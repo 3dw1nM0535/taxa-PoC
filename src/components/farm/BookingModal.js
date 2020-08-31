@@ -52,7 +52,6 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
               await api.farm.addBooking(_tokenId, _volume, _bookerLowerCased, _deposit, _delivered)
               await api.farm.updateFarmHarvestSupply(currentSeason, _tokenId, _supply)
               const _noOfBookers = await farmContract.methods.seasonBookers(currentSeason, _tokenId).call()
-              console.log(_noOfBookers)
               await api.farm.updateHarvestBookers(_tokenId, currentSeason, _noOfBookers)
             }
           })

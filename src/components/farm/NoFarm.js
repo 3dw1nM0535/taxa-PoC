@@ -1,13 +1,13 @@
 import React from 'react'
 import { Grid, Segment, Header, Icon, Button } from 'semantic-ui-react'
 
-export function NoFarm() {
+export function NoFarm({ text }) {
   return (
     <Grid.Column width={16}>
       <Segment placeholder>
         <Header icon>
           <Icon name='frown' />
-          No farm(s) added yet
+          {text}
         </Header>
         <Button
           as='a'
