@@ -94,7 +94,7 @@ function BookingModal({wallet, loaded, farm, netId, tokenId, currentSeason, harv
               color: '#7f00ff',
               textDecoration: 'underline'
             }}
-            href={`${process.env.REACT_APP_ROPSTEN_TESTNET_URL}/${transactionHash}`}
+            href={`${process.env.REACT_APP_RINKEBY_TESTNET_URL}/${transactionHash}`}
             target='blank'
           >
             view transaction status

@@ -95,7 +95,7 @@ function CancellationModal({loaded, farm, wallet, netId, cancellationModalVisibi
               color: '#7f00ff',
               textDecoration: 'underline'
             }}
-            href={`${process.env.REACT_APP_ROPSTEN_TESTNET_URL}/${txHash}`}
+            href={`${process.env.REACT_APP_RINKEBY_TESTNET_URL}/${txHash}`}
             target='blank'
           >
             view transaction status
