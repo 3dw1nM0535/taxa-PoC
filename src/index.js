@@ -1,7 +1,7 @@
 import Web3 from 'web3'
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router } from 'react-router-dom'
+import { Router, Route } from 'react-router-dom'
 import { Provider } from 'react-redux'
 import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client'
 import { PersistGate } from 'redux-persist/integration/react'
@@ -45,7 +45,7 @@ ReactDOM.render(
       <Router history={history}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <App />
+            <Route component={App} />
           </PersistGate>
         </Provider>
       </Router>

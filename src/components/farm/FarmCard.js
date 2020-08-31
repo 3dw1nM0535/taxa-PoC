@@ -5,8 +5,6 @@ import { connect } from 'react-redux'
 
 function FarmCard({ farm, loaded, netId }) {
 
-  const isMetaMaskInstalled = window.ethereum !== undefined
-
   return (
     <Card
       as='a'

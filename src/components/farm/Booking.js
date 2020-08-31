@@ -34,11 +34,9 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
   const GET_BOOKINGS = gql`
     query GetBookings(
       $token: Int!
-      $bookerAddress: String!
     ) {
       getBookings(input: {
         token: $token
-        bookerAddress: $bookerAddress
       }) {
         id
         volume
@@ -53,7 +51,6 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
   const { loading, data, error } = useQuery(GET_BOOKINGS, {
     variables: {
       token: `${farm.token !== undefined ? +farm.token : 0}`,
-      bookerAddress: loaded ? `${String(wallet.address[0]).toLowerCase()}` : `${String(0x00000000000000000000000E0000000000000000)}`,
     }
   })
   
@@ -78,7 +75,7 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
             No booking data found for this farm
           </Header>
         </Segment>
-      ) : (
+      ) : data.getBookings.filter(booking => booking.booker === String(wallet.address[0]).toLowerCase()).length !== 0 ? (
         <Table celled>
           <Table.Header>
             <Table.Row>
@@ -136,6 +133,71 @@ function Booking({ farm, conversionRate, wallet, loaded }) {
             ))}
           </Table.Body>
         </Table>
+      ) : farm.owner !== undefined && String(farm.owner).toLowerCase() === String(wallet.address[0]).toLowerCase() ? (
+        <Table celled>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Booker</Table.HeaderCell>
+              <Table.HeaderCell>Volume</Table.HeaderCell>
+              <Table.HeaderCell>Deposit</Table.HeaderCell>
+              <Table.HeaderCell>Delivered</Table.HeaderCell>
+              <Table.HeaderCell>Receivership</Table.HeaderCell>
+              <Table.HeaderCell>Cancellation</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+
+          <Table.Body>
+            {data.getBookings.map(booking => (
+              <Table.Row key={booking.id}>
+                <Table.Cell>
+                  <Image
+                    style={{
+                      width: 25,
+                      height: 25,
+                    }}
+                    src={makeBlockie(String(booking.booker))}
+                    size='tiny'
+                    circular
+                  />
+                </Table.Cell>
+                <Table.Cell>{booking.volume}</Table.Cell>
+                <Table.Cell>
+                  {`${Web3.utils.fromWei(booking.deposit)} ETH / KES ${new Intl.NumberFormat('en-US').format(parseInt(parseFloat(Web3.utils.fromWei(booking.deposit)) * parseFloat(conversionRate.ethkes)), 10)}`}
+                </Table.Cell>
+                <Table.Cell>{booking.delivered ? <Icon color='green' name='checkmark' size='large' /> : <Icon name='frown' size='large' />}</Table.Cell>
+                <Table.Cell>
+                  <ConfirmationModal bookingId={booking.id} confirmationModalVisibility={confirmationModalVisibility} setConfirmationModalVisibility={setConfirmationModalVisibility} />
+                  <CancellationModal bookingId={booking.id} cancellationModalVisibility={cancellationModalVisibility} setCancellationModalVisibility={setCancellationModalVisibility} />
+                  <Button
+                    size='mini'
+                    color='violet'
+                    disabled={booking.volume === 0 || (farm.owner !== undefined && String(farm.owner).toLowerCase() === String(wallet.address[0]).toLowerCase())}
+                    onClick={() => handleConfirmation()}
+                  >
+                    Confirm Received
+                  </Button>
+                </Table.Cell>
+                <Table.Cell>
+                  <Button
+                    size='mini'
+                    color='violet'
+                    onClick={() => handleCancellation()}
+                    disabled={booking.volume === 0 || (farm.owner !== undefined && String(farm.owner).toLowerCase() === String(wallet.address[0]).toLowerCase())}
+                  >
+                   Cancel 
+                  </Button>
+                </Table.Cell>
+              </Table.Row>
+            ))}
+          </Table.Body>
+        </Table>
+      ) : (
+        <Segment placeholder>
+          <Header icon>
+            <Icon name='frown' size='large' />
+            No bookings for you
+          </Header>
+        </Segment>
       )}
     </>
   )

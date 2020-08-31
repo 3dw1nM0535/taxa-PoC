@@ -4,7 +4,8 @@ import Web3 from 'web3'
 import { connect } from 'react-redux'
 import { walletChange, networkChange, disconnectMetaMask, setPrices } from './actions'
 import { store } from './store'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, useLocation } from 'react-router-dom'
+import { UserRoute } from './components/routes'
 
 import { ResponsiveContainer } from './components/containers'
 import {
@@ -18,7 +19,9 @@ import {
   HarvestingFarms,
 } from './components/pages'
 
-function App({ loaded }) {
+function App({ history, loaded }) {
+
+  const location = useLocation()
 
   useEffect(() => {
     async function calculateEthPrice() {
@@ -72,14 +75,14 @@ function App({ loaded }) {
   return (
     <ResponsiveContainer>
       <Switch>
-        <Route path='/farm/:tokenId/' component={FarmPage} />
-        <Route exact path='/farms/' component={FarmsPage} />
-        <Route exact path='/tokenize/' component={RegisterFarmPage} />
-        <Route exact path='/dormant' component={DormantFarms} />
-        <Route exact path='/preparations/' component={PreparingFarms} />
-        <Route exact path='/planting/' component={PlantingFarms} />
-        <Route exact path='/growth/' component={GrowingFarms} />
-        <Route exact path='/harvesting' component={HarvestingFarms} />
+        <UserRoute location={location} path='/farm/:tokenId/' component={FarmPage} />
+        <Route location={location} exact path='/farms/' component={FarmsPage} />
+        <Route location={location} exact path='/tokenize/' component={RegisterFarmPage} />
+        <Route location={location} exact path='/dormant/' component={DormantFarms} />
+        <Route location={location} exact path='/preparations/' component={PreparingFarms} />
+        <Route location={location} exact path='/planting/' component={PlantingFarms} />
+        <Route location={location} exact path='/growth/' component={GrowingFarms} />
+        <Route location={location} exact path='/harvesting/' component={HarvestingFarms} />
       </Switch>
     </ResponsiveContainer>
   )
