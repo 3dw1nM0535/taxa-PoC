@@ -13,3 +13,4 @@ env_variables:
   REACT_APP_GRAPHQL_API: https://taxa-poc1.df.r.appspot.com/query
   REACT_APP_GEOCODE_KEY: AIzaSyBLPIht2VaAG9mw1MOylA6_YIQ4lJF8_K0
   REACT_APP_RINKEBY_TESTNET_URL: https://rinkeby.etherscan.io/tx
+  REACT_APP_RAPID_X_API_KEY: 4MuAxBSXkjmshFDQQnPkjDmWdGK9p1361CZjsnaGtjDdleGAGX
