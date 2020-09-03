@@ -1,4 +1,3 @@
-# taxa 
-## Decentralized farmer(s) marketplace.
+# taxa-PoC
 
-We are changing 100,000 years old agricultural practices and harvest(goods and produce) trading using decentralized protocols.
+This repository contains source code for taxa proof-of-concept smart contracts and web app
